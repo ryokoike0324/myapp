@@ -18,7 +18,7 @@ test:
   password: password
 
 production:
-   <<: *default
+  <<: *default
   username: <%= Rails.application.credentials.planetscale&.fetch(:username) %>
   password: <%= Rails.application.credentials.planetscale&.fetch(:password) %>
   database: <%= Rails.application.credentials.planetscale&.fetch(:database) %>
