@@ -1,12 +1,7 @@
 Rails.application.routes.draw do
-  get 'contractors/new'
-  get 'contractors/create'
-  get 'contractors/edit'
-  get 'contractors/update'
-  get 'contractors/destroy_form'
-  get 'contractors/destroy'
-  devise_for :contractors
   root 'static_pages#about'
+  devise_for :clients
+  devise_for :contractors
   get 'static_pages/about'
   get 'static_pages/privacy'
   get 'static_pages/terms'
