@@ -1,5 +1,10 @@
+<% unless current_page?(login_path) || current_page?(static_pages_signup_type_path) || current_page?(new_client_registration_path) || current_page?(new_contractor_registration_path) %>
 <header>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  <h1>headerですよ</h1>
+  <h1><%= link_to 'First Step', root_path %></h1>
+  <ul>
+    <li><%= link_to 'ログイン', login_path %></li>
+    <li><%= link_to '簡単ログイン', "#" %></li>
+    <li><%= link_to '新規登録', static_pages_signup_type_path %></li>
+  </ul>
 </header>
+<% end %>

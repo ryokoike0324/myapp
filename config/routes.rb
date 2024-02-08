@@ -1,7 +1,21 @@
 Rails.application.routes.draw do
+  devise_for :contractors, controllers: {
+    sessions:      'contractors/sessions',
+    passwords:     'contractors/passwords',
+    registrations: 'contractors/registrations'
+  }
+  devise_for :clients, controllers: {
+    sessions:      'clients/sessions',
+    passwords:     'clients/passwords',
+    registrations: 'clients/registrations'
+  }
+  # 共通のログイン画面用のルート、重複するためclientは作成しない（同じパスのため）
+  devise_scope :contractor do
+    get '/login', to: 'devise/sessions#new'
+    post '/login', to: 'devise/sessions#create'
+  end
+
   root 'static_pages#about'
-  devise_for :clients
-  devise_for :contractors
   get 'static_pages/about'
   get 'static_pages/privacy'
   get 'static_pages/terms'

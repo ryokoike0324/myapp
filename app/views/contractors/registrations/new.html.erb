@@ -1,7 +1,9 @@
-<h2>新規登録</h2>
+<%= render 'layouts/devise_user_header' %>
 
-<%= form_for(resource, as: resource_name, url: registration_path) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<h2>受注者登録</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "contractors/shared/error_messages", resource: resource %>
 
   <div class="field">
     <%= f.label :email, "メールアドレス" %><br />
@@ -22,7 +24,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "登録する" %>
+    <%= f.submit "登録" %>
   </div>
 <% end %>
 
