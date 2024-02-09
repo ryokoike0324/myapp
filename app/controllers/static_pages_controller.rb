@@ -10,4 +10,7 @@ class StaticPagesController < ApplicationController
 
   def signup_type
   end
+
+  def signin_type
+  end
 end
