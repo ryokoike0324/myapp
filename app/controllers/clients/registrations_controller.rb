@@ -9,10 +9,11 @@ class Clients::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  # POST  /clients
+  def create
+    # super
+    redirect_to static_pages_terms_path
+  end
 
   # GET /resource/edit
   # def edit

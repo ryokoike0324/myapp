@@ -10,9 +10,10 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    # super
+    redirect_to static_pages_privacy_path
+  end
 
   # GET /resource/edit
   # def edit
