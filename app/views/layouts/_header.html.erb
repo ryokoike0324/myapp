@@ -1,10 +1,10 @@
-<% unless current_page?(login_path) || current_page?(static_pages_signup_type_path) || current_page?(new_client_registration_path) || current_page?(new_contractor_registration_path) %>
+<% unless current_page?(login_path) || current_page?(signup_path) || current_page?(new_client_registration_path) || current_page?(new_contractor_registration_path)  || current_page?(new_contractor_session_path)  || current_page?(new_client_session_path) || current_page?(guest_login_path) %>
 <header>
   <h1><%= link_to 'First Step', root_path %></h1>
   <ul>
     <li><%= link_to 'ログイン', login_path %></li>
-    <li><%= link_to '簡単ログイン', "#" %></li>
-    <li><%= link_to '新規登録', static_pages_signup_type_path %></li>
+    <li><%= link_to '簡単ログイン', "guest_login" %></li>
+    <li><%= link_to '新規登録', signup_path %></li>
     <li><%= link_to 'ログアウト', destroy_contractor_session_path , data: { turbo_method: :delete } %></li>
   </ul>
 </header>
