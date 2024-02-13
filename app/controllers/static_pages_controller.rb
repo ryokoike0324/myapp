@@ -8,9 +8,9 @@ class StaticPagesController < ApplicationController
   def terms
   end
 
-  def signup_type
+  def signup
   end
 
-  def signin_type
+  def login
   end
 end
