@@ -3,6 +3,12 @@
 class Contractors::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
+  # POST /contractors/guest_login
+  def guest_login
+    user = Contractor.guest
+    sign_in user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
   # GET /resource/sign_in
   # def new
   #   super

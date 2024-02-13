@@ -10,19 +10,16 @@ Rails.application.routes.draw do
     passwords: 'clients/passwords',
     registrations: 'clients/registrations'
   }
-  # # 共通のログイン画面用のルート、重複するためclientは作成しない（同じパスのため）
-  # devise_scope :client do
-  #   get 'login' => 'devise/sessions#new'
-  #   post 'login' => 'devise/sessions#create'
-  #   delete 'logout' => 'devise/sessions#destroy'
-  # end
 
-  # devise_scope :contractor do
-  #   # ここのモデル名単数系にするそうですよ
-  #   get 'login' => 'devise/sessions#new'
-  #   post 'login' => 'devise/sessions#create'
-  #   delete 'logout' => 'devise/sessions#destroy'
-  # end
+  devise_scope :contractor do
+    # ここのモデル名単数系にするそうですよ
+    post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
+  end
+  devise_scope :client do
+    post 'clients/guest_login', to: 'clients/sessions#guest_login'
+  end
+
+
 
   root 'static_pages#about'
   get 'about' => 'static_pages#about'
@@ -30,6 +27,7 @@ Rails.application.routes.draw do
   get 'terms' => 'static_pages#terms'
   get 'signup' =>  'static_pages#signup'
   get 'login' =>  'static_pages#login'
+  get 'guest_login' =>  'static_pages#guest_login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :contacts, only: [:new, :create] do
     collection do

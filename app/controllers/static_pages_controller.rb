@@ -13,4 +13,8 @@ class StaticPagesController < ApplicationController
 
   def login
   end
+
+  def guest_login
+  end
+
 end
