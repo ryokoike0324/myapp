@@ -1,5 +1,4 @@
 <% provide(:title, 'ゲストユーザー選択') %>
-<%= render 'layouts/devise_user_header' %>
 <h2>簡単ログイン</h1>
 <p>ご希望のユーザーを選択して、ログインして下さい。</p>
 <p><%= link_to '受注者ゲストログイン', contractors_guest_login_path, data: { turbo_method: :post } %></p>

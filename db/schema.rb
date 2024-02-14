@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_045432) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_14_112054) do
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name", null: false
+    t.string "name"
     t.string "boolean", default: "0", null: false
     t.integer "industry", default: 0, null: false
     t.text "our_business"
@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_045432) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name", default: "", null: false
+    t.string "name"
     t.string "image"
     t.text "public_relations"
     t.string "portfolio"
