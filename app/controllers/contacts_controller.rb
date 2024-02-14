@@ -6,12 +6,12 @@ class ContactsController < ApplicationController
 
   def confirm
     @contact = Contact.new(contact_params)
-    if @contact.valid?
-      render action: 'confirm'
-    else
+    if @contact.invalid?
       flash[:alert] = @contact.errors.full_messages.join(', ')
       @contact = Contact.new
-      render 'new', status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
+    else
+      render :confirm
     end
   end
 
