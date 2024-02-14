@@ -1,31 +1,30 @@
-<% provide(:title, 'ゲストユーザー選択') %>
 <%= render 'layouts/devise_user_header' %>
-<h2>発注者新規登録</h2>
+<h2><%= t('.sign_up') %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "clients/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email, "メールアドレス" %><br />
+    <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :password, "パスワード" %>
+    <%= f.label :password %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> 文字以上入力して下さい)</em>
+    <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, "パスワード確認" %><br />
+    <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "登録" %>
+    <%= f.submit t('.sign_up') %>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<%= render "clients/shared/links" %>

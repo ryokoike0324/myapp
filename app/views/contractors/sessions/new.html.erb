@@ -1,27 +1,26 @@
-<% provide(:title, '受注者ログイン') %>
 <%= render 'layouts/devise_user_header' %>
-<h2>受注者ログイン</h2>
+<h2><%= t('.sign_in') %></h2>
 
-<%= form_for(resource, as: resource_name, url: contractor_session_path) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :email, 'メールアドレス' %><br />
+    <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :password, 'パスワード' %><br />
+    <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 
   <% if devise_mapping.rememberable? %>
     <div class="field">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, 'ログイン状態を保存する' %>
+      <%= f.label :remember_me %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit "ログイン" %>
+    <%= f.submit t('.sign_in') %>
   </div>
 <% end %>
 

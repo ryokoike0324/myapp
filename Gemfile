@@ -6,6 +6,8 @@ ruby "3.3.0"
 gem "rails", "~> 7.1.3"
 
 gem 'devise'
+gem 'devise-i18n'
+gem 'rails-i18n'
 
 gem 'dotenv-rails'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
