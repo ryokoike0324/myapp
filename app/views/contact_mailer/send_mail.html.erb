@@ -1,9 +1,12 @@
+<h2><%= @contact.name %> 様 </h2>
 
-<h2><%= @user.name %> 様</h2>
+<p>【メールアドレス】：<%= @contact.email %></p>
+<p>【件名】：<%= @contact.subject %></p>
+<p>【お問い合わせ内容】</p>
+<p><span style="white-space: pre-wrap;"><%= @contact.message %></span></p>
+
 <p>この度は、お問い合わせありがとうございました。<br>
-以下でご質問の回答となっておりますでしょうか。</p>
-
-  <p><%= @answer %></p>
+回答まで少々お待ちください。</p>
 
   <p>今後とも XXX をよろしくお願いいたします。</p>
 
