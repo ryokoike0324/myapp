@@ -110,13 +110,18 @@ GEM
     devise-i18n (1.12.0)
       devise (>= 4.9.0)
     diff-lcs (1.5.1)
-    dotenv (3.0.0)
-    dotenv-rails (3.0.0)
-      dotenv (= 3.0.0)
+    dotenv (3.0.1)
+    dotenv-rails (3.0.1)
+      dotenv (= 3.0.1)
       railties (>= 6.1)
     drb (2.2.0)
       ruby2_keywords
     erubi (1.12.0)
+    factory_bot (6.4.6)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -159,8 +164,6 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     nio4r (2.7.0)
-    nokogiri (1.16.2-x86_64-darwin)
-      racc (~> 1.4)
     nokogiri (1.16.2-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -315,7 +318,6 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -325,6 +327,7 @@ DEPENDENCIES
   devise
   devise-i18n
   dotenv-rails
+  factory_bot_rails
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
