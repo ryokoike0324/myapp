@@ -1,5 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Contractor, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe Contractor do
+  describe 'ユーザー登録' do
+    it "email、passwordとpassword_confirmationが存在すれば登録できること" do
+      con_user = build(:contractor)
+      expect(con_user).to be_valid  # user.valid? が true になればパスする
+    end
+  end
 end
