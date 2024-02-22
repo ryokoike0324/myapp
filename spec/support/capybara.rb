@@ -6,4 +6,7 @@ RSpec.configure do |config|
   config.before(:each, js: true, type: :system) do
     driven_by :selenium_chrome_headless
   end
+
+  # Capybaraはボタンが現れるまで15秒待つ
+  Capybara.default_max_wait_time = 15
 end
