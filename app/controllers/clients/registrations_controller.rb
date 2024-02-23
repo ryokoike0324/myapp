@@ -11,8 +11,7 @@ class Clients::RegistrationsController < Devise::RegistrationsController
 
   # POST  /clients
   # def create
-  # super
-  #   redirect_to terms_path
+  #  super
   # end
 
   # GET /resource/edit

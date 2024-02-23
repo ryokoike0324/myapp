@@ -3,20 +3,24 @@ Rails.application.routes.draw do
   devise_for :contractors, controllers: {
     sessions: 'contractors/sessions',
     passwords: 'contractors/passwords',
-    registrations: 'contractors/registrations'
+    registrations: 'contractors/registrations',
+    confirmations: 'contractors/confirmations'
   }
   devise_for :clients, controllers: {
     sessions: 'clients/sessions',
     passwords: 'clients/passwords',
-    registrations: 'clients/registrations'
+    registrations: 'clients/registrations',
+    confirmations: 'clients/confirmations'
   }
 
   devise_scope :contractor do
     # ここのモデル名単数系にするそうですよ
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
+    # get 'contractors/confirmation', to: 'contractors/confirmations#show'
   end
   devise_scope :client do
     post 'clients/guest_login', to: 'clients/sessions#guest_login'
+    # put 'clients/confirmation', to: 'clients/confirmations#show'
   end
 
 
