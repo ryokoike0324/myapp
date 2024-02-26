@@ -17,7 +17,7 @@ RSpec.describe ContactMailer, type: :mailer do
     end
 
     it '送信元(from)が【First Step事務局】であること' do
-      expect(mail.from).to eq 'First Step事務局'
+      expect(mail.from).to eq ['first-step@example.com']
     end
 
     it '件名(subject)が正しいこと' do

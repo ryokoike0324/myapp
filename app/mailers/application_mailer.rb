@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'First Step事務局'
-  layout "mailer"
+  default from: 'first-step@example.com'
+  layout 'mailer'
 end
