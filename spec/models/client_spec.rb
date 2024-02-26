@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Client do
-  describe 'ユーザー登録' do
+RSpec.describe 'Clientモデル' do
+  describe 'バリデーション' do
 
     it 'email、passwordとpassword_confirmationが存在すれば登録できること' do
       client = build(:client)
@@ -24,6 +24,14 @@ RSpec.describe Client do
       client = build(:client, password: 'hogehoge', password_confirmation: 'foobar')
       client.valid?
       expect(client.errors[:password_confirmation]).to include('とPasswordの入力が一致しません')
+    end
+
+  end
+
+  describe 'ゲストユーザー' do
+    it '正しい値が登録されていること' do
+      guest = Client.guest
+      expect(guest).to be_valid
     end
   end
 end
