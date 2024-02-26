@@ -8,7 +8,7 @@ class Client < ApplicationRecord
     find_or_create_by!(email: 'guest@example.com') do |client|
       client.password = SecureRandom.urlsafe_base64
       client.name = 'ゲスト発注者'
-      client.confirmed_at = Time.now  # Confirmable を使用している場合は必要
+      client.confirmed_at = Time.zone.now  # Confirmable を使用している場合は必要
       # 例えば name を入力必須としているならば， client.name = 'ゲスト' なども必要
     end
   end
