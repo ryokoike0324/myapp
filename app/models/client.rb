@@ -5,7 +5,7 @@ class Client < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   def self.guest
-    find_or_create_by!(email: 'guest@example.com') do |client|
+    find_or_create_by!(email: 'guest-client@example.com') do |client|
       client.password = SecureRandom.urlsafe_base64
       client.name = 'ゲスト発注者'
       client.confirmed_at = Time.zone.now  # Confirmable を使用している場合は必要

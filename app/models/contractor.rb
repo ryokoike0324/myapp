@@ -5,7 +5,7 @@ class Contractor < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   def self.guest
-    find_or_create_by!(email: 'guest@example.com') do |contractor|
+    find_or_create_by!(email: 'guest-contractor@example.com') do |contractor|
       contractor.password = SecureRandom.urlsafe_base64
       contractor.name = 'ゲスト受注者'
       contractor.confirmed_at = Time.zone.now  # Confirmable を使用している場合は必要
