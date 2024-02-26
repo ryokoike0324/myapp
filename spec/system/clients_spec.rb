@@ -56,7 +56,7 @@ RSpec.describe '発注者', type: :system do
     let!(:client){ create(:client) }
 
     context '正しい値を入力したとき' do
-      it 'ログインに成功した後、ログアウトできること' do
+      it 'ログインに成功すること' do
         visit root_path
         click_link_or_button 'ログイン'
         click_link_or_button '発注者ログイン'
@@ -82,6 +82,19 @@ RSpec.describe '発注者', type: :system do
         expect(page).to have_link 'ログイン'
       end
     end
+  end
+
+  describe 'ゲストユーザーのログイン' do
+
+    it '簡単ログインに成功すること' do
+      visit root_path
+      click_link_or_button '簡単ログイン'
+      click_link_or_button '発注者ゲストログイン'
+      expect(page).to have_content 'ログインしました。'
+      expect(page).to have_link 'ログアウト'
+      expect(current_path).to eq root_path
+    end
+
   end
 
   describe 'ログアウト' do
