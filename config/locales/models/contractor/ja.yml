@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    models:
+      contractor:受注者
+    attributes:
+      contractor:
+        name: お名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード確認
+        image: プロフィール画像
+        public_relations: 自己PR
+        portfolio: ポートフォリオURL
+        study_period: 勉強期間

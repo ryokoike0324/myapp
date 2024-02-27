@@ -7,7 +7,7 @@ class Clients::SessionsController < Devise::SessionsController
   def guest_login
     user = Client.guest
     sign_in user
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+    redirect_to root_path, notice: t('clients.sessions.guest_sign_in')
   end
 
   # GET /resource/sign_in

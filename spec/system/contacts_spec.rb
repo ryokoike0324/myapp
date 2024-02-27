@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'お問い合わせ', type: :system do
+RSpec.describe 'お問い合わせ' do
   before do
     ActionMailer::Base.deliveries.clear
   end
+
   context '正しい値を入力した場合' do
     scenario 'お問い合わせが成功すること' do
       visit root_path
@@ -14,7 +15,7 @@ RSpec.describe 'お問い合わせ', type: :system do
       fill_in 'お名前', with: 'ゲスト'
       fill_in 'メールアドレス', with: 'guest@gmail.com'
       fill_in '件名', with: 'お問い合わせテストの件名'
-      fill_in 'メッセージ', with: 'お問い合わせテストのメッセージ'
+      fill_in 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
       click_link_or_button '入力内容確認'
       # 入力内容確認ページへ遷移している
       expect(current_path).to eq confirm_contacts_path
@@ -40,19 +41,19 @@ RSpec.describe 'お問い合わせ', type: :system do
     it 'お問い合わせに失敗すること' do
       visit new_contact_path
       # メールが送信されていないこと
-      expect{
+      expect do
         fill_in 'お名前', with: nil
         fill_in 'メールアドレス', with: nil
         fill_in '件名', with: nil
-        fill_in 'メッセージ', with: nil
+        fill_in 'お問い合わせ内容', with: nil
         click_link_or_button '入力内容確認'
-      }.to change { ActionMailer::Base.deliveries.size }.by(0)
+      end.to change { ActionMailer::Base.deliveries.size }.by(0)
       expect(current_path).to eq confirm_contacts_path
       # エラーメッセージが表示されていること
-      expect(page).to have_content 'Nameを入力してください'
-      expect(page).to have_content 'Emailを入力してください'
-      expect(page).to have_content 'Subjectを入力してください'
-      expect(page).to have_content 'Messageを入力してください'
+      expect(page).to have_content 'お名前を入力してください'
+      expect(page).to have_content 'メールアドレスを入力してください'
+      expect(page).to have_content '件名を入力してください'
+      expect(page).to have_content 'お問い合わせ内容を入力してください'
       # 入力内容確認ページに「送信」ボタンが表示されていないこと
       expect(page).to have_no_button '送信'
     end
@@ -63,7 +64,7 @@ RSpec.describe 'お問い合わせ', type: :system do
     fill_in 'お名前', with: 'ゲスト'
     fill_in 'メールアドレス', with: 'guest@gmail.com'
     fill_in '件名', with: 'お問い合わせテストの件名'
-    fill_in 'メッセージ', with: 'お問い合わせテストのメッセージ'
+    fill_in 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
     click_link_or_button '入力内容確認'
     click_link_or_button '入力画面に戻る'
     expect(current_path).to eq back_contacts_path
@@ -71,6 +72,6 @@ RSpec.describe 'お問い合わせ', type: :system do
     expect(page).to have_field 'お名前', with: 'ゲスト'
     expect(page).to have_field 'メールアドレス', with: 'guest@gmail.com'
     expect(page).to have_field '件名', with: 'お問い合わせテストの件名'
-    expect(page).to have_field 'メッセージ', with: 'お問い合わせテストのメッセージ'
+    expect(page).to have_field 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
   end
 end

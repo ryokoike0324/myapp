@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   devise_scope :contractor do
     # ここのモデル名単数系にするそうですよ
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
+    get 'contractors/profile', to: 'contractors/registrations#profile_show'
+    get 'contractors/profile/edit', to: 'contractors/registrations#profile_show'
+    put 'contractors/profile/edit', to: 'contractors/registrations#profile_show'
     # get 'contractors/confirmation', to: 'contractors/confirmations#show'
   end
   devise_scope :client do
