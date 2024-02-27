@@ -39,8 +39,8 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def profile_show
-
+  def profile_new
+    @contractor = Contractor.new
   end
 
   def profile_edit
