@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Contactモデル' do
+RSpec.describe Contact do
   describe 'バリデーション' do
     let(:contact){ build(:contact) }
 

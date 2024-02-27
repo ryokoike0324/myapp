@@ -39,7 +39,19 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  def profile_show
+
+  end
+
+  def profile_edit
+
+  end
+
+  def profile_update
+
+  end
+
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
@@ -47,9 +59,15 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   # end
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [
+                                        :name,
+                                        :image,
+                                        :public_relations,
+                                        :portfolio,
+                                        :study_period
+                                      ])
+  end
 
   # The path used after sign up.
   # def after_sign_up_path_for(resource)

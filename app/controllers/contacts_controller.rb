@@ -26,7 +26,7 @@ class ContactsController < ApplicationController
       ContactMailer.contact_mail(@contact).deliver_now
       redirect_to done_contacts_path
     else
-      flash[:alert] = @contact.errors.full_messages.join(", ")
+      flash[:alert] = @contact.errors.full_messages.join(', ')
       @contact = Contact.new
       render :new, status: :unprocessable_entity
     end

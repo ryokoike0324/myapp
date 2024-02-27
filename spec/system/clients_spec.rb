@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '発注者', type: :system do
+RSpec.describe '発注者' do
   describe '新規登録' do
     before do
       ActionMailer::Base.deliveries.clear
@@ -20,9 +20,9 @@ RSpec.describe '発注者', type: :system do
         click_link_or_button '新規登録'
         click_link_or_button '発注者登録'
         expect do
-          fill_in 'Email', with: client.email
-          fill_in 'Password', with: client.password
-          fill_in 'Password confirmation', with: client.password
+          fill_in 'メールアドレス', with: client.email
+          fill_in 'パスワード', with: client.password
+          fill_in 'パスワード確認', with: client.password
           click_link_or_button '発注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
         expect(page).to have_content '本人確認用のメールを送信しました。'
@@ -39,14 +39,14 @@ RSpec.describe '発注者', type: :system do
       scenario 'ユーザー登録に失敗すること' do
         visit new_client_registration_path
         expect do
-          fill_in 'Email', with: 'hogehoge'
-          fill_in 'Password', with: '*****'
-          fill_in 'Password confirmation', with: nil
+          fill_in 'メールアドレス', with: 'hogehoge'
+          fill_in 'パスワード', with: '*****'
+          fill_in 'パスワード確認', with: nil
           click_link_or_button '発注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
-        expect(page).to have_content 'Emailは不正な値です'
-        expect(page).to have_content 'Password confirmationとPasswordの入力が一致しません'
-        expect(page).to have_content 'Passwordは6文字以上で入力してください'
+        expect(page).to have_content 'メールアドレスは不正な値です'
+        expect(page).to have_content 'パスワード確認とパスワードの入力が一致しません'
+        expect(page).to have_content 'パスワードは6文字以上で入力してください'
         expect(current_path).to eq client_registration_path
       end
     end
@@ -60,8 +60,8 @@ RSpec.describe '発注者', type: :system do
         visit root_path
         click_link_or_button 'ログイン'
         click_link_or_button '発注者ログイン'
-        fill_in 'Email', with: client.email
-        fill_in 'Password', with: client.password
+        fill_in 'メールアドレス', with: client.email
+        fill_in 'パスワード', with: client.password
         click_link_or_button '発注者ログイン'
         expect(page).to have_content 'ログインしました。'
         expect(page).to have_link 'ログアウト'
@@ -74,10 +74,10 @@ RSpec.describe '発注者', type: :system do
         visit root_path
         click_link_or_button 'ログイン'
         click_link_or_button '発注者ログイン'
-        fill_in 'Email', with: 'hogefoobar@123_456'
-        fill_in 'Password', with: 1234
+        fill_in 'メールアドレス', with: 'hogefoobar@123_456'
+        fill_in 'パスワード', with: 1234
         click_link_or_button '発注者ログイン'
-        expect(page).to have_content 'Emailまたはパスワードが違います。'
+        expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
         expect(current_path).to eq new_client_session_path
         expect(page).to have_link 'ログイン'
       end

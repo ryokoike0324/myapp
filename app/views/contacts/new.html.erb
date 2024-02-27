@@ -9,22 +9,22 @@
 
       <%= form_with model: @contact, url: confirm_contacts_path ,data:{ turbo: false } do |f| %>
         <div class="form-group">
-          <%= f.label :name, 'お名前' %><span class="text-danger">*</span>
+          <%= f.label :name %><span class="text-danger"></span>
           <%= f.text_field :name, autofocus: true, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :email, 'メールアドレス' %><span class="text-danger">*</span>
+          <%= f.label :email %><span class="text-danger"></span>
           <%= f.email_field :email, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :subject, '件名' %><span class="text-danger">*</span>
+          <%= f.label :subject %><span class="text-danger"></span>
           <%= f.text_area :subject, class: 'form-control' %>
         </div>
 
         <div class="form-group">
-          <%= f.label :message, 'メッセージ' %><span class="text-danger">*</span>
+          <%= f.label :message %><span class="text-danger"></span>
           <%= f.text_area :message, size: '10x10', class: 'form-control' %>
         </div>
 

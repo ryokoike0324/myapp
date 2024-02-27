@@ -115,6 +115,7 @@ ja:
         sign_in: 発注者ログイン
       signed_in: ログインしました。
       signed_out: ログアウトしました。
+      guest_sign_in: ゲストユーザーとしてログインしました。
     shared:
       links:
         back: 戻る
@@ -219,6 +220,7 @@ ja:
         sign_in: 受注者ログイン
       signed_in: ログインしました。
       signed_out: ログアウトしました。
+      guest_sign_in: ゲストユーザーとしてログインしました。
     shared:
       links:
         back: 戻る
