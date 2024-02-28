@@ -1,5 +1,6 @@
 class Contractor < ApplicationRecord
-  has_one_attached :image
+  enum study_period: { ３ヶ月未満: 0, ６ヶ月未満: 1, １年未満: 2, １年以上: 3 }
+  mount_uploader :image, ContractorAvatorUploader
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

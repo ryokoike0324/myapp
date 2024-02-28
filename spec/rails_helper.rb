@@ -50,6 +50,13 @@ RSpec.configure do |config|
   config.after do
     DatabaseRewinder.clean
   end
+  config.after(:all) do
+    FileUtils.rm_rf(Dir[Rails.root.join("public/uploads/#{Rails.env}/").to_s]) if Rails.env.test?
+    # FileUtils.rm_rf(Dir["#{Rails.root.join("public/uploads/#{Rails.env}/")}"]) if Rails.env.test?
+    # if Rails.env.test?
+    #   FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/#{Rails.env}/"])
+    # end
+  end
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

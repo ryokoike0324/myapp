@@ -199,8 +199,6 @@ ja:
       updated: パスワードが正しく変更されました。
       updated_not_active: パスワードが正しく変更されました。
     registrations:
-      profile_new:
-        title: プロフィール登録
       destroyed: アカウントを削除しました。またのご利用をお待ちしております。
       edit:
         are_you_sure: 本当によろしいですか？
