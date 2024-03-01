@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Contractors::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  # before_action :configure_sign_up_params, only: [:create, :profile_create]
+  # before_action :configure_account_update_params, only: [:profile_create]
 
   # GET /resource/sign_up
   # def new
@@ -39,39 +39,33 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  def profile_show
 
-  end
-
-  def profile_edit
-
-  end
-
-  def profile_update
-
-  end
-
-  protected
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [
+  #     :name,
+  #     :image,
+  #     :public_relations,
+  #     :portfolio,
+  #     :study_period
+  #   ])
   # end
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [
-                                        :name,
-                                        :image,
-                                        :public_relations,
-                                        :portfolio,
-                                        :study_period
-                                      ])
-  end
-
+  # def configure_account_update_params
+  #   devise_parameter_sanitizer.permit(:account_update, keys: [
+  #                                       :name,
+  #                                       :image,
+  #                                       :public_relations,
+  #                                       :portfolio,
+  #                                       :study_period
+  #                                     ])
+  # end
+  # protected
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
-  #   super(resource)
+  #   メールで認証してるので、comfirmations_controllerのafter_confirmation_path_forで登録後のリダイレクト先を変える
   # end
 
   # The path used after sign up for inactive accounts.

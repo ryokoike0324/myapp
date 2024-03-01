@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resource :contractor_profile, only: [:edit, :update, :show],
+                                controller: 'contractors/profiles',
+                                path: 'contractors/profiles'
+
   devise_for :contractors, controllers: {
     sessions: 'contractors/sessions',
     passwords: 'contractors/passwords',
@@ -16,10 +20,6 @@ Rails.application.routes.draw do
   devise_scope :contractor do
     # ここのモデル名単数系にするそうですよ
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
-    get 'contractors/profile', to: 'contractors/registrations#profile_show'
-    get 'contractors/profile/edit', to: 'contractors/registrations#profile_show'
-    put 'contractors/profile/edit', to: 'contractors/registrations#profile_show'
-    # get 'contractors/confirmation', to: 'contractors/confirmations#show'
   end
   devise_scope :client do
     post 'clients/guest_login', to: 'clients/sessions#guest_login'

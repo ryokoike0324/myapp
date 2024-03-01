@@ -14,7 +14,7 @@ RSpec.describe '受注者' do
     let(:contractor){ build(:contractor) }
 
     context '正しい値を入力したとき' do
-      scenario '新規登録が成功すること' do
+      scenario '新規登録が成功し、プロフィール登録ができること' do
         visit root_path
         expect(page).to have_http_status :ok
         click_link_or_button '新規登録'
@@ -28,10 +28,12 @@ RSpec.describe '受注者' do
         expect(page).to have_content '本人確認用のメールを送信しました。'
         expect(current_path).to eq root_path
         mail = ActionMailer::Base.deliveries.last
-        url = extract_confirmation_url(mail)
-        visit url
+        after_signup_url = extract_confirmation_url(mail)
+        new_contractor = Contractor.last
+        visit after_signup_url
+        expect(current_path).to eq edit_contractor_profile_path(new_contractor)
         expect(page).to have_content 'メールアドレスが確認できました。'
-        # expect(current_path).to eq edit_contractor_registration_path(contractor)
+        expect(page).to have_content 'プロフィール編集'
       end
     end
 
@@ -107,6 +109,163 @@ RSpec.describe '受注者' do
       expect(page).to have_link 'ログイン'
       expect(current_path).to eq root_path
 
+    end
+  end
+
+  describe 'プロフィール' do
+    let!(:contractor){ create(:contractor, :with_profile) }
+
+    it 'ログインしている受注者は自身のプロフィールを表示でき、プロフィールを編集できること' do
+      login_as contractor
+      click_link_or_button 'プロフィール'
+      # リンクからプロフィールページに遷移すること
+      expect(current_path).to eq contractor_profile_path(contractor)
+      # すでに登録している情報が表示されていること
+      expect(page).to have_content contractor.name
+      image_url = contractor.image
+      expect(page).to have_css("img[src='#{image_url}']")
+      expect(page).to have_content contractor.public_relations
+      expect(page).to have_content contractor.portfolio
+      expect(page).to have_content contractor.study_period
+      click_link_or_button 'プロフィール編集'
+      # プロフィール編集ページに遷移できること
+      expect(current_path).to eq edit_contractor_profile_path(contractor)
+      fill_in 'お名前', with: 'テスト太郎'
+      update_image_url = Rails.root.join('spec/files/after_test_avator.png').to_s
+      attach_file 'プロフィール画像',  update_image_url
+      fill_in '自己PR', with: '初めましてテスト太郎です。よろしくお願いします。'
+      fill_in 'ポートフォリオURL', with: 'https://bartell-toy.test/lanita'
+      select '１年以上', from: '勉強期間'
+      click_link_or_button '登録'
+      # 編集後プロフィールページに正しく遷移すること
+      expect(page).to have_content 'プロフィール登録が完了しました'
+      expect(current_path).to eq contractor_profile_path(contractor)
+      # プロフィールページに編集内容が反映されていること
+      expect(page).to have_content 'テスト太郎'
+      expect(page).to have_css("img[src*='#{File.basename(update_image_url)}']")
+      expect(page).to have_content '初めましてテスト太郎です。よろしくお願いします。'
+      expect(page).to have_content 'https://bartell-toy.test/lanita'
+      expect(page).to have_content '１年以上'
+    end
+  end
+
+  describe 'アカウント情報更新' do
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+
+    def extract_confirmation_url(mail)
+      body = mail.body.encoded
+      body[/http[^"]+/]
+    end
+
+    let!(:contractor){ create(:contractor) }
+
+    context 'メールアドレスとパスワードを更新する場合' do
+      it '正しい新しいパスワード、現在のパスワードを入力すれば成功すること' do
+        login_as contractor
+        visit root_path
+        click_link_or_button 'アカウント'
+        # アカウント編集ページに遷移すること
+        expect(current_path).to eq edit_contractor_registration_path(contractor)
+        expect(page).to have_content 'アカウント編集'
+        # ユーザーのアカウント情報が表示されていること
+        expect(page).to have_field 'メールアドレス', with: contractor.email
+        # メールアドレスを変更すると認証メールが送信されること
+        expect do
+          fill_in 'メールアドレス', with: 'example@example.com'
+          fill_in '新しいパスワード', with: 'test1234TEST'
+          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in '現在のパスワード', with: contractor.password
+          click_link_or_button '更新'
+        end.to change { ActionMailer::Base.deliveries.size }.by(1)
+        expect(page).to have_content '本人確認用メールより確認処理をおこなってください。'
+        # ログアウトしていること
+        expect(current_path).to eq root_path
+        mail = ActionMailer::Base.deliveries.last
+        after_signup_url = extract_confirmation_url(mail)
+        visit after_signup_url
+        # 認証用のメールからリンクを踏むとrootに遷移すること
+        expect(current_path).to eq root_path
+        # ログインしていること
+        expect(page).to have_content 'ログアウト'
+        # flashが表示されていること
+        expect(page).to have_content 'メールアドレスが確認できました'
+      end
+
+      it '不正な情報を入力すると失敗すること' do
+        login_as contractor
+        visit root_path
+        click_link_or_button 'アカウント'
+        expect do
+          fill_in 'メールアドレス', with: 'example@example.com'
+          fill_in '新しいパスワード', with: 'test1234TEST'
+          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in '現在のパスワード', with: 'failTestPass'
+          click_link_or_button '更新'
+        end.to change { ActionMailer::Base.deliveries.size }.by(0)
+        expect(page).to have_content 'を入力してください'
+        expect(current_path).to eq contractor_registration_path
+      end
+
+    end
+
+    context 'パスワードのみ更新する場合' do
+      it '正しい新しいパスワードを入力すれば成功し、確認メールは送信されないこと' do
+        login_as contractor
+        visit root_path
+        click_link_or_button 'アカウント'
+        expect do
+          # 登録されてるメールアドレスは入力されているはず
+          fill_in '新しいパスワード', with: 'test1234TEST'
+          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in '現在のパスワード', with: contractor.password
+          click_link_or_button '更新'
+        end.to change { ActionMailer::Base.deliveries.size }.by(0)
+        expect(page).to have_content 'アカウント情報を変更しました。'
+        expect(current_path).to eq root_path
+      end
+    end
+
+    context 'メールアドレスのみ更新する場合' do
+      it '正しいメールアドレスを入力すれば成功し、確認メールが送信されること' do
+        login_as contractor
+        visit root_path
+        click_link_or_button 'アカウント'
+        expect do
+          # 新しいパスワードは入力せずとも登録できるはず
+          fill_in 'メールアドレス', with: 'new-test-email@example.com'
+          fill_in '現在のパスワード', with: contractor.password
+          click_link_or_button '更新'
+        end.to change { ActionMailer::Base.deliveries.size }.by(1)
+        expect(page).to have_content '本人確認用メールより確認処理をおこなってください。'
+        expect(current_path).to eq root_path
+        mail = ActionMailer::Base.deliveries.last
+        after_signup_url = extract_confirmation_url(mail)
+        visit after_signup_url
+        # 認証用のメールからリンクを踏むとrootに遷移すること
+        expect(current_path).to eq root_path
+        # ログインしていること
+        expect(page).to have_content 'ログアウト'
+        # flashが表示されていること
+        expect(page).to have_content 'メールアドレスが確認できました'
+      end
+    end
+  end
+
+  describe '退会', focus: true do
+
+    let!(:contractor){ create(:contractor) }
+
+    it 'ログインしているユーザーは退会できること', :js  do
+      login_as contractor
+      visit root_path
+      click_link_or_button 'アカウント'
+      click_link_or_button '退会する'
+      expect do
+        expect(page.accept_confirm).to eq 'アカウント情報が削除されます。本当に退会しますか？'
+        expect(page).to have_content 'アカウントを削除しました'
+      end.to change(Contractor, :count).by(-1)
     end
   end
 

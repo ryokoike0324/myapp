@@ -24,7 +24,6 @@ require 'rspec/rails'
 # require only the support files necessary.
 #
 Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
-
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
 begin
@@ -39,7 +38,7 @@ RSpec.configure do |config|
   ]
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
   config.include LoginMacros
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
@@ -49,6 +48,16 @@ RSpec.configure do |config|
   end
   config.after do
     DatabaseRewinder.clean
+  end
+  config.after(:all) do
+    FileUtils.rm_rf(Dir[Rails.root.join("public/uploads/#{Rails.env}/").to_s]) if Rails.env.test?
+    # FileUtils.rm_rf(Dir["#{Rails.root.join("public/uploads/#{Rails.env}/")}"]) if Rails.env.test?
+    # if Rails.env.test?
+    #   FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/#{Rails.env}/"])
+    # end
+  end
+  config.before(:all) do
+    FileUtils.rm_rf(Dir[Rails.root.join('tmp/capybara/*')], secure: true)
   end
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

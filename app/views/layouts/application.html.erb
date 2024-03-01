@@ -3,20 +3,21 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title><%= yield(:title) %> - kakedashi</title>
+    <title><%= yield(:title) %> - First Step</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%# config/importmap.rbに記載されたものを読み込んでる %>
     <%= javascript_importmap_tags %>
 
   </head>
   <body>
     <%= render 'layouts/header' %>
-      <%# deivseのフラッシュメッセージを表示 %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% flash.each do |message_type, message| %>
+      <div><%= message %></div>
+    <% end %>
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>
