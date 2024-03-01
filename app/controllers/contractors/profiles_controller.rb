@@ -12,7 +12,7 @@ class Contractors::ProfilesController < ApplicationController
     @contractor = current_contractor
     if @contractor.update(profile_params)
       flash[:success] = t('.success')
-      redirect_to contractor_profile_path
+      redirect_to contractor_profile_path(current_contractor)
     else
       render :edit, status: :unprocessable_entity
     end

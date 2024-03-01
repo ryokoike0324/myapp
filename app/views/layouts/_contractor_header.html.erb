@@ -1,6 +1,7 @@
   <h1><%= link_to 'First Step', root_path %></h1>
   <h2>受注者用のページですよ</h2>
   <ul>
+    <li><%= link_to 'アカウント', edit_contractor_registration_path(current_contractor)  %></li>
     <li><%= link_to 'プロフィール', contractor_profile_path(current_contractor)  %></li>
     <li><%= link_to 'ログアウト', destroy_contractor_session_path , data: { turbo_method: :delete } %></li>
   </ul>

@@ -62,11 +62,11 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
   #                                       :study_period
   #                                     ])
   # end
-
+  # protected
   # The path used after sign up.
-  def after_sign_up_path_for(resource)
-    edit_contractor_profile_path
-  end
+  # def after_sign_up_path_for(resource)
+  #   メールで認証してるので、comfirmations_controllerのafter_confirmation_path_forで登録後のリダイレクト先を変える
+  # end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

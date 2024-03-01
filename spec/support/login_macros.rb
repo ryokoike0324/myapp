@@ -6,5 +6,7 @@ module LoginMacros
     fill_in 'メールアドレス', with: user.email
     fill_in 'パスワード', with: user.password
     click_link_or_button "#{user_type_ja}ログイン"
+    # ページが表示される前にテストが先に進むのを防ぐため以下のコードを挿入
+    expect(page).to have_content 'ログインしました'
   end
 end
