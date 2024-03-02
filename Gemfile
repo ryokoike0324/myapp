@@ -10,6 +10,8 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'rails-i18n'
 
+gem 'pry-rails'
+
 gem 'faker'
 
 gem 'dotenv-rails'
@@ -87,3 +89,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
 end
+
+gem 'tailwindcss-rails', '~> 2.3'
+
+gem 'cssbundling-rails', '~> 1.4'

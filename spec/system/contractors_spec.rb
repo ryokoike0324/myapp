@@ -33,7 +33,12 @@ RSpec.describe '受注者' do
         visit after_signup_url
         expect(current_path).to eq edit_contractor_profile_path(new_contractor)
         expect(page).to have_content 'メールアドレスが確認できました。'
+        # 登録後ログインしていること
+        expect(page).to have_content 'ログアウト'
+        # プロフィール編集ページに遷移している
         expect(page).to have_content 'プロフィール編集'
+        current_user = Contractor.find_by(email: contractor.email)
+        expect(current_path).to eq edit_contractor_profile_path(current_user)
       end
     end
 
@@ -253,7 +258,7 @@ RSpec.describe '受注者' do
     end
   end
 
-  describe '退会', focus: true do
+  describe '退会' do
 
     let!(:contractor){ create(:contractor) }
 

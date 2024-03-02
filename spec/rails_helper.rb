@@ -37,8 +37,9 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
   config.include FactoryBot::Syntax::Methods
-  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Warden::Test::Helpers
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include LoginMacros
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!

@@ -13,7 +13,7 @@ FactoryBot.define do
       public_relations { Faker::Lorem.sentence(word_count: 25) }
       portfolio { Faker::Internet.unique.url }
       study_period { %w[３ヶ月未満 ６ヶ月未満 １年未満 １年以上].sample }
-      image { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'files', 'test-avator.png'), 'image/png') }
+      image { Rack::Test::UploadedFile.new(Rails.root.join('spec/files/test-avator.png'), 'image/png') }
 
     end
 
