@@ -1,10 +1,10 @@
 FROM ruby:3.3.0
 RUN apt-get update -qq && \
     apt-get install -y build-essential \
-                       libpq-dev \
-                       nodejs vim \
+                       vim \
                        imagemagick \
-                       iputils-ping net-tools
+                       iputils-ping net-tools \
+                       lsof
 RUN mkdir /myapp
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile

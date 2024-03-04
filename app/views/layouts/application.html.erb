@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,15 +7,14 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%# config/importmap.rbに記載されたものを読み込んでる %>
     <%= javascript_importmap_tags %>
-
   </head>
   <body>
     <%= render 'layouts/header' %>
     <% flash.each do |message_type, message| %>
+      <%# <% binding.remote_pry %> %>
       <div><%= message %></div>
     <% end %>
     <%= yield %>

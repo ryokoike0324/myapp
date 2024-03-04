@@ -13,9 +13,9 @@ class Contractors::ConfirmationsController < Devise::ConfirmationsController
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
-    @confirmed = Contractor.last.confirmed_at
+    @confirmed = resource_class.find_by_confirmation_token(params[:confirmation_token]).confirmed_at
     super do
-      sign_in(resource)
+      sign_in resource
     end
   end
 
@@ -28,7 +28,10 @@ class Contractors::ConfirmationsController < Devise::ConfirmationsController
 
   # The path used after confirmation.
   def after_confirmation_path_for(_resource_name, resource)
+    # root_path
+
     if resource.instance_of?(Contractor) && @confirmed.nil?
+      # binding.remote_pry
       # 新規登録の場合の遷移先
       edit_contractor_profile_path(resource)
     else

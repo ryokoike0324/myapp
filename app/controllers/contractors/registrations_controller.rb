@@ -11,8 +11,7 @@ class Contractors::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   # def create
-  # super
-  #   redirect_to privacy_path
+  #   super
   # end
 
   # GET /resource/edit

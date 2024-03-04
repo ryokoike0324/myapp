@@ -28,7 +28,7 @@ services:
     stdin_open: true
     environment:
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
-  # ik以下い
+  # かなり重いため必要な時以外はコメントアウト
   # selenium_chrome:
   #   image: selenium/standalone-chrome
   #   ports:

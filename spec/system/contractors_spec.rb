@@ -22,7 +22,7 @@ RSpec.describe '受注者' do
         expect do
           fill_in 'メールアドレス', with: contractor.email
           fill_in 'パスワード', with: contractor.password
-          fill_in 'パスワード確認', with: contractor.password
+          fill_in 'パスワード（確認用）', with: contractor.password
           click_link_or_button '受注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
         expect(page).to have_content '本人確認用のメールを送信しました。'
@@ -32,7 +32,7 @@ RSpec.describe '受注者' do
         new_contractor = Contractor.last
         visit after_signup_url
         expect(current_path).to eq edit_contractor_profile_path(new_contractor)
-        expect(page).to have_content 'メールアドレスが確認できました。'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
         # 登録後ログインしていること
         expect(page).to have_content 'ログアウト'
         # プロフィール編集ページに遷移している
@@ -48,11 +48,11 @@ RSpec.describe '受注者' do
         expect do
           fill_in 'メールアドレス', with: 'hogehoge'
           fill_in 'パスワード', with: '*****'
-          fill_in 'パスワード確認', with: nil
+          fill_in 'パスワード（確認用）', with: nil
           click_link_or_button '受注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
         expect(page).to have_content 'メールアドレスは不正な値です'
-        expect(page).to have_content 'パスワード確認とパスワードの入力が一致しません'
+        expect(page).to have_content 'パスワード（確認用）とパスワードの入力が一致しません'
         expect(page).to have_content 'パスワードは6文字以上で入力してください'
         expect(current_path).to eq contractor_registration_path
       end
@@ -166,7 +166,7 @@ RSpec.describe '受注者' do
 
     let!(:contractor){ create(:contractor) }
 
-    context 'メールアドレスとパスワードを更新する場合' do
+    context 'メールアドレスとパスワードを更新する場合', focus: true do
       it '正しい新しいパスワード、現在のパスワードを入力すれば成功すること' do
         login_as contractor
         visit root_path
@@ -176,11 +176,12 @@ RSpec.describe '受注者' do
         expect(page).to have_content 'アカウント編集'
         # ユーザーのアカウント情報が表示されていること
         expect(page).to have_field 'メールアドレス', with: contractor.email
+        # sleep 1
         # メールアドレスを変更すると認証メールが送信されること
         expect do
           fill_in 'メールアドレス', with: 'example@example.com'
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: contractor.password
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
@@ -195,7 +196,7 @@ RSpec.describe '受注者' do
         # ログインしていること
         expect(page).to have_content 'ログアウト'
         # flashが表示されていること
-        expect(page).to have_content 'メールアドレスが確認できました'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
       end
 
       it '不正な情報を入力すると失敗すること' do
@@ -205,7 +206,7 @@ RSpec.describe '受注者' do
         expect do
           fill_in 'メールアドレス', with: 'example@example.com'
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: 'failTestPass'
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
@@ -223,7 +224,7 @@ RSpec.describe '受注者' do
         expect do
           # 登録されてるメールアドレスは入力されているはず
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: contractor.password
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
@@ -253,7 +254,7 @@ RSpec.describe '受注者' do
         # ログインしていること
         expect(page).to have_content 'ログアウト'
         # flashが表示されていること
-        expect(page).to have_content 'メールアドレスが確認できました'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
       end
     end
   end

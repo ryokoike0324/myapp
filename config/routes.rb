@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   devise_scope :contractor do
     # ここのモデル名単数系にするそうですよ
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
+    resource :contractor_profile, only: [:edit, :update, :show],
+                                  controller: 'contractors/profiles',
+                                  path: 'contractors/profiles'
   end
-  resource :contractor_profile, only: [:edit, :update, :show],
-                                controller: 'contractors/profiles',
-                                path: 'contractors/profiles'
   # client(発注者)
   devise_for :clients, controllers: {
     sessions: 'clients/sessions',
