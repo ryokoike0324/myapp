@@ -11,7 +11,7 @@
     <%# config/importmap.rbに記載されたものを読み込んでる %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body class='min-h-screen'>
     <%= render 'layouts/header' %>
     <% flash.each do |message_type, message| %>
       <%# <% binding.remote_pry %> %>

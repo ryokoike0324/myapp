@@ -43,7 +43,9 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create] do
     collection do
       post 'confirm'
+      get 'confirm'
       post 'back'
+      get 'back'
       get 'done'
     end
   end

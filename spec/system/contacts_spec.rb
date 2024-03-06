@@ -26,8 +26,8 @@ RSpec.describe 'お問い合わせ' do
       expect(page).to have_content 'お問い合わせテストのメッセージ'
       # 確認ページに送信ボタンが表示されていること
       expect(page).to have_button '送信'
-      # 確認ページに入力画面に戻るボタンが表示されていること
-      expect(page).to have_button '入力画面に戻る'
+      # 確認ページに内容を修正するボタンが表示されていること
+      expect(page).to have_button '内容を修正する'
       # メールが１件送信されていること
       expect do
         click_link_or_button '送信'
@@ -59,19 +59,49 @@ RSpec.describe 'お問い合わせ' do
     end
   end
 
-  it '確認画面からお問い合わせ画面に戻れること' do
-    visit new_contact_path
-    fill_in 'お名前', with: 'ゲスト'
-    fill_in 'メールアドレス', with: 'guest@gmail.com'
-    fill_in '件名', with: 'お問い合わせテストの件名'
-    fill_in 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
-    click_link_or_button '入力内容確認'
-    click_link_or_button '入力画面に戻る'
-    expect(current_path).to eq back_contacts_path
-    # 入力した値が表示されていること
-    expect(page).to have_field 'お名前', with: 'ゲスト'
-    expect(page).to have_field 'メールアドレス', with: 'guest@gmail.com'
-    expect(page).to have_field '件名', with: 'お問い合わせテストの件名'
-    expect(page).to have_field 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
+  context '内容を修正する場合' do
+    it '修正内容が反映され、お問い合わせに成功すること' do
+      visit new_contact_path
+      fill_in 'お名前', with: 'ゲスト'
+      fill_in 'メールアドレス', with: 'guest@gmail.com'
+      fill_in '件名', with: 'お問い合わせテストの件名'
+      fill_in 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
+      click_link_or_button '入力内容確認'
+      # 確認ページを更新しても正しく内容が反映されている
+      visit current_path
+      expect(current_path).to eq confirm_contacts_path
+      expect(page).to have_content 'ゲスト'
+      expect(page).to have_content 'guest@gmail.com'
+      expect(page).to have_content 'お問い合わせテストの件名'
+      expect(page).to have_content 'お問い合わせテストのメッセージ'
+      click_link_or_button '内容を修正する'
+      expect(current_path).to eq back_contacts_path
+      # 入力フィールドに正しい値が表示されている
+      expect(page).to have_field 'お名前', with: 'ゲスト'
+      expect(page).to have_field 'メールアドレス', with: 'guest@gmail.com'
+      expect(page).to have_field '件名', with: 'お問い合わせテストの件名'
+      expect(page).to have_field 'お問い合わせ内容', with: 'お問い合わせテストのメッセージ'
+      # ページを更新しても正しく内容が反映されている
+      visit current_path
+      expect(page).to have_content 'お問い合わせ'
+      expect(page).to have_field 'お名前', with: 'ゲスト'
+      fill_in 'お名前', with: '修正太郎'
+      fill_in 'メールアドレス', with: 'again-guest@gmail.com'
+      fill_in '件名', with: '修正の件名'
+      fill_in 'お問い合わせ内容', with: '１２３４修正修正修正のメッセージ'
+      click_link_or_button '入力内容確認'
+      # 内容を修正しても正しく値が入力されている
+      expect(page).to have_content '修正太郎'
+      expect(page).to have_content 'again-guest@gmail.com'
+      expect(page).to have_content '修正の件名'
+      expect(page).to have_content '１２３４修正修正修正のメッセージ'
+      # お問い合わせに成功すること
+      expect do
+        click_link_or_button '送信'
+      end.to change { ActionMailer::Base.deliveries.size }.by(1)
+      expect(current_path).to eq done_contacts_path
+      expect(page).to have_content 'お問い合わせありがとうございました。'
+    end
   end
+
 end

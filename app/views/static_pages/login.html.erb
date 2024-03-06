@@ -1,4 +1,11 @@
 <% provide(:title, 'ログイン選択') %>
-
-<p><%= link_to '受注者ログイン', new_contractor_session_path %></p>
-<p><%= link_to '発注者ログイン', new_client_session_path %></p>
+<main class="w-1/2 mx-auto py-52 min-h-full flex justify-between text-center">
+  <%= link_to new_contractor_session_path, class: "w-64 h-64 bg-blue-200 rounded-lg pt-24" do %>
+    <p class='text-2xl font-bold'>受注者ログイン</p>
+    <p class='text-sm mt-5'>クリエーターさんはこちらから</p>
+  <% end %>
+  <%= link_to new_client_session_path, class: "w-64 h-64 bg-red-200 rounded-lg pt-24" do %>
+    <p class='text-2xl font-bold'>発注者ログイン</p>
+    <p class='text-sm mt-5'>事業者さんはこちらから</p>
+  <% end %>
+</main>

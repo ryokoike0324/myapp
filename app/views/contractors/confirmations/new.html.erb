@@ -1,16 +1,20 @@
-<h2><%= t('.resend_confirmation_instructions') %></h2>
+<main class="w-96 mx-auto py-36 min-h-full">
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "contractors/shared/error_messages", resource: resource %>
+  <h2 class="text-3xl pb-10 font-bold"><%= t('.resend_confirmation_instructions') %></h2>
+  <p class="mb-5 text-sm text-gray-600">登録確認メールとは、新規アカウント登録時に確認のため送信されるメールで、初回ログイン時に必要です。</p>
+  <p class="mb-10 text-sm text-gray-600">再送する場合は、アカウント作成時に登録したメールアドレスを入力してください。</p>
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "contractors/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-  </div>
+    <div class="mb-5">
+      <%= f.label :email, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-10' %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit t('.resend_confirmation_instructions') %>
-  </div>
-<% end %>
+    <div class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3">
+      <%= f.submit t('.resend_confirmation_instructions') %>
+    </div>
+  <% end %>
+</main>
 
-<%= render "contractors/shared/links" %>
+<%# <%= render "clients/shared/links" %>

@@ -1,0 +1,12 @@
+ja:
+  contacts:
+    new:
+      title: お問い合わせ
+      submit: 入力内容確認
+    confirm:
+      title: 入力内容確認
+      page_title: お問い合わせ 内容確認
+      submit: 送信する
+      back: 内容を修正する
+      text1: お問い合わせ内容はこちらで宜しいでしょうか？
+      text2: よろしければ「送信する」ボタンを押して下さい。
