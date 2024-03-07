@@ -33,7 +33,7 @@ RSpec.describe 'お問い合わせ' do
         click_link_or_button '送信'
       end.to change { ActionMailer::Base.deliveries.size }.by(1)
       expect(current_path).to eq done_contacts_path
-      expect(page).to have_content 'お問い合わせありがとうございました。'
+      expect(page).to have_content 'お問い合わせフォームの送信を完了致しました。'
     end
   end
 
@@ -59,7 +59,7 @@ RSpec.describe 'お問い合わせ' do
     end
   end
 
-  context '内容を修正する場合' do
+  context '確認ページから内容を修正する場合' do
     it '修正内容が反映され、お問い合わせに成功すること' do
       visit new_contact_path
       fill_in 'お名前', with: 'ゲスト'
@@ -100,7 +100,7 @@ RSpec.describe 'お問い合わせ' do
         click_link_or_button '送信'
       end.to change { ActionMailer::Base.deliveries.size }.by(1)
       expect(current_path).to eq done_contacts_path
-      expect(page).to have_content 'お問い合わせありがとうございました。'
+      expect(page).to have_content 'お問い合わせフォームの送信を完了致しました。'
     end
   end
 

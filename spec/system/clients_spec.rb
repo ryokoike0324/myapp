@@ -18,11 +18,11 @@ RSpec.describe '発注者' do
         visit root_path
         expect(page).to have_http_status :ok
         click_link_or_button '新規登録'
-        click_link_or_button '発注者登録'
+        click_link_or_button '発注者新規登録'
         expect do
           fill_in 'メールアドレス', with: client.email
-          fill_in 'パスワード', with: client.password
-          fill_in 'パスワード確認', with: client.password
+          fill_in 'パスワード （6字以上）', with: client.password
+          fill_in 'パスワード（確認用）', with: client.password
           click_link_or_button '発注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
         expect(page).to have_content '本人確認用のメールを送信しました。'
@@ -30,7 +30,7 @@ RSpec.describe '発注者' do
         mail = ActionMailer::Base.deliveries.last
         url = extract_confirmation_url(mail)
         visit url
-        expect(page).to have_content 'メールアドレスが確認できました。'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
         # 登録後ログインしていること
         expect(page).to have_content 'ログアウト'
         # プロフィール編集ページに遷移している
@@ -45,14 +45,54 @@ RSpec.describe '発注者' do
         visit new_client_registration_path
         expect do
           fill_in 'メールアドレス', with: 'hogehoge'
-          fill_in 'パスワード', with: '*****'
-          fill_in 'パスワード確認', with: nil
+          fill_in 'パスワード （6字以上）', with: '*****'
+          fill_in 'パスワード（確認用）', with: nil
           click_link_or_button '発注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
         expect(page).to have_content 'メールアドレスは不正な値です'
-        expect(page).to have_content 'パスワード確認とパスワードの入力が一致しません'
+        expect(page).to have_content 'パスワード（確認用）とパスワードの入力が一致しません'
         expect(page).to have_content 'パスワードは6文字以上で入力してください'
         expect(current_path).to eq client_registration_path
+      end
+    end
+
+    describe 'アカウント確認メールの再送信' do
+      context '登録したメールアドレスの場合' do
+        it 'メールが再送信され、アカウント登録が成功すること' do
+          visit root_path
+          expect(page).to have_http_status :ok
+          click_link_or_button '新規登録'
+          click_link_or_button '発注者新規登録'
+          fill_in 'メールアドレス', with: client.email
+          fill_in 'パスワード （6字以上）', with: client.password
+          fill_in 'パスワード（確認用）', with: client.password
+          click_link_or_button '発注者アカウント登録'
+          visit new_client_registration_path
+          click_link_or_button 'アカウント確認メールが届きませんでしたか？'
+          fill_in 'メールアドレス', with: client.email
+          expect {
+            click_link_or_button 'アカウント確認メール再送'
+          }.to change { ActionMailer::Base.deliveries.size }.by(1)
+          mail = ActionMailer::Base.deliveries.last
+          url = extract_confirmation_url(mail)
+          visit url
+          expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
+        end
+      end
+
+      context '登録していないメールアドレスの場合' do
+        it 'メールが再送信されないこと' do
+          visit root_path
+          expect(page).to have_http_status :ok
+          click_link_or_button '新規登録'
+          click_link_or_button '発注者新規登録'
+          click_link_or_button 'アカウント確認メールが届きませんでしたか？'
+          fill_in 'メールアドレス', with: client.email
+          expect {
+            click_link_or_button 'アカウント確認メール再送'
+          }.to change { ActionMailer::Base.deliveries.size }.by(0)
+          expect(page).to have_content 'メールアドレスは見つかりませんでした。'
+        end
       end
     end
   end
@@ -70,7 +110,7 @@ RSpec.describe '発注者' do
         click_link_or_button '発注者ログイン'
         expect(page).to have_content 'ログインしました。'
         expect(page).to have_link 'ログアウト'
-        expect(current_path).to eq terms_path
+        expect(current_path).to eq root_path
       end
     end
 
@@ -94,7 +134,7 @@ RSpec.describe '発注者' do
     it '簡単ログインに成功すること' do
       visit root_path
       click_link_or_button '簡単ログイン'
-      click_link_or_button '発注者ゲストログイン'
+      click_link_or_button '事業者さんはこちらから'
       expect(page).to have_content 'ログインしました。'
       expect(page).to have_link 'ログアウト'
       expect(current_path).to eq root_path
@@ -115,7 +155,7 @@ RSpec.describe '発注者' do
     end
   end
 
-  describe 'プロフィール' do
+  describe 'プロフィール編集' do
     let!(:client){ create(:client, :with_profile) }
 
     it 'ログインしている発注者は自身のプロフィールを表示でき、プロフィールを編集できること' do
@@ -170,7 +210,7 @@ RSpec.describe '発注者' do
         expect do
           fill_in 'メールアドレス', with: 'example@example.com'
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: client.password
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(1)
@@ -185,7 +225,7 @@ RSpec.describe '発注者' do
         # ログインしていること
         expect(page).to have_content 'ログアウト'
         # flashが表示されていること
-        expect(page).to have_content 'メールアドレスが確認できました'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
       end
 
       it '不正な情報を入力すると失敗すること' do
@@ -195,7 +235,7 @@ RSpec.describe '発注者' do
         expect do
           fill_in 'メールアドレス', with: 'example@example.com'
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: 'failTestPass'
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
@@ -213,7 +253,7 @@ RSpec.describe '発注者' do
         expect do
           # 登録されてるメールアドレスは入力されているはず
           fill_in '新しいパスワード', with: 'test1234TEST'
-          fill_in 'パスワード確認', with: 'test1234TEST'
+          fill_in 'パスワード（確認用）', with: 'test1234TEST'
           fill_in '現在のパスワード', with: client.password
           click_link_or_button '更新'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
@@ -243,9 +283,59 @@ RSpec.describe '発注者' do
         # ログインしていること
         expect(page).to have_content 'ログアウト'
         # flashが表示されていること
-        expect(page).to have_content 'メールアドレスが確認できました'
+        expect(page).to have_content 'アカウント登録が完了しました。プロフィールを登録して下さい。'
       end
     end
+  end
+
+  describe 'パスワード再設定' do
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+
+    def extract_confirmation_url(mail)
+      body = mail.body.encoded
+      body[/http[^"]+/]
+    end
+
+    let!(:client){ create(:client) }
+
+    context '登録されているメールアドレスを入力した場合' do
+      it 'パスワード再設定に成功すること' do
+        visit new_client_session_path
+        click_link_or_button 'パスワードを忘れた方'
+        fill_in 'メールアドレス', with: client.email
+        expect {
+          click_link_or_button 'パスワード再設定メールを送信'
+        }.to change { ActionMailer::Base.deliveries.size }.by(1)
+        expect(page).to have_content 'パスワードの再設定について数分以内にメールでご連絡いたします。'
+        expect(current_path).to eq new_client_session_path
+        mail = ActionMailer::Base.deliveries.last
+        url = extract_confirmation_url(mail)
+        visit url
+        expect(current_path).to eq edit_client_password_path
+        fill_in '新しいパスワード', with: 'newpassword'
+        fill_in '新しいパスワード（確認用）', with: 'newpassword'
+        click_link_or_button 'パスワードを変更する'
+        expect(current_path).to eq root_path
+        expect(page).to have_content 'パスワードが正しく変更されました。'
+        expect(page).to have_content 'ログアウト'
+      end
+    end
+
+    context '登録されていないメールアドレスを入力した場合' do
+      it 'パスワード再設定に失敗すること' do
+        visit new_client_session_path
+        click_link_or_button 'パスワードを忘れた方'
+        fill_in 'メールアドレス', with: 'failure@example.com'
+        expect {
+          click_link_or_button 'パスワード再設定メールを送信'
+        }.to change { ActionMailer::Base.deliveries.size }.by(0)
+        expect(page).to have_content 'メールアドレスは見つかりませんでした。'
+        expect(current_path).to eq client_password_path
+      end
+    end
+
   end
 
   describe '退会' do

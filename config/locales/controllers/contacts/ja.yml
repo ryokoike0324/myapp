@@ -2,6 +2,3 @@ ja:
   contacts:
     new:
       title: お問い合わせ
-  contact_mailer:
-      contact_mail:
-        subject: 【First Step事務局】お問い合わせ内容の確認

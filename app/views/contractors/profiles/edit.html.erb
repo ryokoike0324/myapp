@@ -1,32 +1,37 @@
+<% provide(:title, t('.title')) %>
 
-<h2><%= t('.title') %></h2>
-<%= form_with(model: @contractor, url: contractor_profile_path) do |f| %>
-  <%= render "contractors/shared/error_messages", resource: @contractor %>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :image %><br />
-    <%= f.file_field :image, accept: 'image/*' %>
-    <%= f.hidden_field :image_cache %>
+<div class="flex justify-center items-center" >
+  <div class="w-1/3">
+  <h2><%= t('.title') %></h2>
+  <%= form_with(model: @contractor, url: contractor_profile_path) do |f| %>
+    <%= render "contractors/shared/error_messages", resource: @contractor %>
     <div class="field">
-      <%= image_tag @contractor.image.url, id: 'preview', size: '100x100', class: 'rounded-circle' %>
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autofocus: true %>
     </div>
+    <div class="field">
+      <%= f.label :image %><br />
+      <%= f.file_field :image, accept: 'image/*' %>
+      <%= f.hidden_field :image_cache %>
+      <div class="field">
+        <%= image_tag @contractor.image.url, id: 'preview', size: '100x100', class: 'rounded-circle' %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :public_relations %><br />
+      <%= f.text_area :public_relations %>
+    </div>
+    <div class="field">
+      <%= f.label :portfolio %><br />
+      <%= f.text_field :portfolio %>
+    </div>
+    <div class="field">
+      <%= f.label :study_period %><br />
+      <%= f.select :study_period, %w[３ヶ月未満 ６ヶ月未満 １年未満 １年以上] %>
+    </div>
+    <div class="actions">
+      <%= f.submit t('.submit') %>
+    </div>
+  <% end %>
   </div>
-  <div class="field">
-    <%= f.label :public_relations %><br />
-    <%= f.text_area :public_relations %>
-  </div>
-  <div class="field">
-    <%= f.label :portfolio %><br />
-    <%= f.text_field :portfolio %>
-  </div>
-  <div class="field">
-    <%= f.label :study_period %><br />
-    <%= f.select :study_period, ['３ヶ月未満','６ヶ月未満','１年未満','１年以上'] %>
-  </div>
-  <div class="actions">
-    <%= f.submit t('.submit') %>
-  </div>
-<% end %>
+</div>

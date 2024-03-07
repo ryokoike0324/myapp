@@ -1,3 +1,13 @@
-<div class="container p-5">
-  <h5 class="text-center">お問い合わせありがとうございました。</h5>
+<% provide(:title, t('.title')) %>
+
+<div class="flex justify-center items-center" >
+  <div class="w-1/3 py-12">
+    <h2 class="text-2xl pb-10 font-bold mb-10"><%= t('.h2') %></h2>
+    <p class="mb-5 text-base text-gray-600"><%= t('.text1') %></p>
+    <p class="mb-5 text-base text-gray-600"><%= t('.text2') %></p>
+    <p class="mb-20 text-base text-gray-600"><%= t('.text3') %></p>
+    <%= link_to root_path, class: 'bg-gray-400 hover:bg-gray-600 text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer' do %>
+      <%= t('.home') %>
+    <% end %>
+  </div>
 </div>

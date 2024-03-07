@@ -11,13 +11,16 @@
     <%# config/importmap.rbに記載されたものを読み込んでる %>
     <%= javascript_importmap_tags %>
   </head>
-  <body class='min-h-screen'>
-    <%= render 'layouts/header' %>
-    <% flash.each do |message_type, message| %>
-      <%# <% binding.remote_pry %> %>
-      <div><%= message %></div>
-    <% end %>
-    <%= yield %>
-    <%= render 'layouts/footer' %>
+  <body>
+    <main class="grid grid-rows-base-layout grid-cols-base-layout min-h-screen">
+
+      <%= render 'layouts/header' %>
+      <% flash.each do |message_type, message| %>
+        <%# <% binding.remote_pry %> %>
+        <div><%= message %></div>
+      <% end %>
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+    </main>
   </body>
 </html>

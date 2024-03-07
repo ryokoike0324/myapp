@@ -1,13 +1,15 @@
-<% provide(:title, 'ゲストユーザー選択') %>
-<main class="w-1/2 mx-auto py-52 min-h-full flex justify-between text-center">
+<% provide(:title, t('.title')) %>
+<div class="flex justify-center items-center" >
+  <div class="w-1/2 py-12 flex justify-between text-center">
   <%= link_to contractors_guest_login_path, data: { turbo_method: :post }, class: "w-64 h-64 bg-blue-200 rounded-lg pt-20" do %>
-    <p class='text-2xl font-bold'>ゲスト受注者</p>
-    <p class='text-2xl font-bold'>ログイン</p>
-    <p class='text-sm mt-5'>クリエーターさんはこちらから</p>
+    <p class='text-2xl font-bold'><%= t('.contractor') %></p>
+    <p class='text-2xl font-bold'><%= t('.login') %></p>
+    <p class='text-sm mt-5'><%= t('.contractor_text') %></p>
   <% end %>
   <%= link_to clients_guest_login_path, data: { turbo_method: :post }, class: "w-64 h-64 bg-red-200 rounded-lg pt-20" do %>
-    <p class='text-2xl font-bold'>ゲスト発注者</p>
-    <p class='text-2xl font-bold'>ログイン</p>
-    <p class='text-sm mt-5'>事業者さんはこちらから</p>
+    <p class='text-2xl font-bold'><%= t('.client') %></p>
+    <p class='text-2xl font-bold'><%= t('.login') %></p>
+    <p class='text-sm mt-5'><%= t('.client_text') %></p>
   <% end %>
-</main>
+  </div>
+</div>
