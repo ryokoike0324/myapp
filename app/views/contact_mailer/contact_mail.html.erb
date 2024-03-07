@@ -1,12 +1,12 @@
-<h2><%= @contact.name %> 様 </h2>
+<h2><%= @contact.name %><%= t('.name_add') %> </h2>
 
-<p>【メールアドレス】：<%= @contact.email %></p>
-<p>【件名】：<%= @contact.subject %></p>
-<p>【お問い合わせ内容】</p>
+<p><%= t('.email') %><%= @contact.email %></p>
+<p><%= t('.contact_subject') %><%= @contact.subject %></p>
+<p><%= t('.message') %></p>
 <p><span style="white-space: pre-wrap;"><%= @contact.message %></span></p>
 
-<p>この度は、お問い合わせありがとうございました。<br>
-回答まで少々お待ちください。</p>
+<p><%= t('.text1') %></p>
+<p><%= t('.text2') %></p>
 
-  <p>今後とも 【First Step】 をよろしくお願いいたします。</p>
+  <p> <%= t('.text3') %> </p>
 

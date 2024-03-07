@@ -1,0 +1,11 @@
+ja:
+  clients:
+    profiles:
+      edit:
+        title: プロフィール編集
+        submit: 登録
+      update:
+        success: プロフィール登録が完了しました
+      show:
+        title: プロフィール
+        edit: プロフィール編集

@@ -1,0 +1,18 @@
+ja:
+  layouts:
+    client_header:
+      account: アカウント
+      profile: プロフィール
+      logout: ログアウト
+    contractor_header:
+      account: アカウント
+      profile: プロフィール
+      logout: ログアウト
+    footer:
+      contact: お問い合わせ
+      privacy: プライバシーポリシー
+      terms: 利用規約
+    guest_header:
+      login: ログイン
+      guest_login: 簡単ログイン
+      signup: 新規登録

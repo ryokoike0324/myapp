@@ -1,4 +1,4 @@
-<header>
+<header class="h-20 flex bg-blue-500 text-white items-center justify-between px-20">
   <% if current_client.nil? && current_contractor.nil? %>
     <%= render 'layouts/guest_header' %>
   <% elsif current_client.is_a?(Client) %>
@@ -6,5 +6,4 @@
   <% elsif current_contractor.is_a?(Contractor) %>
     <%= render 'layouts/contractor_header' %>
   <% end %>
-
 </header>

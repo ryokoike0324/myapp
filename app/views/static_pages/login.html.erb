@@ -1,4 +1,13 @@
-<% provide(:title, 'ログイン選択') %>
-
-<p><%= link_to '受注者ログイン', new_contractor_session_path %></p>
-<p><%= link_to '発注者ログイン', new_client_session_path %></p>
+<% provide(:title, t('.title')) %>
+<div class="flex justify-center items-center" >
+  <div class="w-1/2 py-12 flex justify-between text-center">
+  <%= link_to new_contractor_session_path, class: "w-64 h-64 bg-blue-200 rounded-lg pt-24" do %>
+    <p class='text-2xl font-bold'><%= t('.contractor') %></p>
+    <p class='text-sm mt-5'><%= t('.contractor_text') %></p>
+  <% end %>
+  <%= link_to new_client_session_path, class: "w-64 h-64 bg-red-200 rounded-lg pt-24" do %>
+    <p class='text-2xl font-bold'><%= t('.client') %></p>
+    <p class='text-sm mt-5'><%= t('.client_text') %></p>
+  <% end %>
+  </div>
+</div>

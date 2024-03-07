@@ -1,0 +1,10 @@
+ja:
+  contact_mailer:
+    contact_mail:
+      name_add: 様
+      email: 【メールアドレス】：
+      contact_subject: 【件名】：
+      message: 【お問い合わせ内容】
+      text1: この度は、お問い合わせありがとうございました。
+      text2: 回答まで少々お待ちください。
+      text3: 今後とも 【First Step】 をよろしくお願いいたします。

@@ -1,7 +1,7 @@
 ja:
   activerecord:
     attributes:
-      user:
+      contractor:
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
         confirmed_at: パスワード確認時刻
@@ -9,7 +9,31 @@ ja:
         current_password: 現在のパスワード
         current_sign_in_at: 現在のログイン時刻
         current_sign_in_ip: 現在のログインIPアドレス
-        email: Eメール
+        email: メールアドレス
+        encrypted_password: 暗号化パスワード
+        failed_attempts: 失敗したログイン試行回数
+        last_sign_in_at: 最終ログイン時刻
+        last_sign_in_ip: 最終ログインIPアドレス
+        locked_at: ロック時刻
+        password: パスワード
+        password_confirmation: パスワード（確認用）
+        remember_created_at: ログイン記憶時刻
+        remember_me: ログインを記憶する
+        reset_password_sent_at: パスワードリセット送信時刻
+        reset_password_token: パスワードリセット用トークン
+        sign_in_count: ログイン回数
+        unconfirmed_email: 未確認Eメール
+        unlock_token: ロック解除用トークン
+        updated_at: 更新日
+      client:
+        confirmation_sent_at: パスワード確認送信時刻
+        confirmation_token: パスワード確認用トークン
+        confirmed_at: パスワード確認時刻
+        created_at: 作成日
+        current_password: 現在のパスワード
+        current_sign_in_at: 現在のログイン時刻
+        current_sign_in_ip: 現在のログインIPアドレス
+        email: メールアドレス
         encrypted_password: 暗号化パスワード
         failed_attempts: 失敗したログイン試行回数
         last_sign_in_at: 最終ログイン時刻
@@ -26,13 +50,16 @@ ja:
         unlock_token: ロック解除用トークン
         updated_at: 更新日
     models:
-      contractor: 受注者
-      client: 発注者
+      contractor:受注者
+      client:発注者
   clients:
     confirmations:
       confirmed: アカウント登録が完了しました。プロフィールを登録して下さい。
       new:
+        title: アカウント確認メール再送
         resend_confirmation_instructions: アカウント確認メール再送
+        text1: 登録確認メールとは、新規アカウント登録時に確認のため送信されるメールで、初回ログイン時に必要です。
+        text2: 再送する場合は、アカウント作成時に登録したメールアドレスを入力してください。
       send_instructions: アカウントの有効化について数分以内にメールでご連絡します。
       send_paranoid_instructions: メールアドレスが登録済みの場合、本人確認用のメールが数分以内に送信されます。
     failure:
@@ -47,6 +74,7 @@ ja:
       unconfirmed: メールアドレスの本人確認が必要です。
     mailer:
       confirmation_instructions:
+        from: 【First Step事務局】
         action: メールアドレスの確認
         greeting: "%{recipient}様"
         instruction: 以下のリンクをクリックし、メールアドレスの確認手続を完了させてください。
@@ -78,13 +106,17 @@ ja:
       success: "%{kind} アカウントによる認証に成功しました。"
     passwords:
       edit:
+        title: パスワード再設定
         change_my_password: パスワードを変更する
         change_your_password: パスワードを変更
-        confirm_new_password: 確認用新しいパスワード
+        confirm_new_password: 新しいパスワード（確認用）
         new_password: 新しいパスワード
+        current_password: 現在のパスワード
       new:
-        forgot_your_password: パスワードを忘れましたか？
-        send_me_reset_password_instructions: パスワードの再設定方法を送信する
+        title: パスワード再設定
+        forgot_your_password: パスワードを忘れた方
+        send_me_reset_password_instructions: パスワード再設定メールを送信
+        text: アカウントに登録されているメールアドレスを入力してください。再設定メールを送信します。
       no_token: このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。
       send_instructions: パスワードの再設定について数分以内にメールでご連絡いたします。
       send_paranoid_instructions: メールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。
@@ -96,14 +128,16 @@ ja:
         are_you_sure: アカウント情報が削除されます。本当に退会しますか？
         cancel_my_account: 退会する
         currently_waiting_confirmation_for_email: "%{email} の確認待ち"
-        leave_blank_if_you_don_t_want_to_change_it: 空欄のままなら変更しません
+        leave_blank_if_you_don_t_want_to_change_it: ※空欄のままなら変更されません
         title: "アカウント編集"
-        # title: "%{resource}編集"
+        new_password: 新しいパスワード
+        current_password: 現在のパスワード
         unhappy: 気に入りません
         update: 更新
-        we_need_your_current_password_to_confirm_your_changes: 変更を反映するには現在のパスワードを入力してください
+        we_need_your_current_password_to_confirm_your_changes: ※変更を反映するには現在のパスワードを入力してください
       new:
         sign_up: 発注者アカウント登録
+        password: パスワード
       signed_up: アカウント登録が完了しました。
       signed_up_but_inactive: ログインするためには、アカウントを有効化してください。
       signed_up_but_locked: アカウントがロックされているためログインできません。
@@ -120,10 +154,10 @@ ja:
       guest_sign_in: ゲストユーザーとしてログインしました。
     shared:
       links:
-        back: 戻る
-        didn_t_receive_confirmation_instructions: アカウント確認のメールを受け取っていませんか？
+        back: ホームへ戻る
+        didn_t_receive_confirmation_instructions: アカウント確認メールが届きませんでしたか？
         didn_t_receive_unlock_instructions: アカウントのロック解除方法のメールを受け取っていませんか？
-        forgot_your_password: パスワードを忘れましたか？
+        forgot_your_password: パスワードを忘れた方
         sign_in: ログイン
         sign_in_with_provider: "%{provider}でログイン"
         sign_up: アカウント登録
@@ -138,7 +172,10 @@ ja:
     confirmations:
       confirmed: アカウント登録が完了しました。プロフィールを登録して下さい。
       new:
+        title: アカウント確認メール再送
         resend_confirmation_instructions: アカウント確認メール再送
+        text1: 登録確認メールとは、新規アカウント登録時に確認のため送信されるメールで、初回ログイン時に必要です。
+        text2: 再送する場合は、アカウント作成時に登録したメールアドレスを入力してください。
       send_instructions: アカウントの有効化について数分以内にメールでご連絡します。
       send_paranoid_instructions: メールアドレスが登録済みの場合、本人確認用のメールが数分以内に送信されます。
     failure:
@@ -153,6 +190,7 @@ ja:
       unconfirmed: メールアドレスの本人確認が必要です。
     mailer:
       confirmation_instructions:
+        from: 【First Step事務局】
         action: メールアドレスの確認
         greeting: "%{recipient}様"
         instruction: 以下のリンクをクリックし、メールアドレスの確認手続を完了させてください。
@@ -184,13 +222,16 @@ ja:
       success: "%{kind} アカウントによる認証に成功しました。"
     passwords:
       edit:
+        title: パスワード再設定
         change_my_password: パスワードを変更する
         change_your_password: パスワードを変更
-        confirm_new_password: 確認用新しいパスワード
+        confirm_new_password: 新しいパスワード（確認用）
         new_password: 新しいパスワード
       new:
-        forgot_your_password: パスワード再設定
-        send_me_reset_password_instructions: 送信する
+        title: パスワード再設定
+        forgot_your_password: パスワードを忘れた方
+        send_me_reset_password_instructions: パスワード再設定メールを送信
+        text: アカウントに登録されているメールアドレスを入力してください。再設定メールを送信します。
       no_token: このページにはアクセスできません。パスワード再設定メールのリンクからアクセスされた場合には、URL をご確認ください。
       send_instructions: パスワードの再設定について数分以内にメールでご連絡いたします。
       send_paranoid_instructions: メールアドレスが登録済みの場合、パスワード再設定用のメールが数分以内に送信されます。
@@ -204,14 +245,15 @@ ja:
         new_password: 新しいパスワード
         current_password: 現在のパスワード
         currently_waiting_confirmation_for_email: "%{email} の確認待ち"
-        leave_blank_if_you_don_t_want_to_change_it: 空欄のままなら変更しません
+        leave_blank_if_you_don_t_want_to_change_it: ※空欄のままなら変更されません
         title: "アカウント編集"
         # title: "%{resource}編集"
         unhappy: 気に入りません
         update: 更新
-        we_need_your_current_password_to_confirm_your_changes: 変更を反映するには現在のパスワードを入力してください
+        we_need_your_current_password_to_confirm_your_changes: ※変更を反映するには現在のパスワードを入力してください
       new:
         sign_up: 受注者アカウント登録
+        password: パスワード
       signed_up: アカウント登録が完了しました。
       signed_up_but_inactive: ログインするためには、アカウントを有効化してください。
       signed_up_but_locked: アカウントがロックされているためログインできません。
@@ -228,10 +270,10 @@ ja:
       guest_sign_in: ゲストユーザーとしてログインしました。
     shared:
       links:
-        back: 戻る
-        didn_t_receive_confirmation_instructions: アカウント確認のメールを受け取っていませんか？
+        back: ホームへ戻る
+        didn_t_receive_confirmation_instructions: アカウント確認メールが届きませんでしたか？
         didn_t_receive_unlock_instructions: アカウントのロック解除方法のメールを受け取っていませんか？
-        forgot_your_password: パスワードを忘れましたか？
+        forgot_your_password: パスワードを忘れた方
         sign_in: ログイン
         sign_in_with_provider: "%{provider}でログイン"
         sign_up: アカウント登録

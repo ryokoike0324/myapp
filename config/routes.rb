@@ -1,15 +1,20 @@
 Rails.application.routes.draw do
 
-  resource :contractor_profile, only: [:edit, :update, :show],
-                                controller: 'contractors/profiles',
-                                path: 'contractors/profiles'
-
+  # contractor(受注者)
   devise_for :contractors, controllers: {
     sessions: 'contractors/sessions',
     passwords: 'contractors/passwords',
     registrations: 'contractors/registrations',
     confirmations: 'contractors/confirmations'
   }
+  devise_scope :contractor do
+    # ここのモデル名単数系にするそうですよ
+    post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
+    resource :contractor_profile, only: [:edit, :update, :show],
+                                  controller: 'contractors/profiles',
+                                  path: 'contractors/profiles'
+  end
+  # client(発注者)
   devise_for :clients, controllers: {
     sessions: 'clients/sessions',
     passwords: 'clients/passwords',
@@ -17,14 +22,13 @@ Rails.application.routes.draw do
     confirmations: 'clients/confirmations'
   }
 
-  devise_scope :contractor do
-    # ここのモデル名単数系にするそうですよ
-    post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
-  end
   devise_scope :client do
     post 'clients/guest_login', to: 'clients/sessions#guest_login'
     # put 'clients/confirmation', to: 'clients/confirmations#show'
   end
+  resource :client_profile, only: [:edit, :update, :show],
+                            controller: 'clients/profiles',
+                            path: 'clients/profiles'
 
 
 
@@ -39,7 +43,9 @@ Rails.application.routes.draw do
   resources :contacts, only: [:new, :create] do
     collection do
       post 'confirm'
+      get 'confirm'
       post 'back'
+      get 'back'
       get 'done'
     end
   end

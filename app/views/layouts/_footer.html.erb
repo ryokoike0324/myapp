@@ -1,7 +1,8 @@
-<footer>
-  <ul>
-    <li><%= link_to 'お問い合わせ', new_contact_path %></li>
-    <li><%= link_to 'プライバシーポリシー', privacy_path %></li>
-    <li><%= link_to '利用規約', terms_path %></li>
+<footer class='h-20 flex justify-between bg-blue-500 text-white items-center px-20'>
+  <p>&copy;2024-All Rights Reserved.</p>
+  <ul class='flex gap-6 font-bold'>
+    <li><%= link_to t('.contact'), new_contact_path %></li>
+    <li><%= link_to t('.privacy'), privacy_path %></li>
+    <li><%= link_to t('.terms'), terms_path %></li>
   </ul>
 </footer>

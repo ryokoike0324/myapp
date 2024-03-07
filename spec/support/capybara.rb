@@ -10,7 +10,7 @@ Capybara.register_driver :remote_chrome do |app|
   chrome_options.add_argument('--disable-gpu')
   chrome_options.add_argument('--window-size=1680,1050')
 
-  capabilities = {
+  {
     browserName: 'chrome',
     'goog:chromeOptions' => chrome_options.as_json
   }
@@ -18,7 +18,7 @@ Capybara.register_driver :remote_chrome do |app|
   Capybara::Selenium::Driver.new(
     app,
     browser: :remote,
-    url: url,
+    url:,
     options: chrome_options
   )
 end
@@ -28,7 +28,7 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
-  config.before(:each, type: :system, js: true) do
+  config.before(:each, :js, type: :system) do
     driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
     Capybara.server_port = 4444

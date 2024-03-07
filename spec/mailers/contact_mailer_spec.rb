@@ -16,7 +16,7 @@ RSpec.describe ContactMailer do
       expect(mail.to).to eq [ENV.fetch('MAILER_ADDRESS'), contact.email]
     end
 
-    it '送信元(from)が【First Step事務局】であること' do
+    it '送信元(from)が正しいメールアドレスであること' do
       expect(mail.from).to eq ['first-step@example.com']
     end
 

@@ -1,29 +1,39 @@
-<h2><%= t('.sign_up') %></h2>
+<% provide(:title, t('.title')) %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "contractors/shared/error_messages", resource: resource %>
+<div class="flex justify-center items-center" >
+  <div class="w-1/3">
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <h2 class="text-3xl pb-10 font-bold"><%= t('.sign_up') %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "contractors/shared/error_messages", resource: resource %>
+
+    <div class="mb-8">
+      <%= f.label :email, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+
+    <div class="mb-8">
+      <%= f.label :password, class: "block text-gray-700 text-base font-bold mb-2" do %>
+        <%= t('.password')%>
+        <% if @minimum_password_length %>
+          <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
+        <% end %>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+
+    <div class="mb-8">
+      <%= f.label :password_confirmation, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+    </div>
+
+    <div class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3">
+      <%= f.submit t('.sign_up') %>
+    </div>
+  <% end %>
+
+  <%= render "contractors/shared/links" %>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em><%= t('devise.shared.minimum_password_length', count: @minimum_password_length) %></em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit t('.sign_up') %>
-  </div>
-<% end %>
-
-<%= render "contractors/shared/links" %>

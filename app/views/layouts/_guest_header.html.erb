@@ -1,6 +1,10 @@
-  <h1><%= link_to 'First Step', root_path %></h1>
-  <ul>
-    <li><%= link_to 'ログイン', login_path %></li>
-    <li><%= link_to '簡単ログイン', guest_login_path %></li>
-    <li><%= link_to '新規登録', signup_path %></li>
-  </ul>
+<h1 class="text-4xl font-bold tracking-wider"><%= link_to 'First Step', root_path %></h1>
+<ul class="flex gap-6 items-center font-bold">
+  <li><%= link_to t('.login'), login_path %></li>
+  <li><%= link_to t('.guest_login'), guest_login_path %></li>
+  <%= link_to signup_path, class: 'block bg-orange-400 px-5 py-2 rounded-full hover:bg-orange-300 transition' do %>
+    <li>
+      <%= t('.signup') %>
+    </li>
+  <% end %>
+</ul>

@@ -1,3 +1,19 @@
-<% provide(:title, '初めての方へ') %>
-<h1>StaticPages#about</h1>
-<p>Find me in app/views/static_pages/about.html.erb</p>
+<% provide(:title, t('.title')) %>
+<div class="bg-center bg-cover text-center pt-40 pb-5 text-white" style="background-image: url('<%= asset_path('hero.jpg') %>');">
+  <p class="mb-5 text-6xl drop-shadow-lg"><%= t('.hero_word1') %></p>
+  <p class="text-4xl mb-20 drop-shadow-lg"><%= t('.hero_word2') %></p>
+  <%= link_to signup_path, class: 'inline-block bg-orange-400 px-5 py-2 rounded-full hover:bg-orange-300 transition w-30' do %>
+    <button>
+      <%= t('.sign_up_button') %>
+    </button>
+  <% end %>
+</div>
+<div class="mx-30">
+  <div>
+    <p><%= t('.text1') %></p>
+    <div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>

@@ -5,9 +5,6 @@ ja:
     attributes:
       contractor:
         name: お名前
-        email: メールアドレス
-        password: パスワード
-        password_confirmation: パスワード確認
         image: プロフィール画像
         public_relations: 自己PR
         portfolio: ポートフォリオURL
