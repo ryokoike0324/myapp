@@ -39,15 +39,12 @@
     </div>
 
 
-    <div class='flex justify-between mb-10'>
-
     <div>
       <%= f.submit t('.update'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-12 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
     </div>
   <% end %>
 
   <%= button_to t('.cancel_my_account'), registration_path(resource_name), data: { confirm: t('.are_you_sure'), turbo_confirm: t('.are_you_sure') }, method: :delete, class: 'bg-red-500 hover:bg-red-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
-    </div>
 
   <%= link_to t('devise.shared.links.back'), :back, class: 'text-gray-500 text-center font-bold cursor-pointer' %>
   </div>

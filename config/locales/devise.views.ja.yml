@@ -109,7 +109,7 @@ ja:
         title: パスワード再設定
         change_my_password: パスワードを変更する
         change_your_password: パスワードを変更
-        confirm_new_password: 新しいパスワード（確認用）
+        confirm_new_password: パスワード（確認用）
         new_password: 新しいパスワード
         current_password: 現在のパスワード
       new:
@@ -225,7 +225,7 @@ ja:
         title: パスワード再設定
         change_my_password: パスワードを変更する
         change_your_password: パスワードを変更
-        confirm_new_password: 新しいパスワード（確認用）
+        confirm_new_password: パスワード（確認用）
         new_password: 新しいパスワード
       new:
         title: パスワード再設定

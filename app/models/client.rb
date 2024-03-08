@@ -1,6 +1,5 @@
 class Client < ApplicationRecord
   enum industry: { 飲食: 0, 製造: 1, IT: 2, 建築: 3, サービス: 4, その他: 5 }
-  has_one_attached :image
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
