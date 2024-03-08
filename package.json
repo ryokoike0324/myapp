@@ -1,0 +1,8 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/ryokoike0324/myapp.git",
+  "author": "ryokoike0324 <ryokoike0324@gmail.com>",
+  "license": "MIT"
+}

@@ -10,6 +10,10 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'rails-i18n'
 
+gem 'tailwindcss-rails', '~> 2.3'
+
+gem 'cssbundling-rails', '~> 1.4'
+
 gem 'pry-remote'
 
 gem 'faker'
@@ -90,6 +94,4 @@ group :test do
   gem 'shoulda-matchers'
 end
 
-gem 'tailwindcss-rails', '~> 2.3'
 
-gem 'cssbundling-rails', '~> 1.4'
