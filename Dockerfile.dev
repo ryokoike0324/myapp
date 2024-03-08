@@ -4,7 +4,9 @@ RUN apt-get update -qq && \
                        vim \
                        imagemagick \
                        iputils-ping net-tools \
-                       lsof
+                       lsof \
+                       nodejs yarn
+
 RUN mkdir /myapp
 WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
