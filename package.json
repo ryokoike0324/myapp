@@ -4,5 +4,8 @@
   "main": "index.js",
   "repository": "https://github.com/ryokoike0324/myapp.git",
   "author": "ryokoike0324 <ryokoike0324@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build:css": "tailwindcss build ./app/javascript/stylesheets/application.css -o ./app/assets/builds/application.css"
+  }
 }
