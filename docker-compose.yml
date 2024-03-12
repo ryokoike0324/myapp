@@ -29,11 +29,11 @@ services:
     environment:
       SELENIUM_DRIVER_URL: http://selenium_chrome:4444/wd/hub
   # かなり重いため必要な時以外はコメントアウト
-  selenium_chrome:
-    image: selenium/standalone-chrome
-    ports:
-      - "4444:4444"
-    # ref: https://github.com/seleniumhq-community/docker-seleniarm#--shm-size2g
-    shm_size: 2gb
+  # selenium_chrome:
+  #   image: selenium/standalone-chrome
+  #   ports:
+  #     - "4444:4444"
+  #   # ref: https://github.com/seleniumhq-community/docker-seleniarm#--shm-size2g
+  #   shm_size: 2gb
 volumes:
   mysql_data:
