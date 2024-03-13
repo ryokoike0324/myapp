@@ -78,13 +78,13 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = 'rails-render-planetscale-myapp.onrender.com'
+  host = 'my-rails-app-20cfaca02579.herokuapp.com'
   config.action_mailer.default_url_options = { host: }
   ActionMailer::Base.smtp_settings = {
-    port: 587,
-    address: 'smtp.mailgun.org',
-    user_name: ENV.fetch('MAILGUN_SMTP_LOGIN', nil),
-    password: ENV.fetch('MAILGUN_SMTP_PASSWORD', nil),
+    port: ENV.fetch('MAILGUN_SMTP_PORT'),
+    address: ENV.fetch('MAILGUN_SMTP_SERVER'),
+    user_name: ENV.fetch('MAILGUN_SMTP_LOGIN'),
+    password: ENV.fetch('MAILGUN_SMTP_PASSWORD'),
     domain: host,
     authentication: :plain,
   }
