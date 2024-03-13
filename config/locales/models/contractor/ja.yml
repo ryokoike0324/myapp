@@ -1,7 +1,7 @@
 ja:
   activerecord:
     models:
-      contractor:受注者
+      contractor: 受注者
     attributes:
       contractor:
         name: お名前

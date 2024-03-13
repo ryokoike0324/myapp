@@ -36,7 +36,7 @@ RSpec.describe '発注者' do
         # プロフィール編集ページに遷移している
         expect(page).to have_content 'プロフィール'
         current_user = Client.find_by(email: client.email)
-        expect(current_path).to eq edit_client_profile_path(current_user)
+        expect(current_path).to eq new_request_path(current_user)
       end
     end
 

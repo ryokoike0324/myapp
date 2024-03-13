@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    models:
+      request: 依頼内容
+    attributes:
+      request:
+        title: お仕事タイトル
+        description: 依頼内容
+        delivery_date: 納期
+        deadline: 募集締切

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # contractor(受注者)
   devise_for :contractors, controllers: {
     sessions: 'contractors/sessions',
@@ -29,6 +28,7 @@ Rails.application.routes.draw do
   resource :client_profile, only: [:edit, :update, :show],
                             controller: 'clients/profiles',
                             path: 'clients/profiles'
+  resources :requests
 
 
 
