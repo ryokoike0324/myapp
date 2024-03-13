@@ -148,7 +148,7 @@ RSpec.describe '受注者' do
     let!(:contractor){ create(:contractor) }
 
     it 'ログインしているユーザーはログアウトできること' do
-      login_as contractor
+      log_in_as contractor
       click_link_or_button 'ログアウト'
       expect(page).to have_content 'ログアウトしました。'
       expect(page).to have_link 'ログイン'
@@ -157,24 +157,25 @@ RSpec.describe '受注者' do
     end
   end
 
-  describe 'プロフィール' do
+  describe 'プロフィール編集' do
     let!(:contractor){ create(:contractor, :with_profile) }
 
     it 'ログインしている受注者は自身のプロフィールを表示でき、プロフィールを編集できること' do
-      login_as contractor
+      log_in_as contractor
       click_link_or_button 'プロフィール'
       # リンクからプロフィールページに遷移すること
-      expect(current_path).to eq contractor_profile_path(contractor)
+      expect(current_path).to eq edit_contractor_profile_path(contractor)
       # すでに登録している情報が表示されていること
-      expect(page).to have_content contractor.name
+      expect(page).to have_field 'お名前', with: contractor.name
       image_url = contractor.image
       expect(page).to have_css("img[src='#{image_url}']")
-      expect(page).to have_content contractor.public_relations
-      expect(page).to have_content contractor.portfolio
-      expect(page).to have_content contractor.study_period
-      click_link_or_button 'プロフィール編集'
-      # プロフィール編集ページに遷移できること
-      expect(current_path).to eq edit_contractor_profile_path(contractor)
+      expect(page).to have_field '自己PR', with: contractor.public_relations
+      expect(page).to have_field 'ポートフォリオURL', with: contractor.portfolio
+      expect(page).to have_select('勉強期間', selected: contractor.study_period)
+      click_link_or_button '登録'
+      # Topページに遷移できること
+      expect(current_path).to eq root_path
+      click_link_or_button 'プロフィール'
       fill_in 'お名前', with: 'テスト太郎'
       update_image_url = Rails.root.join('spec/files/after_test_avator.png').to_s
       attach_file 'プロフィール画像',  update_image_url
@@ -184,13 +185,14 @@ RSpec.describe '受注者' do
       click_link_or_button '登録'
       # 編集後プロフィールページに正しく遷移すること
       expect(page).to have_content 'プロフィール登録が完了しました'
-      expect(current_path).to eq contractor_profile_path(contractor)
+      expect(current_path).to eq root_path
       # プロフィールページに編集内容が反映されていること
-      expect(page).to have_content 'テスト太郎'
+      click_link_or_button 'プロフィール'
+      expect(page).to have_field 'お名前', with: 'テスト太郎'
       expect(page).to have_css("img[src*='#{File.basename(update_image_url)}']")
-      expect(page).to have_content '初めましてテスト太郎です。よろしくお願いします。'
-      expect(page).to have_content 'https://bartell-toy.test/lanita'
-      expect(page).to have_content '１年以上'
+      expect(page).to have_field '自己PR', with: '初めましてテスト太郎です。よろしくお願いします。'
+      expect(page).to have_field 'ポートフォリオURL', with: 'https://bartell-toy.test/lanita'
+      expect(page).to have_select('勉強期間', selected: '１年以上')
     end
   end
 
@@ -208,7 +210,7 @@ RSpec.describe '受注者' do
 
     context 'メールアドレスとパスワードを更新する場合' do
       it '正しい新しいパスワード、現在のパスワードを入力すれば成功すること' do
-        login_as contractor
+        log_in_as contractor
         visit root_path
         click_link_or_button 'アカウント'
         # アカウント編集ページに遷移すること
@@ -247,7 +249,7 @@ RSpec.describe '受注者' do
       end
 
       it '不正な情報を入力すると失敗すること' do
-        login_as contractor
+        log_in_as contractor
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -265,7 +267,7 @@ RSpec.describe '受注者' do
 
     context 'パスワードのみ更新する場合' do
       it '正しい新しいパスワードを入力すれば成功し、確認メールは送信されないこと' do
-        login_as contractor
+        log_in_as contractor
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -282,7 +284,7 @@ RSpec.describe '受注者' do
 
     context 'メールアドレスのみ更新する場合' do
       it '正しいメールアドレスを入力すれば成功し、確認メールが送信されること' do
-        login_as contractor
+        log_in_as contractor
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -362,7 +364,7 @@ RSpec.describe '受注者' do
     let!(:contractor){ create(:contractor) }
 
     it 'ログインしているユーザーは退会できること', :js  do
-      login_as contractor
+      log_in_as contractor
       visit root_path
       click_link_or_button 'アカウント'
       click_link_or_button '退会する'

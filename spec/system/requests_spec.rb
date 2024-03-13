@@ -7,7 +7,7 @@ RSpec.describe "依頼内容" do
 
     context '正しい値を入力した場合' do
       it 'お仕事登録が成功すること' do
-        login_as client
+        sign_in client
         visit new_request_path
         p request
         expect do

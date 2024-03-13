@@ -1,37 +1,35 @@
 <% provide(:title, t('.title')) %>
 
 <div class="flex justify-center items-center" >
-  <div class="w-1/3">
-  <h2><%= t('.title') %></h2>
+  <div class="w-1/3 py-12">
+  <h2 class="text-3xl mb-16 font-bold"><%= t('.title') %></h2>
   <%= form_with(model: @contractor, url: contractor_profile_path) do |f| %>
     <%= render "contractors/shared/error_messages", resource: @contractor %>
-    <div class="field">
-      <%= f.label :name %><br />
-      <%= f.text_field :name, autofocus: true %>
+
+    <div class="mb-10">
+      <%= f.label :name, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.text_field :name, autofocus: true, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
     </div>
-    <div class="field">
-      <%= f.label :image %><br />
+    <div class="mb-10">
+      <%= f.label :image, class: "block text-gray-700 text-base font-bold mb-2" %>
+
+      <%= image_tag @contractor.image.url, id: 'preview', class: 'w-32 h-32 rounded-full mb-5' %>
       <%= f.file_field :image, accept: 'image/*' %>
       <%= f.hidden_field :image_cache %>
-      <div class="field">
-        <%= image_tag @contractor.image.url, id: 'preview', size: '100x100', class: 'rounded-circle' %>
-      </div>
     </div>
-    <div class="field">
-      <%= f.label :public_relations %><br />
-      <%= f.text_area :public_relations %>
+    <div class="mb-10">
+      <%= f.label :public_relations, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.text_area :public_relations, class: 'shadow appearance-none border rounded w-full py-2 px-3 min-h-40 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
     </div>
-    <div class="field">
-      <%= f.label :portfolio %><br />
-      <%= f.text_field :portfolio %>
+    <div class="mb-10">
+      <%= f.label :portfolio, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.url_field :portfolio, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
     </div>
-    <div class="field">
-      <%= f.label :study_period %><br />
-      <%= f.select :study_period, %w[３ヶ月未満 ６ヶ月未満 １年未満 １年以上] %>
+    <div class="mb-10">
+      <%= f.label :study_period, class: "block text-gray-700 text-base font-bold mb-2" %>
+      <%= f.select :study_period, %w[３ヶ月未満 ６ヶ月未満 １年未満 １年以上],{},{ class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }  %>
     </div>
-    <div class="actions">
-      <%= f.submit t('.submit') %>
-    </div>
+    <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>
   <% end %>
   </div>
 </div>

@@ -12,7 +12,7 @@ class Clients::ProfilesController < ApplicationController
     @client = current_client
     if @client.update(profile_params)
       flash[:success] = t('.success')
-      redirect_to client_profile_path(current_client)
+      redirect_to root_path
     else
       render :edit, status: :unprocessable_entity
     end

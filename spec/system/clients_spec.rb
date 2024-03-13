@@ -146,7 +146,7 @@ RSpec.describe '発注者' do
     let!(:client){ create(:client) }
 
     it 'ログインしているユーザーはログアウトできること' do
-      login_as client
+      log_in_as client
       click_link_or_button 'ログアウト'
       expect(page).to have_content 'ログアウトしました。'
       expect(page).to have_link 'ログイン'
@@ -159,28 +159,26 @@ RSpec.describe '発注者' do
     let!(:client){ create(:client, :with_profile) }
 
     it 'ログインしている発注者は自身のプロフィールを表示でき、プロフィールを編集できること' do
-      login_as client
+      log_in_as client
       click_link_or_button 'プロフィール'
       # リンクからプロフィールページに遷移すること
-      expect(current_path).to eq client_profile_path(client)
-      # すでに登録している情報が表示されていること
-      expect(page).to have_content client.name
-      expect(page).to have_content client.industry
-      expect(page).to have_content client.our_business
-      click_link_or_button 'プロフィール編集'
-      # プロフィール編集ページに遷移できること
       expect(current_path).to eq edit_client_profile_path(client)
+      # すでに登録している情報が表示されていること
+      expect(page).to have_field '店名・会社名', with: client.name
+      expect(page).to have_field '事業内容', with: client.our_business
+      expect(page).to have_select('業種', selected: client.industry)
       fill_in '店名・会社名', with: '東京ストリート塩ラーメン'
       fill_in '事業内容', with: '池袋で、美味しい塩ラーメンの店をやっております。'
       select '飲食', from: '業種'
       click_link_or_button '登録'
       # 編集後プロフィールページに正しく遷移すること
       expect(page).to have_content 'プロフィール登録が完了しました'
-      expect(current_path).to eq client_profile_path(client)
+      expect(current_path).to eq root_path
       # プロフィールページに編集内容が反映されていること
-      expect(page).to have_content '東京ストリート塩ラーメン'
-      expect(page).to have_content '池袋で、美味しい塩ラーメンの店をやっております。'
-      expect(page).to have_content '飲食'
+      click_link_or_button 'プロフィール'
+      expect(page).to have_field '店名・会社名', with: '東京ストリート塩ラーメン'
+      expect(page).to have_field '事業内容', with: '池袋で、美味しい塩ラーメンの店をやっております。'
+      expect(page).to have_select('業種', selected: '飲食')
     end
   end
 
@@ -198,7 +196,7 @@ RSpec.describe '発注者' do
 
     context 'メールアドレスとパスワードを更新する場合' do
       it '正しい新しいパスワード、現在のパスワードを入力すれば成功すること' do
-        login_as client
+        log_in_as client
         visit root_path
         click_link_or_button 'アカウント'
         # アカウント編集ページに遷移すること
@@ -237,7 +235,7 @@ RSpec.describe '発注者' do
       end
 
       it '不正な情報を入力すると失敗すること' do
-        login_as client
+        log_in_as client
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -255,7 +253,7 @@ RSpec.describe '発注者' do
 
     context 'パスワードのみ更新する場合' do
       it '正しい新しいパスワードを入力すれば成功し、確認メールは送信されないこと' do
-        login_as client
+        log_in_as client
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -272,7 +270,7 @@ RSpec.describe '発注者' do
 
     context 'メールアドレスのみ更新する場合' do
       it '正しいメールアドレスを入力すれば成功し、確認メールが送信されること' do
-        login_as client
+        log_in_as client
         visit root_path
         click_link_or_button 'アカウント'
         expect do
@@ -366,7 +364,7 @@ RSpec.describe '発注者' do
     let!(:client){ create(:client) }
 
     it 'ログインしているユーザーは退会できること', :js  do
-      login_as client
+      log_in_as client
       visit root_path
       click_link_or_button 'アカウント'
       click_link_or_button '退会する'

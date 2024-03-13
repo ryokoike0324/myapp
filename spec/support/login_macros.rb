@@ -1,5 +1,5 @@
 module LoginMacros
-  def login_as(user)
+  def log_in_as(user)
     user_type = user.instance_of?(Client) ? 'client' : 'contractor'
     user_type_ja = user.instance_of?(Client) ? '発注者' : '受注者'
     visit send(:"new_#{user_type}_session_path")

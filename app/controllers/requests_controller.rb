@@ -1,5 +1,6 @@
 class RequestsController < ApplicationController
   before_action :authenticate_client!
+  before_action :redirect_if_request_exists, only: [:new]
 
   def new
     @request = Request.new
@@ -24,7 +25,11 @@ class RequestsController < ApplicationController
 
   private
 
-    def request_params
-      params.require(:request).permit(:title, :description, :delivery_date, :deadline)
-    end
+  def request_params
+    params.require(:request).permit(:title, :description, :delivery_date, :deadline)
+  end
+
+  def redirect_if_request_exists
+    redirect_to edit_request_path(current_client.request) if current_client.request.present?
+  end
 end
