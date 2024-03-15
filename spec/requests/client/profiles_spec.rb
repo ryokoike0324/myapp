@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Client::ProfilesController' do
-  describe 'matching_login_contractorフィルタ' do
+  describe 'matching_login_clientフィルタ' do
     let!(:client) { create(:client) }
     let!(:other_client) { create(:client) }
 
