@@ -210,7 +210,7 @@ ja:
   # deviseのflash変更は以下へ
   devise:
     confirmations:
-      confirmed: アカウント登録が完了しました。プロフィールを登録して下さい。
+      confirmed: アカウント登録が完了しました。
       new:
         resend_confirmation_instructions: アカウント確認メール再送
       send_instructions: アカウントの有効化について数分以内にメールでご連絡します。

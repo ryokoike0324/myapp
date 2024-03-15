@@ -30,7 +30,7 @@ class Clients::ConfirmationsController < Devise::ConfirmationsController
   def after_confirmation_path_for(_resource_name, resource)
     if resource.instance_of?(Client) && @confirmed.nil?
       # 新規登録の場合の遷移先
-      new_request_path(resource)
+      new_client_request_path(resource)
     else
       # アカウント情報更新の場合の遷移先
       root_path

@@ -1,6 +1,7 @@
 class Contractors::ProfilesController < ApplicationController
   before_action :authenticate_contractor!
-  before_action :set_contractor, only: %i[edit update]
+  before_action :matching_login_contractor, only: %i[edit update]
+  # application_controllerに記載
 
   def show
   end
@@ -9,8 +10,8 @@ class Contractors::ProfilesController < ApplicationController
   end
 
   def update
-    @contractor = current_contractor
-    if @contractor.update(profile_params)
+
+    if current_contractor.update(profile_params)
       flash[:success] = t('.success')
       redirect_to root_path
     else
@@ -19,10 +20,6 @@ class Contractors::ProfilesController < ApplicationController
   end
 
   private
-
-  def set_contractor
-    @contractor = Contractor.find(current_contractor.id)
-  end
 
   def profile_params
     params.require(:contractor).permit(:name,

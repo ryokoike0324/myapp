@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   # protected
 
   # def after_sign_in_path_for(resource)
@@ -11,4 +11,23 @@ class ApplicationController < ActionController::Base
   #     root_path
   #   end
   # end
+
+  private
+
+  # beforeフィルター
+  # アクセスしようとしているユーザーとログインしているユーザーは同じか（自分以外の人のページにアクセスしようとしていないか）
+  def matching_login_client
+    @client = Client.find(params[:client_id])
+    redirect_to(root_url, status: :see_other) unless @client && @client == current_client
+  end
+
+  def matching_login_contractor
+    @contractor = Contractor.find(params[:contractor_id])
+    redirect_to(root_url, status: :see_other) unless @contractor && @contractor == current_contractor
+  end
+
+  # URLに直接IDを入力して使われていないIDのページを閲覧しようとした場合
+  def record_not_found
+    redirect_to root_url, alert: t('application.not_found')
+  end
 end

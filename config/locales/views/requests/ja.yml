@@ -1,5 +1,9 @@
 ja:
-  requests:
-    new:
-      title: お仕事登録
-      submit: 登録
+  clients:
+    requests:
+      new:
+        title: お仕事登録
+      edit:
+        title: お仕事登録情報編集
+      form:
+        submit: 登録
