@@ -5,8 +5,13 @@ class Clients::RequestsController < ApplicationController
   before_action :redirect_if_request_exists, only: %i[new create]
   before_action :redirect_if_no_request, only: %i[edit update]
 
+  def index
+    @request = Reques.all
+  end
+
   def show
   end
+
   def new
     @request = Request.new
   end

@@ -28,7 +28,7 @@ FactoryBot.define do
     email                 { Faker::Internet.unique.email }
     password              { Faker::Internet.password(min_length: 6) }
     password_confirmation { password }
-    confirmed_at { Time.zone.now }
+    confirmed_at { Faker::Time.between(from: 10.days.ago, to: Time.zone.now) }
 
     trait :with_profile do
       name { Faker::Company.name }

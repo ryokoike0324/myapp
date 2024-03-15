@@ -8,6 +8,7 @@ gem 'rails', '~> 7.1.3'
 gem 'carrierwave'
 gem 'devise'
 gem 'devise-i18n'
+gem 'kaminari'
 gem 'rails-i18n'
 
 gem 'tailwindcss-rails', '~> 2.3'
