@@ -1,6 +1,7 @@
 class Clients::ProfilesController < ApplicationController
   before_action :authenticate_client!
-  before_action :set_client, only: %i[edit update]
+  before_action :matching_login_client, only: %i[edit update]
+  # application_controllerに記載
 
   def show
   end
@@ -9,8 +10,7 @@ class Clients::ProfilesController < ApplicationController
   end
 
   def update
-    @client = current_client
-    if @client.update(profile_params)
+    if current_client.update(profile_params)
       flash[:success] = t('.success')
       redirect_to root_path
     else
@@ -19,10 +19,6 @@ class Clients::ProfilesController < ApplicationController
   end
 
   private
-
-  def set_client
-    @client = Client.find(current_client.id)
-  end
 
   def profile_params
     params.require(:client).permit(:name,

@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   devise_scope :contractor do
     # ここのモデル名単数系にするそうですよ
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
-    resource :contractor_profile, only: [:edit, :update, :show],
-                                  controller: 'contractors/profiles',
-                                  path: 'contractors/profiles'
   end
+
+  resources :contractors do
+    resource :profile, only: %i[show edit update], controller: 'contractors/profiles'
+  end
+
   # client(発注者)
   devise_for :clients, controllers: {
     sessions: 'clients/sessions',
@@ -25,10 +27,12 @@ Rails.application.routes.draw do
     post 'clients/guest_login', to: 'clients/sessions#guest_login'
     # put 'clients/confirmation', to: 'clients/confirmations#show'
   end
-  resource :client_profile, only: [:edit, :update, :show],
-                            controller: 'clients/profiles',
-                            path: 'clients/profiles'
-  resources :requests
+  # クライアントに紐づくプロファイルやリクエストのカスタムルート
+  resources :clients do
+    resource :profile, only: %i[show edit update], controller: 'clients/profiles'
+    resource :request, only: %i[index show new edit create update], controller: 'clients/requests'
+  end
+  # get 'clients/request/new', to: 'clients/requests#new'
 
 
 

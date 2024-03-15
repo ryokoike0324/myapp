@@ -3,6 +3,7 @@ ja:
     client_header:
       account: アカウント
       profile: プロフィール
+      request: お仕事登録
       logout: ログアウト
     contractor_header:
       account: アカウント

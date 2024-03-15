@@ -1,10 +1,5 @@
-<% provide(:title, t('.title')) %>
 
-<div class="flex justify-center items-center" >
-  <div class="w-1/3 py-12">
-  <h2 class="text-3xl pb-10 font-bold"><%= t('.title') %></h2>
-
-  <%= form_with model: @request ,data:{ turbo: false } do |f| %>
+  <%= form_with model: @request, url: client_request_path(current_client), data:{ turbo: false } do |f| %>
     <div class="mb-8">
       <%= f.label :title, class: "block text-gray-700 text-base font-bold mb-2" %>
       <%= f.text_field :title, autofocus: true, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
@@ -27,5 +22,4 @@
 
     <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>
   <% end %>
-  </div>
-</div>
+

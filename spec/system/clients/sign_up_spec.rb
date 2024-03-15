@@ -36,9 +36,10 @@ RSpec.describe '発注者' do
         expect(page).to have_content 'アカウント登録が完了しました。'
         # 登録後ログインしていること
         expect(page).to have_content 'ログアウト'
-        current_user = Client.find_by(email: client.email)
+        current_client = Client.find_by(email: client.email)
         # お仕事登録ページに遷移している
-        expect(current_path).to eq new_request_path(current_user)
+        expect(current_path).to eq new_client_request_path(current_client)
+        expect(page).to have_content 'お仕事登録'
         expect do
           fill_in 'お仕事タイトル', with: request.title
           fill_in '依頼内容', with: request.description
@@ -47,7 +48,7 @@ RSpec.describe '発注者' do
           click_link_or_button('登録')
         end.to change(Request, :count).by(1)
         # プロフィール編集ページに遷移している
-        expect(current_path).to eq edit_client_profile_path
+        expect(current_path).to eq edit_client_profile_path(current_client)
         fill_in '店名・会社名', with: '東京ストリート塩ラーメン'
         fill_in '事業内容', with: '池袋で、美味しい塩ラーメンの店をやっております。'
         select '飲食', from: '業種'
@@ -86,9 +87,9 @@ RSpec.describe '発注者' do
           visit new_client_registration_path
           click_link_or_button 'アカウント確認メールが届きませんでしたか？'
           fill_in 'メールアドレス', with: client.email
-          expect {
+          expect do
             click_link_or_button 'アカウント確認メール再送'
-          }.to change { ActionMailer::Base.deliveries.size }.by(1)
+          end.to change { ActionMailer::Base.deliveries.size }.by(1)
           mail = ActionMailer::Base.deliveries.last
           url = extract_confirmation_url(mail)
           visit url
@@ -104,9 +105,9 @@ RSpec.describe '発注者' do
           click_link_or_button '発注者新規登録'
           click_link_or_button 'アカウント確認メールが届きませんでしたか？'
           fill_in 'メールアドレス', with: client.email
-          expect {
+          expect do
             click_link_or_button 'アカウント確認メール再送'
-          }.to change { ActionMailer::Base.deliveries.size }.by(0)
+          end.to change { ActionMailer::Base.deliveries.size }.by(0)
           expect(page).to have_content 'メールアドレスは見つかりませんでした。'
         end
       end
