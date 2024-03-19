@@ -28,11 +28,11 @@ Rails.application.routes.draw do
     # put 'clients/confirmation', to: 'clients/confirmations#show'
   end
   # クライアントに紐づくプロファイルやリクエストのカスタムルート
+  get 'clients/requests', to: 'clients/requests#index'
   resources :clients do
     resource :profile, only: %i[show edit update], controller: 'clients/profiles'
-    resource :request, only: %i[index show new edit create update], controller: 'clients/requests'
+    resource :request, only: %i[show new edit create update], controller: 'clients/requests'
   end
-  # get 'clients/request/new', to: 'clients/requests#new'
 
 
 

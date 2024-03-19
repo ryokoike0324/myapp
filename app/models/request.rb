@@ -25,6 +25,11 @@
 class Request < ApplicationRecord
   belongs_to :client
 
+  scope :latest, -> { order(created_at: :desc) }
+  scope :old, -> { order(created_at: :asc) }
+  scope :until_deadline, -> { order(deadline: :asc) }
+  scope :until_delivery_date, -> { order(delivery_date: :asc) }
+
   validates :title, presence: true
   validates :description, presence: true
   validates :deadline, presence: true

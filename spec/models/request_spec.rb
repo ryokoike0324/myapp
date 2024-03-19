@@ -25,7 +25,7 @@
 require 'rails_helper'
 
 RSpec.describe Request do
-  describe 'バリデーション' do
+  describe 'validates' do
     let(:request){ build(:request) }
 
     it 'title,description,deadline,delivery_dateが存在すれば登録できる' do
@@ -54,6 +54,36 @@ RSpec.describe Request do
       request.title = nil
       request.valid?
       expect(request.errors[:title]).to include('を入力してください')
+    end
+  end
+
+  describe 'scope' do
+    let!(:first_request){ create(:request, created_at: 1.day.ago, deadline: 2.days.from_now, delivery_date: 5.days.from_now) }
+    let!(:second_request){ create(:request, created_at: 2.days.ago, deadline: 3.days.from_now, delivery_date: 4.days.from_now) }
+    let!(:third_request){ create(:request, created_at: 3.days.ago, deadline: 1.day.from_now, delivery_date: 6.days.from_now) }
+
+    describe 'latest' do
+      it 'created_atが新しい日時順のコレクションが返されること' do
+        expect(described_class.latest).to eq([first_request, second_request, third_request])
+      end
+    end
+
+    describe 'old' do
+      it 'created_atが古い日時順のコレクションが返されること' do
+        expect(described_class.old).to eq([third_request, second_request, first_request])
+      end
+    end
+
+    describe 'deadline' do
+      it '締切日(deadline)が近い順のコレクションが返されること' do
+        expect(described_class.until_deadline).to eq([third_request, first_request, second_request])
+      end
+    end
+
+    describe 'delivery_date' do
+      it '納期(delivery_date)が近い順のコレクションが返されること' do
+        expect(described_class.until_delivery_date).to eq([second_request, first_request, third_request])
+      end
     end
   end
 end

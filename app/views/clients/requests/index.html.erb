@@ -1,0 +1,39 @@
+<% provide(:title, t('.title')) %>
+
+<div class="flex justify-center items-center" >
+  <div class="w-1/2 py-12">
+    <h2 class="text-3xl pb-10 font-bold"><%= t('.title') %></h2>
+    <%= form_with url: clients_requests_path, method: :get, local: true do %>
+      <div class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <%= label_tag :sort, t('.sort') %>
+        <%= select_tag :sort, options_for_select([
+          [t('.latest'), 'latest'],
+          [t('.old'), 'old'],
+          [t('.until_deadline'), 'until_deadline'],
+          [t('.until_delivery_date'), 'until_delivery_date']
+        ], selected: params[:sort]),class:"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", onchange: 'this.form.submit();' %>
+      </div>
+    <% end %>
+
+    <div class="mb-12 shadow-md rounded-md">
+      <% @requests.each do |request| %>
+          <div class="flex border-solid border-2 border-slate-100 p-10 hover:bg-sky-200 gap-5"">
+            <div class="bg-blue-400 rounded-lg inline-block h-20 w-20 text-white pt-4 pl-2">
+              <%= t('.recruitment') %><br>
+              <%= deadline_days_left(request.deadline) %>
+            </div>
+            <div>
+              <%= link_to client_request_path(request) do %>
+                <p class="font-bold text-lg tracking-wide text-blue-600 mb-2"><%= request.title %></p>
+              <% end %>
+              <p class="mb-2"><%= t('.delivery_date') %><%= request.delivery_date.strftime("%Y年 %m月 %d日") %></p>
+              <p><%= request.client.name %></p>
+            </div>
+          </div>
+      <% end %>
+    </div>
+    <div class="flex justify-center">
+      <%= paginate(@requests) %>
+    </div>
+  </div>
+</div>
