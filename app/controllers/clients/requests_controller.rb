@@ -6,7 +6,19 @@ class Clients::RequestsController < ApplicationController
   before_action :redirect_if_no_request, only: %i[edit update]
 
   def index
-    @request = Reques.all
+    @requests = case params[:sort]
+                when 'latest'
+                  Request.latest
+                when 'old'
+                  Request.old
+                when 'until_deadline'
+                  Request.until_deadline
+                when 'until_delivery_date'
+                  Request.until_delivery_date
+                else
+                  Request.all
+                end
+    @requests = @requests.page(params[:page]).per(10)
   end
 
   def show
@@ -57,5 +69,4 @@ class Clients::RequestsController < ApplicationController
   def redirect_if_no_request
     redirect_to new_client_request_path(current_client) if current_client.request.nil?
   end
-
 end
