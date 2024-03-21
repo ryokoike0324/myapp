@@ -1,4 +1,37 @@
-<div>
-  <h1 class="font-bold text-4xl">Requests#show</h1>
-  <p>Find me in app/views/requests/show.html.erb</p>
+<% provide(:title, @request.title) %>
+
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-4xl p-5 bg-white rounded-lg shadow-xl">
+    <div class="mb-4">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2"><%= @request.title %></h1>
+      <p class="text-sm text-gray-600">依頼者：<%= @request.client.name %></p>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">募集締切</h2>
+      <p class="text-gray-600"><%= @request.deadline.strftime('%Y年%m月%d日') %></p>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">希望納期</h2>
+      <p class="text-gray-600"><%= @request.delivery_date.strftime('%Y年%m月%d日') %></p>
+    </div>
+    
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">依頼詳細</h2>
+      <p class="text-gray-600 whitespace-pre-wrap"><%= @request.description %></p>
+    </div>
+
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">業種</h2>
+      <p class="text-gray-600"><%= @request.client.industry %></p>
+    </div>
+
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-700">事業内容</h2>
+      <p class="text-gray-600 whitespace-pre-wrap"><%= @request.client.our_business %></p>
+    </div>
+    
+    <%= link_to '戻る', clients_requests_path, class: "mt-4 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
 </div>

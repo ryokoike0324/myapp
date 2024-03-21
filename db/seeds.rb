@@ -31,7 +31,7 @@ Contractor.create!(
     title: Faker::Job.title,
     deadline: Faker::Date.between(from: '2024-04-01', to: '2024-04-30'),
     delivery_date: Faker::Date.between(from: '2024-05-01', to: '2024-05-31'),
-    description: Faker::Lorem.sentence(word_count: 25)
+    description: Faker::Lorem.sentence(word_count: 100)
   )
 end
 

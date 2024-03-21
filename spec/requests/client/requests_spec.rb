@@ -9,7 +9,7 @@ RSpec.describe 'Client::RequestsController' do
       it 'client/:id/request/newテンプレートにアクセスできること' do
         sign_in client
         get new_client_request_path(client)
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:notice)
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Client::RequestsController' do
         client = request.client
         sign_in client
         get edit_client_request_path(client)
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:notice)
       end
     end
 

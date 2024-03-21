@@ -7,7 +7,7 @@ class Contractors::SessionsController < Devise::SessionsController
   def guest_login
     user = Contractor.guest
     sign_in user
-    redirect_to root_path, notice: t('contractors.sessions.guest_sign_in')
+    redirect_to clients_requests_path, notice: t('contractors.sessions.guest_sign_in')
   end
 
   # GET /resource/sign_in

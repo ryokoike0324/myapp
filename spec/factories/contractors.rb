@@ -3,7 +3,6 @@
 # Table name: contractors
 #
 #  id                     :bigint           not null, primary key
-#  applied                :boolean          default(FALSE), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime

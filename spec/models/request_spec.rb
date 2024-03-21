@@ -10,17 +10,14 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  client_id     :bigint           not null
-#  contractor_id :bigint
 #
 # Indexes
 #
-#  index_requests_on_client_id      (client_id)
-#  index_requests_on_contractor_id  (contractor_id)
+#  index_requests_on_client_id  (client_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (client_id => clients.id)
-#  fk_rails_...  (contractor_id => contractors.id)
 #
 require 'rails_helper'
 

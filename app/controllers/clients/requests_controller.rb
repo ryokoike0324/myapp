@@ -1,5 +1,5 @@
 class Clients::RequestsController < ApplicationController
-  before_action :authenticate_client!
+  before_action :authenticate_client!, except: %i[index show]
   before_action :matching_login_client, only: %i[edit update]
   # application_controllerに記載
   before_action :redirect_if_request_exists, only: %i[new create]
@@ -22,6 +22,7 @@ class Clients::RequestsController < ApplicationController
   end
 
   def show
+    @request = Request.find(params[:client_id])
   end
 
   def new
@@ -45,7 +46,7 @@ class Clients::RequestsController < ApplicationController
 
   def update
     if current_client.update(request_params)
-      # flash[:success] = t('success')
+      # flash[:notice] = t('success')
       redirect_to rooot
     else
       render 'edit', status: :unprocessable_entity

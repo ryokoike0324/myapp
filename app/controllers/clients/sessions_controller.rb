@@ -6,8 +6,9 @@ class Clients::SessionsController < Devise::SessionsController
   # POST /clients/guest_login
   def guest_login
     user = Client.guest
+    # binding.pry_remote
     sign_in user
-    redirect_to root_path, notice: t('clients.sessions.guest_sign_in')
+    redirect_to clients_requests_path, notice: t('clients.sessions.guest_sign_in')
   end
 
   # GET /resource/sign_in

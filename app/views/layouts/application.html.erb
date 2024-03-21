@@ -15,10 +15,7 @@
     <main class="grid grid-rows-base-layout grid-cols-base-layout min-h-screen">
 
       <%= render 'layouts/header' %>
-      <% flash.each do |message_type, message| %>
-        <%# <% binding.remote_pry %> %>
-        <div><%= message %></div>
-      <% end %>
+      <%= render 'layouts/flash_messages' %>
       <%= yield %>
       <%= render 'layouts/footer' %>
     </main>

@@ -32,11 +32,22 @@ class Client < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
 
   def self.guest
-    find_or_create_by!(email: 'guest-client@example.com') do |client|
+    guest_client = find_or_create_by!(email: 'guest-client@example.com') do |client|
       client.password = SecureRandom.urlsafe_base64
       client.name = 'ゲスト発注者'
-      client.confirmed_at = Time.zone.now  # Confirmable を使用している場合は必要
-      # 例えば name を入力必須としているならば， client.name = 'ゲスト' なども必要
+      # Confirmable を使用している場合は必要
+      client.confirmed_at = Time.zone.now
+      client.our_business = 'ゲスト発注者の事業内容欄です。お好きに編集して下さい。'
     end
+    # 既存の関連 Request が存在しない場合にのみ新たに作成
+    unless guest_client.request
+      guest_client.create_request(
+        title: 'ゲスト発注者のお仕事投稿タイトル',
+        description: 'ゲスト発注者のお仕事情報詳細欄です。お好きに編集して下さい。',
+        deadline: 1.week.from_now,
+        delivery_date: 2.weeks.from_now
+      )
+    end
+    guest_client
   end
 end

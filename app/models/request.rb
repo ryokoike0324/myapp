@@ -10,19 +10,18 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  client_id     :bigint           not null
-#  contractor_id :bigint
 #
 # Indexes
 #
-#  index_requests_on_client_id      (client_id)
-#  index_requests_on_contractor_id  (contractor_id)
+#  index_requests_on_client_id  (client_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (client_id => clients.id)
-#  fk_rails_...  (contractor_id => contractors.id)
 #
 class Request < ApplicationRecord
+  has_many :request_applications, dependent: :destroy
+  has_many :contractors, through: :request_applications
   belongs_to :client
 
   scope :latest, -> { order(created_at: :desc) }
