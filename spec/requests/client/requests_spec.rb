@@ -9,7 +9,7 @@ RSpec.describe 'Client::RequestsController' do
       it 'client/:id/request/newテンプレートにアクセスできること' do
         sign_in client
         get new_client_request_path(client)
-        expect(response).to have_http_status(:notice)
+        expect(response).to have_http_status(:ok)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe 'Client::RequestsController' do
     end
   end
 
-  describe 'editアクションに対するredirect_if_have_no_requestフィルタ' do
+  describe 'redirect_if_have_no_requestフィルタ' do
 
     context 'requestを登録しているclientユーザーの場合' do
       let!(:request){ create(:request) }
@@ -34,7 +34,7 @@ RSpec.describe 'Client::RequestsController' do
         client = request.client
         sign_in client
         get edit_client_request_path(client)
-        expect(response).to have_http_status(:notice)
+        expect(response).to have_http_status(:ok)
       end
     end
 
