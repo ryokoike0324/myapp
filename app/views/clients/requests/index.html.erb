@@ -17,7 +17,7 @@
 
     <div class="mb-12 shadow-md rounded-md">
       <% @requests.each do |request| %>
-          <div class="flex border-solid border-2 border-slate-100 p-10 hover:bg-sky-200 gap-5"">
+          <div class="flex border-solid border-2 border-slate-100 p-10 hover:bg-sky-200 gap-5">
             <div class="bg-blue-400 rounded-lg inline-block h-20 w-20 text-white pt-4 pl-2">
               <%= t('.recruitment') %><br>
               <%= deadline_days_left(request.deadline) %>
@@ -29,6 +29,7 @@
               <p class="mb-2"><%= t('.delivery_date') %><%= request.delivery_date.strftime("%Y年 %m月 %d日") %></p>
               <p><%= request.client.name %></p>
             </div>
+            <%= render 'shared/application_button', request: request %>
           </div>
       <% end %>
     </div>

@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+  # バリデーションエラー
+    errors:
+      models:
+        request_application:
+          attributes:
+            contractor_id:
+              taken: "既にこのお仕事に申し込んでいます"

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     confirmations: 'contractors/confirmations'
   }
   devise_scope :contractor do
-    # ここのモデル名単数系にするそうですよ
+    # ここのモデル名単数系にする
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
   end
 
@@ -32,6 +32,14 @@ Rails.application.routes.draw do
   resources :clients do
     resource :profile, only: %i[show edit update], controller: 'clients/profiles'
     resource :request, only: %i[show new edit create update], controller: 'clients/requests'
+  end
+
+  # config/routes.rb
+  resources :requests do
+    member do
+      post 'apply', to: 'request_application#apply'
+      delete 'cancel_application', to: 'request_application#cancel_application'
+    end
   end
 
 
