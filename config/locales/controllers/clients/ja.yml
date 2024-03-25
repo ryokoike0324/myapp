@@ -9,3 +9,8 @@ ja:
       show:
         title: プロフィール
         edit: プロフィール編集
+    requests:
+      create:
+        notice: お仕事登録が完了しました。
+      update:
+        notice: お仕事情報編集が完了しました。

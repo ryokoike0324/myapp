@@ -36,19 +36,21 @@ class Clients::RequestsController < ApplicationController
   def create
     @request = current_client.build_request(request_params)
     if @request.save
+      flash.now[:notice] = t('.notice')
       redirect_to edit_client_profile_path(current_client)
     else
-      flash.now[:alert] = @request.errors.full_messages.join(', ')
       @request = Request.new
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if current_client.update(request_params)
-      # flash[:notice] = t('success')
-      redirect_to rooot
+    @request = current_client.request
+    if @request.update(request_params)
+      flash[:notice] = t('.notice')
+      redirect_to root_path
     else
+      # binding.pry_remote
       render 'edit', status: :unprocessable_entity
     end
   end

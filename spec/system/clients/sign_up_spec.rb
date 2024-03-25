@@ -66,8 +66,8 @@ RSpec.describe '発注者' do
           fill_in 'パスワード（確認用）', with: nil
           click_link_or_button '発注者アカウント登録'
         end.to change { ActionMailer::Base.deliveries.size }.by(0)
-        expect(page).to have_content 'メールアドレスは不正な値です'
-        expect(page).to have_content 'パスワード（確認用）とパスワードの入力が一致しません'
+        expect(page).to have_content 'メールアドレスの形式が間違っています'
+        expect(page).to have_content '入力されたパスワードと一致しません。'
         expect(page).to have_content 'パスワードは6文字以上で入力してください'
         expect(current_path).to eq client_registration_path
       end

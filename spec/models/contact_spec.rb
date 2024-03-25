@@ -23,25 +23,25 @@ RSpec.describe Contact do
     it 'nameがないと登録できない' do
       contact.name = nil
       contact.valid?
-      expect(contact.errors[:name]).to include('を入力してください')
+      expect(contact.errors[:name]).to include('お名前を入力してください')
     end
 
     it 'emailがないと登録できない' do
       contact.email = nil
       contact.valid?
-      expect(contact.errors[:email]).to include('を入力してください')
+      expect(contact.errors[:email]).to include('メールアドレスを入力してください')
     end
 
     it 'subjectがないと登録できない' do
       contact.subject = nil
       contact.valid?
-      expect(contact.errors[:subject]).to include('を入力してください')
+      expect(contact.errors[:subject]).to include('件名を入力してください')
     end
 
     it 'messageがないと登録できない' do
       contact.message = nil
       contact.valid?
-      expect(contact.errors[:message]).to include('を入力してください')
+      expect(contact.errors[:message]).to include('お問い合わせ内容を入力してください')
     end
   end
 

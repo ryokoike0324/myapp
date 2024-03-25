@@ -52,6 +52,25 @@ RSpec.describe Request do
       request.valid?
       expect(request.errors[:title]).to include('を入力してください')
     end
+
+    it 'deadline(募集締切)が明日以降の日付であること' do
+      request.deadline = Time.zone.today
+      expect(request).not_to be_valid
+      expect(request.errors[:deadline]).to include('は明日以降の日付をご入力ください。')
+    end
+
+    it 'delivery_date(希望納期)がdeadline(募集締切)より後の日付であること' do
+      request.deadline = 1.week.from_now
+      request.delivery_date = 1.week.from_now - 1.day
+      expect(request).not_to be_valid
+      expect(request.errors[:delivery_date]).to include('は募集締切日より後の日付をご入力ください。')
+    end
+
+    it 'deadline(募集締切)とdelivery_date(希望納期)が両方有効な場合に有効であること' do
+      request.deadline = 1.week.from_now
+      request.delivery_date = 2.weeks.from_now
+      expect(request).to be_valid
+    end
   end
 
   describe 'scope' do

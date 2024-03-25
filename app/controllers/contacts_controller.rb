@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
     session[:contact_params] = contact_params if params[:contact].present?
     @contact = Contact.new(session[:contact_params])
     if @contact.invalid?
-      flash.now[:alert] = @contact.errors.full_messages.join(', ')
+      # flash.now[:alert] = @contact.errors.full_messages.join(', ')
       render :new, status: :unprocessable_entity
     else
       render :confirm
@@ -35,7 +35,7 @@ class ContactsController < ApplicationController
       ContactMailer.contact_mail(@contact).deliver_now
       redirect_to done_contacts_path
     else
-      flash.now[:alert] = @contact.errors.full_messages.join(', ')
+      # flash.now[:alert] = @contact.errors.full_messages.join(', ')
       @contact = Contact.new
       render :new, status: :unprocessable_entity
     end

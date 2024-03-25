@@ -9,3 +9,4 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 
 # application.jsにもimport
 pin_all_from 'app/javascript/custom', under: 'custom'
+

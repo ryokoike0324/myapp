@@ -1,22 +1,11 @@
-<% provide(:title, t('.title')) %>
+<% provide(:title, 'パスワード再設定') %>
 
 <div class="flex justify-center items-center" >
   <div class="w-1/3">
-  <%= render "contractors/shared/error_messages", resource: resource %>
 
-  <h2 class="text-3xl mb-16 font-bold"><%= t('.forgot_your_password') %></h2>
-  <p class="mb-16 text-base text-gray-600"><%= t('.text') %></p>
-  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-
-    <div class="mb-5">
-      <%= f.label :email, class: "block text-gray-700 text-base font-bold mb-2" %>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-10'  %>
-    </div>
-
-    <div class="bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3">
-      <%= f.submit t('.send_me_reset_password_instructions') %>
-    </div>
-  <% end %>
+  <h2 class="text-3xl mb-16 font-bold">パスワードを忘れた方（受注者）</h2>
+  <p class="mb-16 text-base text-gray-600">アカウントに登録されているメールアドレスを入力してください。再設定メールを送信します。</p>
+  <%= render 'shared/password_reset_form_field', resource: resource, resource_name: resource_name %>
 
   <%= render "contractors/shared/links" %>
   </div>

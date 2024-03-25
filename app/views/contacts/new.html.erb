@@ -7,22 +7,26 @@
   <%= form_with model: @contact, url: confirm_contacts_path ,data:{ turbo: false } do |f| %>
     <div class="mb-8">
       <%= f.label :name, class: "block text-gray-700 text-base font-bold mb-2" %>
-      <%= f.text_field :name, autofocus: true, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+      <%= f.text_field :name, autofocus: true, class: form_field_error_class(@contact, :name) %>
+      <%= display_field_error_messages(@contact, :name) %>
     </div>
 
     <div class="mb-8">
       <%= f.label :email, class: "block text-gray-700 text-base font-bold mb-2"  %>
-      <%= f.email_field :email, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'  %>
+      <%= f.email_field :email, class: form_field_error_class(@contact, :email)  %>
+      <%= display_field_error_messages(@contact, :email) %>
     </div>
 
     <div class="mb-8">
       <%= f.label :subject, class: "block text-gray-700 text-base font-bold mb-2"  %>
-      <%= f.text_field :subject, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+      <%= f.text_field :subject, class: form_field_error_class(@contact, :subject) %>
+      <%= display_field_error_messages(@contact, :subject) %>
     </div>
 
     <div class="mb-8">
       <%= f.label :message, class: "block text-gray-700 text-base font-bold mb-2"  %>
-      <%= f.text_area :message, class: 'shadow appearance-none border rounded w-full min-h-40 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'  %>
+      <%= f.text_area :message, class: "#{form_field_error_class(@contact, :message)} min-h-40" %>
+      <%= display_field_error_messages(@contact, :message) %>
     </div>
 
     <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>

@@ -39,19 +39,19 @@ RSpec.describe Contractor do
     it 'emailがなければ登録できない' do
       contractor = build(:contractor, email: nil)
       contractor.valid?
-      expect(contractor.errors[:email]).to include('を入力してください')
+      expect(contractor.errors[:email]).to include('メールアドレスを入力して下さい')
     end
 
     it 'passwordがなければ登録できない' do
       contractor = build(:contractor, password: nil)
       contractor.valid?
-      expect(contractor.errors[:password]).to include('を入力してください')
+      expect(contractor.errors[:password]).to include('パスワードを入力して下さい。')
     end
 
     it 'passwordとpassword_confirmationが一致しなければ登録できない' do
       contractor = build(:contractor, password: 'hogehoge', password_confirmation: 'foobar')
       contractor.valid?
-      expect(contractor.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+      expect(contractor.errors[:password_confirmation]).to include('入力されたパスワードと一致しません。')
     end
   end
 

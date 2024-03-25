@@ -3,3 +3,4 @@ import "@hotwired/turbo-rails";
 import "controllers";
 // importmap.rbにも
 import "custom/contractor_profiles";
+import "custom/modal";

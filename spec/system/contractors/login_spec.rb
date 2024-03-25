@@ -15,7 +15,7 @@ RSpec.describe '受注者' do
         click_link_or_button '受注者ログイン'
         expect(page).to have_content 'ログインしました。'
         expect(page).to have_link 'ログアウト'
-        expect(current_path).to eq root_path
+        expect(current_path).to eq clients_requests_path
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe '受注者' do
         click_link_or_button '事業者さんはこちらから'
         expect(page).to have_content 'ログインしました。'
         expect(page).to have_link 'ログアウト'
-        expect(current_path).to eq root_path
+        expect(current_path).to eq clients_requests_path
       end
     end
   end

@@ -52,6 +52,38 @@ ja:
     models:
       contractor:受注者
       client:発注者
+    errors:
+      models:
+        client:
+          attributes:
+            email:
+              blank: "メールアドレスを入力して下さい"
+              taken: "入力されたメールアドレスはすでに登録されています。"
+              invalid: "メールアドレスの形式が間違っています"
+              not_found: メールアドレスは見つかりませんでした。
+
+            current_password:
+              blank: "現在のパスワードを入力して下さい。"
+            password:
+              blank: "パスワードを入力して下さい。"
+              too_short: "パスワードは%{count}文字以上で入力してください。"
+            password_confirmation:
+              confirmation: "入力されたパスワードと一致しません。"
+        contractor:
+          attributes:
+            email:
+              blank: "メールアドレスを入力して下さい"
+              taken: "入力されたメールアドレスはすでに登録されています。"
+              invalid: "メールアドレスの形式が間違っています"
+              not_found: メールアドレスは見つかりませんでした。
+            current_password:
+              blank: "現在のパスワードを入力して下さい。"
+            password:
+              blank: "パスワードを入力して下さい。"
+              too_short: "パスワードは%{count}文字以上で入力してください。"
+            password_confirmation:
+              confirmation: "入力されたパスワードと一致しません。"
+        
   clients:
     confirmations:
       confirmed: アカウント登録が完了しました。プロフィールを登録して下さい。

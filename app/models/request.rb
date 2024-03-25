@@ -33,4 +33,24 @@ class Request < ApplicationRecord
   validates :description, presence: true
   validates :deadline, presence: true
   validates :delivery_date, presence: true
+  # カスタムバリデーション
+  validate :deadline_must_be_in_the_future
+  validate :delivery_date_must_be_after_deadline
+
+  private
+
+  # deadlineが明日以降の日付であることを確認するバリデーション
+  def deadline_must_be_in_the_future
+    # 早期リターンー不要な処理をスキップすることでコードの効率性を向上させたり、不正な状態でのエラーを防ぐ
+    return if deadline.blank?
+
+    errors.add(:deadline, 'は明日以降の日付をご入力ください。') if deadline <= Date.tomorrow
+  end
+
+  # delivery_dateがdeadlineより後の日付であることを確認するバリデーション
+  def delivery_date_must_be_after_deadline
+    return if delivery_date.blank? || deadline.blank?
+
+    errors.add(:delivery_date, 'は募集締切日より後の日付をご入力ください。') if delivery_date <= deadline
+  end
 end

@@ -8,3 +8,17 @@ ja:
         email: "メールアドレス"
         subject: "件名"
         message: 'お問い合わせ内容'
+    # バリデーションエラー
+    errors:
+      models:
+        contact:
+          attributes:
+            name:
+              blank: "お名前を入力してください"
+            email:
+              blank: "メールアドレスを入力してください"
+              invalid: "メールアドレスの形式が間違っています"
+            subject:
+              blank: "件名を入力してください"
+            message:
+              blank: "お問い合わせ内容を入力してください"

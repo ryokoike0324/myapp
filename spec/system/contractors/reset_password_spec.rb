@@ -31,7 +31,7 @@ RSpec.describe '受注者' do
         fill_in '新しいパスワード', with: 'newpassword'
         fill_in 'パスワード（確認用）', with: 'newpassword'
         click_link_or_button '登録する'
-        expect(current_path).to eq root_path
+        expect(current_path).to eq clients_requests_path
         expect(page).to have_content 'パスワードが正しく変更されました。'
         click_link_or_button 'ログアウト'
         # 変更されたパスワードで正しくログインできる

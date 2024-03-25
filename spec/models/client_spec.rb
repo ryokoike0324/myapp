@@ -36,19 +36,19 @@ RSpec.describe Client do
     it 'emailがなければ登録できない' do
       client = build(:client, email: nil)
       client.valid?
-      expect(client.errors[:email]).to include('を入力してください')
+      expect(client.errors[:email]).to include('メールアドレスを入力して下さい')
     end
 
     it 'passwordがなければ登録できない' do
       client = build(:client, password: nil)
       client.valid?
-      expect(client.errors[:password]).to include('を入力してください')
+      expect(client.errors[:password]).to include('パスワードを入力して下さい。')
     end
 
     it 'passwordとpassword_confirmationが一致しなければ登録できない' do
       client = build(:client, password: 'hogehoge', password_confirmation: 'foobar')
       client.valid?
-      expect(client.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+      expect(client.errors[:password_confirmation]).to include('入力されたパスワードと一致しません。')
     end
 
   end
