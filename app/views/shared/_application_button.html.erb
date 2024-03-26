@@ -2,7 +2,7 @@
   <%# dom_idにより各ボタンに対し一意のidを作成が可能になる %>
   <turbo-frame id="<%= dom_id(request, :application_button) %>">
     <% if current_contractor.request_applications.exists?(request_id: request.id) %>
-      <%= button_to 'キャンセルする', cancel_application_request_path(request), method: :delete, data: { turbo_frame: dom_id(request, :application_button) }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right' %>
+      <%= button_to 'キャンセルする', cancel_request_path(request), method: :delete, data: { turbo_frame: dom_id(request, :application_button) }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right' %>
     <% else %>
       <%= button_to '申し込み', apply_request_path(request), method: :post, data: { turbo_frame: dom_id(request, :application_button) }, class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right' %>
     <% end %>

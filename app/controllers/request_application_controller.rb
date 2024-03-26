@@ -1,6 +1,11 @@
 class RequestApplicationController < ApplicationController
   before_action :authenticate_contractor!
 
+  def index
+    # 現在ログインしているcontractorの申し込みしたお仕事の一覧を取得
+    @applications = current_contractor.request_applications.includes(:request)
+  end
+
   # app/controllers/requests_controller.rb
   def apply
     application = RequestApplication.new(contractor: current_contractor, request_id: params[:id])
@@ -9,7 +14,7 @@ class RequestApplicationController < ApplicationController
       redirect_to clients_requests_path
     else
       # エラー処理
-      flash.now[:alert] = t('.alert')
+      flash[:alert] = t('.alert')
       # 現在のページを再表示
       redirect_to clients_requests_path, alert: t('.alert'), status: :see_other
     end

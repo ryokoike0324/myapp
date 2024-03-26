@@ -34,13 +34,21 @@ Rails.application.routes.draw do
     resource :request, only: %i[show new edit create update], controller: 'clients/requests'
   end
 
-  # config/routes.rb
-  resources :requests do
+  # only: []はそのリソースに対するルーティングを意図的に生成しないようにするためのものであり、ネストされたリソースに対するルーティングのみを生成したい
+  resources :requests, only: [] do
     member do
+      # /requests/:id/apply
       post 'apply', to: 'request_application#apply'
-      delete 'cancel_application', to: 'request_application#cancel_application'
+      # /requests/:id/cancel
+      delete 'cancel', to: 'request_application#cancel_application'
     end
   end
+
+  resources :contractors, only: [] do
+    # /contractors/:contractor_id/request_applications
+    resources :applications, only: [:index]
+  end
+
 
 
 
