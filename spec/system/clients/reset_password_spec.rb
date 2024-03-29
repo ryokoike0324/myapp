@@ -48,9 +48,9 @@ RSpec.describe '発注者' do
         visit new_client_session_path
         click_link_or_button 'パスワードを忘れた方'
         fill_in 'メールアドレス', with: 'failure@example.com'
-        expect {
+        expect do
           click_link_or_button 'パスワード再設定メールを送信'
-        }.to change { ActionMailer::Base.deliveries.size }.by(0)
+        end.to change { ActionMailer::Base.deliveries.size }.by(0)
         expect(page).to have_content 'アカウントに登録されているメールアドレスを入力してください。'
         expect(current_path).to eq client_password_path
       end

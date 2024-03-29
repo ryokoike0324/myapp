@@ -10,8 +10,9 @@
 #
 # Indexes
 #
-#  index_request_applications_on_contractor_id  (contractor_id)
-#  index_request_applications_on_request_id     (request_id)
+#  index_request_applications_on_contractor_id                 (contractor_id)
+#  index_request_applications_on_contractor_id_and_request_id  (contractor_id,request_id) UNIQUE
+#  index_request_applications_on_request_id                    (request_id)
 #
 # Foreign Keys
 #
@@ -21,6 +22,6 @@
 class RequestApplication < ApplicationRecord
   belongs_to :contractor
   belongs_to :request
-
+  # contractor_id と request_id の組み合わせがユニーク（一意）であることを保証
   validates :contractor_id, uniqueness: { scope: :request_id }
 end

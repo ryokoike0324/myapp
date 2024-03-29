@@ -9,3 +9,6 @@ ja:
       show:
         title: プロフィール
         edit: プロフィール編集
+    request_applications:
+      create:
+        alert: 申し込みに失敗しました。

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   private
 
   # beforeフィルター
-  # アクセスしようとしているユーザーとログインしているユーザーは同じか（自分以外の人のページにアクセスしようとしていないか）
+  # 今ログインしているユーザーとアクセスしようとしているページのユーザーは同じか（自分以外の人のページにアクセスしようとしていないか）
   def matching_login_client
     @client = Client.find(params[:client_id])
     redirect_to(root_url, status: :see_other) unless @client && @client == current_client

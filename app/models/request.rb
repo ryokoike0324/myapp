@@ -21,7 +21,7 @@
 #
 class Request < ApplicationRecord
   has_many :request_applications, dependent: :destroy
-  has_many :contractors, through: :request_applications
+  has_many :applicants, through: :request_applications, source: :contractor
   belongs_to :client
 
   scope :latest, -> { order(created_at: :desc) }
@@ -37,6 +37,16 @@ class Request < ApplicationRecord
   validate :deadline_must_be_in_the_future
   validate :delivery_date_must_be_after_deadline
 
+  # 募集締切までの日数を返す
+  def days_left
+    (deadline.to_date - Time.zone.today).to_i
+  end
+
+  # 募集締切を過ぎたかどうか
+  def deadline_passed?
+    (deadline.to_date - Time.zone.today).to_i < 0
+  end
+
   private
 
   # deadlineが明日以降の日付であることを確認するバリデーション
@@ -44,7 +54,7 @@ class Request < ApplicationRecord
     # 早期リターンー不要な処理をスキップすることでコードの効率性を向上させたり、不正な状態でのエラーを防ぐ
     return if deadline.blank?
 
-    errors.add(:deadline, 'は明日以降の日付をご入力ください。') if deadline <= Date.tomorrow
+    errors.add(:deadline, '明日以降の日付をご入力ください。') if deadline <= Time.zone.today
   end
 
   # delivery_dateがdeadlineより後の日付であることを確認するバリデーション

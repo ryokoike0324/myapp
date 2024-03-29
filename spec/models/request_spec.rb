@@ -22,7 +22,7 @@
 require 'rails_helper'
 
 RSpec.describe Request do
-  describe 'validates' do
+  describe 'バリデーション' do
     let(:request){ build(:request) }
 
     it 'title,description,deadline,delivery_dateが存在すれば登録できる' do
@@ -56,7 +56,7 @@ RSpec.describe Request do
     it 'deadline(募集締切)が明日以降の日付であること' do
       request.deadline = Time.zone.today
       expect(request).not_to be_valid
-      expect(request.errors[:deadline]).to include('は明日以降の日付をご入力ください。')
+      expect(request.errors[:deadline]).to include('明日以降の日付をご入力ください。')
     end
 
     it 'delivery_date(希望納期)がdeadline(募集締切)より後の日付であること' do
@@ -99,6 +99,37 @@ RSpec.describe Request do
     describe 'delivery_date' do
       it '納期(delivery_date)が近い順のコレクションが返されること' do
         expect(described_class.until_delivery_date).to eq([second_request, first_request, third_request])
+      end
+    end
+  end
+
+  describe 'instance method' do
+
+    describe 'days_left' do
+
+      it '募集締切日までの残りの日数を返すこと' do
+        request = create(:request, deadline: Time.zone.today + 5.days)
+        expect(request.days_left).to eq 5
+      end
+    end
+
+    describe 'deadline_passed?' do
+
+      context '募集締切を過ぎた場合' do
+
+        it 'trueを返すこと' do
+          request = build(:request, deadline: Time.zone.today - 1.day)
+          request.save(validate: false)
+          expect(request.deadline_passed?).to be true
+        end
+      end
+
+      context '募集締切を過ぎていない場合' do
+
+        it 'falseを返すこと' do
+          request = create(:request, deadline: Time.zone.today + 1.day)
+          expect(request.deadline_passed?).to be false
+        end
       end
     end
   end

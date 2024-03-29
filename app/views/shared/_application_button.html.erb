@@ -1,10 +1,15 @@
+<%# dom_idにより各ボタンに対し一意のidを作成が可能になる %>
+<% application_button_id = dom_id(req, :application_button) %>
 <% if current_contractor %>
-  <%# dom_idにより各ボタンに対し一意のidを作成が可能になる %>
-  <turbo-frame id="<%= dom_id(request, :application_button) %>">
-    <% if current_contractor.request_applications.exists?(request_id: request.id) %>
-      <%= button_to 'キャンセルする', cancel_request_path(request), method: :delete, data: { turbo_frame: dom_id(request, :application_button) }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right' %>
+  <turbo-frame id="<%= application_button_id %>">
+    <% if current_contractor.request_applications.exists?(request_id: req.id) %>
+      <%= form_with url: contractors_request_application_path(current_contractor), method: :delete, data: { turbo_frame: application_button_id }, local: true do |form| %>
+          <%= hidden_field_tag :request_id, req.id %>
+          <%= form.submit 'キャンセルする', class: 'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-500 text-base font-medium text-white hover:bg-red-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm' %>
+        <% end %>
     <% else %>
-      <%= button_to '申し込み', apply_request_path(request), method: :post, data: { turbo_frame: dom_id(request, :application_button) }, class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right' %>
+      <button data-open-modal="confirmationModal-<%= req.id %>" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer block">申し込む</button>
     <% end %>
+    <%= render 'shared/modal_apply_request', req: req, application_button_id: application_button_id %>
   </turbo-frame>
 <% end %>

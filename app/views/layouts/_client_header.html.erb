@@ -1,8 +1,8 @@
-
 <h1 class="text-4xl font-bold tracking-wider"><%= link_to 'First Step', clients_requests_path %></h1>
 <ul class="flex gap-6 items-center font-bold">
   <li><%= link_to t('.account'), edit_client_registration_path(current_client)  %></li>
   <li><%= link_to t('.profile'), edit_client_profile_path(current_client)  %></li>
   <li><%= link_to t('.request'), edit_client_request_path(current_client)  %></li>
-  <li><%= link_to t('.logout'), destroy_client_session_path , data: { turbo_method: :delete } %></li>
+  <li><%= link_to t('.applicants'), client_applicants_path(current_client) %></li>
+  <li><%= link_to t('.logout'), destroy_client_session_path ,method: :delete, data: { turbo_method: :delete } %></li>
 </ul>
