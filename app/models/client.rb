@@ -25,6 +25,8 @@
 #
 class Client < ApplicationRecord
   has_one :request, dependent: :destroy
+  has_one :engagement, dependent: :destroy
+  has_one :contractor, through: :engagement
   enum industry: { 飲食: 0, 製造: 1, IT: 2, 建築: 3, サービス: 4, その他: 5 }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

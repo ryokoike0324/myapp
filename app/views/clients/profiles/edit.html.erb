@@ -1,27 +1,22 @@
 <% provide(:title, t('.title')) %>
-
 <div class="flex justify-center items-center" >
   <div class="w-1/3  py-12">
-  <h2 class="text-3xl mb-16 font-bold"><%= t('.title') %></h2>
-  <%= form_with(model: current_client, url: client_profile_path) do |f| %>
-    <%= render "clients/shared/error_messages", resource: current_client %>
-
-    <div class="mb-10">
-      <%= f.label :name, class: "block text-gray-700 text-base font-bold mb-2" %>
-      <%= f.text_field :name, autofocus: true, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
-    </div>
-
-    <div class="mb-10">
-      <%= f.label :industry, class: "block text-gray-700 text-base font-bold mb-2" %>
-      <%= f.select :industry, %w[飲食 製造 IT 建築 サービス その他],{},{ class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }  %>
-    </div>
-
-    <div class="mb-10">
-      <%= f.label :our_business, class: "block text-gray-700 text-base font-bold mb-2" %>
-      <%= f.text_area :our_business, class: 'shadow appearance-none border rounded w-full py-2 px-3 min-h-40 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
-    </div>
-
-    <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>
-  <% end %>
+    <h2 class="text-3xl mb-16 font-bold"><%= t('.title') %></h2>
+    <%= form_with(model: current_client, url: client_profile_path) do |f| %>
+      <%= render "clients/shared/error_messages", resource: current_client %>
+      <div class="mb-10">
+        <%= f.label :name, class: "block text-gray-700 text-base font-bold mb-2" %>
+        <%= f.text_field :name, autofocus: true, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+      </div>
+      <div class="mb-10">
+        <%= f.label :industry, class: "block text-gray-700 text-base font-bold mb-2" %>
+        <%= f.select :industry, %w[飲食 製造 IT 建築 サービス その他],{},{ class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }  %>
+      </div>
+      <div class="mb-10">
+        <%= f.label :our_business, class: "block text-gray-700 text-base font-bold mb-2" %>
+        <%= f.text_area :our_business, class: 'shadow appearance-none border rounded w-full py-2 px-3 min-h-40 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
+      </div>
+      <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>
+    <% end %>
   </div>
 </div>

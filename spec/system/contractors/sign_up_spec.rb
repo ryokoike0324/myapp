@@ -80,9 +80,9 @@ RSpec.describe '受注者' do
           visit new_contractor_registration_path
           click_link_or_button 'アカウント確認メールが届きませんでしたか？'
           fill_in 'メールアドレス', with: contractor.email
-          expect {
+          expect do
             click_link_or_button 'アカウント確認メール再送'
-          }.to change { ActionMailer::Base.deliveries.size }.by(1)
+          end.to change { ActionMailer::Base.deliveries.size }.by(1)
           mail = ActionMailer::Base.deliveries.last
           url = extract_confirmation_url(mail)
           visit url
@@ -98,9 +98,9 @@ RSpec.describe '受注者' do
           click_link_or_button '受注者新規登録'
           click_link_or_button 'アカウント確認メールが届きませんでしたか？'
           fill_in 'メールアドレス', with: contractor.email
-          expect {
+          expect do
             click_link_or_button 'アカウント確認メール再送'
-          }.to change { ActionMailer::Base.deliveries.size }.by(0)
+          end.to change { ActionMailer::Base.deliveries.size }.by(0)
           expect(page).to have_content 'メールアドレスは見つかりませんでした。'
         end
       end

@@ -1,0 +1,27 @@
+<div id="confirmationModal-<%= @applicant.id %>" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-white rounded-lg px-4 pt-5 pb-4 shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+      <div class="sm:flex sm:items-start">
+        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+            この応募者に依頼しますか？
+          </h3>
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">
+              ※一度に複数のお仕事を依頼することは出来ません。
+            </p>
+            <p class="text-sm text-gray-500">
+              ※「依頼する」ボタンをクリックすると依頼が完了します。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-5 sm:mt-4 sm:flex flex justify-around">
+        <%= button_to '依頼する', contractors_request_applications_path(@applicant), method: :post, submit_close_modal: true, class: 'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm' %>
+        <button data-close-modal="confirmationModal-<%= @applicant.id %>" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm">
+          キャンセル
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'RequestApplications' do
-  describe 'POST #apply' do
+  describe '#create' do
     let(:contractor) { create(:contractor) }
-    let(:request) { create(:request) }
+    let!(:request) { create(:request) }
     let!(:first_application) { create(:request_application, contractor:, request:) }
 
     before do
@@ -12,7 +12,7 @@ RSpec.describe 'RequestApplications' do
 
     context '申込に失敗した時' do
       before do
-        post apply_request_path(request)
+        post contractors_request_applications_path(request)
       end
 
       it '適切にリダイレクトすること' do

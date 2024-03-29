@@ -41,7 +41,7 @@
   <div class="flex justify-between mb-10">
     <%= f.submit '更新', class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-12 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
     <%# buttunタグを使うとformが反応してputリクエストを送ってしまうため、spanタグ %>
-    <span data-open-modal class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right">退会する</span>
+    <span data-open-modal="confirmationModal-<%= resource.id %>" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer float-right">退会する</span>
   </div>
 <% end %>
 <%= link_to t('devise.shared.links.back'), clients_requests_path, class: 'text-gray-500 text-center font-bold cursor-pointer' %>

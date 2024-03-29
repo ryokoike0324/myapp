@@ -6,7 +6,7 @@ class Clients::RequestsController < ApplicationController
   before_action :redirect_if_no_request, only: %i[edit update]
 
   def index
-    @requests = case params[:sort]
+    @requests = case sort_param
                 when 'latest'
                   Request.latest
                 when 'old'
@@ -61,6 +61,10 @@ class Clients::RequestsController < ApplicationController
   # ストロングパラメーター
   def request_params
     params.require(:request).permit(:title, :description, :delivery_date, :deadline)
+  end
+
+  def sort_param
+    params[:sort].presence || 'latest'
   end
 
   # すでにお仕事を登録しているユーザーはeditテンプレートにリダイレクトする

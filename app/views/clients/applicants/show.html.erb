@@ -1,0 +1,30 @@
+
+<% provide(:title, @applicant.name) %>
+
+<div class="w-1/3 mx-auto px-4">
+  <div class="mt-8 bg-white shadow-md rounded-lg p-6">
+    <%= image_tag(@applicant.image.url, class: "rounded-full h-24 w-24 mx-auto") %>
+    <h1 class="mt-4 text-center text-2xl font-bold"><%= @applicant.name %></h1>
+    <div class="mt-4">
+      <h2 class="text-lg font-semibold">ポートフォリオURL</h2>
+      <p><a href="<%= @applicant.portfolio %>" target="_blank" class="text-blue-500 hover:text-blue-700"><%= @applicant.portfolio %></a></p>
+    </div>
+    <div class="mt-4">
+      <h2 class="text-lg font-semibold">自己PR</h2>
+      <p class="whitespace-pre-wrap"><%= @applicant.public_relations %></p>
+    </div>
+    <div class="mt-4">
+      <h2 class="text-lg font-semibold">学習期間</h2>
+      <p><%= @applicant.study_period %></p>
+    </div>
+    <div class="flex justify-between mt-6">
+      <% unless @applicant.engagement %>
+        <button data-open-modal="confirmationModal-<%= @applicant.id %>" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer block">申し込む</button>
+      <% end %>
+        <%= link_to '戻る', client_applicants_path, class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+    <%= render 'shared/modal_engage_request' %>
+  </div>
+</div>
+
+

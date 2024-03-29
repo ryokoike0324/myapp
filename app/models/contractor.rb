@@ -6,7 +6,6 @@
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime
-#  contracted             :boolean          default(FALSE), not null
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  image                  :string(255)
@@ -29,6 +28,9 @@
 class Contractor < ApplicationRecord
   has_many :request_applications, dependent: :destroy
   has_many :requests, through: :request_applications
+  has_one :engagement, dependent: :destroy
+  has_one :client, through: :engagement
+
   enum study_period: { ３ヶ月未満: 0, ６ヶ月未満: 1, １年未満: 2, １年以上: 3 }
   mount_uploader :image, ContractorAvatorUploader
   # Include default devise modules. Others available are:

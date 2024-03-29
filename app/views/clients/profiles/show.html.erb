@@ -1,21 +1,21 @@
 <% content_for(:title, t('.title')) %>
 <div class="flex justify-center items-center" >
   <div class="w-1/3">
-      <h1 class="float-left mb-5"><%= t('.title') %></h1>
-      <table class="table">
-        <tr>
-          <th scope="row"><%= Client.human_attribute_name(:name) %></th>
-          <td><%= current_client.name %></td>
-        </tr>
-        <tr>
-          <th scope="row"><%= Client.human_attribute_name(:industry) %></th>
-          <td><%= current_client.industry %></td>
-        </tr>
-        <tr>
-          <th scope="row"><%= Client.human_attribute_name(:our_business) %></th>
-          <td><%= current_client.our_business %></td>
-        </tr>
-      </table>
-      <%= link_to t('.edit'), edit_client_profile_path(current_client), class: 'btn btn-success float-right' %>
+    <h1 class="float-left mb-5"><%= t('.title') %></h1>
+    <table class="table">
+      <tr>
+        <th scope="row"><%= Client.human_attribute_name(:name) %></th>
+        <td><%= current_client.name %></td>
+      </tr>
+      <tr>
+        <th scope="row"><%= Client.human_attribute_name(:industry) %></th>
+        <td><%= current_client.industry %></td>
+      </tr>
+      <tr>
+        <th scope="row"><%= Client.human_attribute_name(:our_business) %></th>
+        <td><%= current_client.our_business %></td>
+      </tr>
+    </table>
+    <%= link_to t('.edit'), edit_client_profile_path(current_client), class: 'btn btn-success float-right' %>
   </div>
 </div>

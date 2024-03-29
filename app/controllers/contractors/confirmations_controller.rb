@@ -13,7 +13,10 @@ class Contractors::ConfirmationsController < Devise::ConfirmationsController
 
   # GET /resource/confirmation?confirmation_token=abcdef
   def show
+    # ↓コメントを挿入した以降の行の警告を無視できる
+    # rubocop:disable Rails/DynamicFindBy
     @confirmed = resource_class.find_by_confirmation_token(params[:confirmation_token]).confirmed_at
+    # rubocop:enable Rails/DynamicFindBy
     super do
       sign_in resource
     end

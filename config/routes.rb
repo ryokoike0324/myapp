@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  # contractor(受注者)
+
+  # ###Contractor##################################
+
+  # ---contractor/devise関係-------------------
   devise_for :contractors, controllers: {
     sessions: 'contractors/sessions',
     passwords: 'contractors/passwords',
@@ -11,11 +14,20 @@ Rails.application.routes.draw do
     post 'contractors/guest_login', to: 'contractors/sessions#guest_login'
   end
 
-  resources :contractors do
-    resource :profile, only: %i[show edit update], controller: 'contractors/profiles'
+  # ---contractors/profiles----------------
+  resources :contractors, only: [], module: :contractors do
+    resource :profile, only: [:show, :edit, :update]
   end
 
-  # client(発注者)
+  # ---contractors/request_applications----------------
+  # only: []はそのリソースに対するルーティングを意図的に生成しないようにするためのものであり、ネストされたリソースに対するルーティングのみを生成したい
+  namespace :contractors do
+    resources :request_applications, only: [:index, :create, :destroy]
+  end
+
+  # ###Client##################################
+
+  # ---client/devise関係-------------------
   devise_for :clients, controllers: {
     sessions: 'clients/sessions',
     passwords: 'clients/passwords',
@@ -27,31 +39,35 @@ Rails.application.routes.draw do
     post 'clients/guest_login', to: 'clients/sessions#guest_login'
     # put 'clients/confirmation', to: 'clients/confirmations#show'
   end
-  # クライアントに紐づくプロファイルやリクエストのカスタムルート
+
+  # ---clients/requests----------------------
+  # controllers/clients/以下にcontrollerを配置している場合namespaceメソッドでネストするかmodule: :clientsオプションをつける
   get 'clients/requests', to: 'clients/requests#index'
-  resources :clients do
-    resource :profile, only: %i[show edit update], controller: 'clients/profiles'
-    resource :request, only: %i[show new edit create update], controller: 'clients/requests'
+  resources :clients, only: [], module: :clients do
+    resource :request, only: [:show, :new, :edit, :create, :update]
   end
 
-  # only: []はそのリソースに対するルーティングを意図的に生成しないようにするためのものであり、ネストされたリソースに対するルーティングのみを生成したい
-  resources :requests, only: [] do
-    member do
-      # /requests/:id/apply
-      post 'apply', to: 'request_application#apply'
-      # /requests/:id/cancel
-      delete 'cancel', to: 'request_application#cancel_application'
+  # ---clients/profiles----------------------
+  resources :clients, only: [], module: :clients do
+    resource :profile, only: [:show, :edit, :update]
+  end
+
+  # ---clients/applicants--------------------
+  resources :clients, only: [], module: :clients do
+    resources :applicants, only: [:index, :show]
+  end
+
+  # ---clients/engagements--------------------
+  namespace :clients do
+    resources :contractors, only: [] do
+      resources :engagements, only: [:create]
     end
   end
 
-  resources :contractors, only: [] do
-    # /contractors/:contractor_id/request_applications
-    resources :applications, only: [:index]
-  end
 
+  # ###その他###############################
 
-
-
+  # ---static_pages--------------------------
   root 'static_pages#about'
   get 'about' => 'static_pages#about'
   get 'privacy' => 'static_pages#privacy'
@@ -60,6 +76,8 @@ Rails.application.routes.draw do
   get 'login' =>  'static_pages#login'
   get 'guest_login' =>  'static_pages#guest_login'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # ---contacts------------------------------
   resources :contacts, only: [:new, :create] do
     collection do
       post 'confirm'

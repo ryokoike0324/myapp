@@ -1,0 +1,19 @@
+
+<% provide(:title, '応募中のお仕事一覧') %>
+
+<div class="flex justify-center items-center">
+  <div class="w-1/2 py-12">
+    <h2 class="text-3xl pb-10 font-bold">応募中のお仕事一覧</h2>
+    <div class="mt-2">
+      <p class="text-sm text-gray-500 mb-3">
+        複数のお仕事へ応募することは可能ですが、受注出来るお仕事は1つだけとなります。
+      </p>
+      <p class="text-sm text-gray-500 mb-10">
+        受注完了時に応募中のお仕事は自動的にキャンセルされます。
+      </p>
+    </div>
+        <%= render 'shared/requests_index', reqs: @requests %>
+
+    <%= link_to '戻る', clients_requests_path, class: "mt-4 inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+</div>
