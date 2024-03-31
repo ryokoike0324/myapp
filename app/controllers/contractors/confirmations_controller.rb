@@ -36,7 +36,7 @@ class Contractors::ConfirmationsController < Devise::ConfirmationsController
     if resource.instance_of?(Contractor) && @confirmed.nil?
       # binding.remote_pry
       # 新規登録の場合の遷移先
-      edit_contractor_profile_path(resource)
+      edit_contractors_profile_path
     else
       # アカウント情報更新の場合の遷移先
       root_path

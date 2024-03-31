@@ -9,7 +9,7 @@ RSpec.describe '受注者' do
       log_in_as contractor
       click_link_or_button 'プロフィール'
       # リンクからプロフィールページに遷移すること
-      expect(current_path).to eq edit_contractor_profile_path(contractor)
+      expect(current_path).to eq edit_contractors_profile_path
       # すでに登録している情報が表示されていること
       expect(page).to have_field 'お名前', with: contractor.name
       image_url = contractor.image

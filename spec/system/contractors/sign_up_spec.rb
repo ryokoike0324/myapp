@@ -35,9 +35,8 @@ RSpec.describe '受注者' do
         expect(page).to have_content 'アカウント登録が完了しました。'
         # 登録後ログインしていること
         expect(page).to have_content 'ログアウト'
-        current_user = Contractor.find_by(email: contractor.email)
         # プロフィール編集ページに遷移している
-        expect(current_path).to eq edit_contractor_profile_path(current_user)
+        expect(current_path).to eq edit_contractors_profile_path
         fill_in 'お名前', with: 'テスト太郎'
         update_image_url = Rails.root.join('spec/files/after_test_avator.png').to_s
         attach_file 'プロフィール画像',  update_image_url

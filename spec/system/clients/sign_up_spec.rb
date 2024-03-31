@@ -38,7 +38,7 @@ RSpec.describe '発注者' do
         expect(page).to have_content 'ログアウト'
         current_client = Client.find_by(email: client.email)
         # お仕事登録ページに遷移している
-        expect(current_path).to eq new_client_request_path(current_client)
+        expect(current_path).to eq new_clients_request_path
         expect(page).to have_content 'お仕事登録'
         expect do
           fill_in 'お仕事タイトル', with: request.title
@@ -48,7 +48,7 @@ RSpec.describe '発注者' do
           click_link_or_button('登録')
         end.to change(Request, :count).by(1)
         # プロフィール編集ページに遷移している
-        expect(current_path).to eq edit_client_profile_path(current_client)
+        expect(current_path).to eq edit_clients_profile_path(current_client)
         fill_in '店名・会社名', with: '東京ストリート塩ラーメン'
         fill_in '事業内容', with: '池袋で、美味しい塩ラーメンの店をやっております。'
         select '飲食', from: '業種'

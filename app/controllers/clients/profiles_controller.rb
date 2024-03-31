@@ -1,6 +1,5 @@
 class Clients::ProfilesController < ApplicationController
   before_action :authenticate_client!
-  before_action :matching_login_client, only: %i[edit update]
   # application_controllerに記載
 
   def show

@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   end
 
   # ---contractors/profiles----------------
-  resources :contractors, only: [], module: :contractors do
+  # deviseにより提供されるcurrent_contractorがあるためcontractor_idは不要になる
+  # 不要なidをURLに露出させないためにresourcesでなくnamespaceを使う
+  namespace :contractors do
     resource :profile, only: [:show, :edit, :update]
   end
 
@@ -43,25 +45,23 @@ Rails.application.routes.draw do
   # ---clients/requests----------------------
   # controllers/clients/以下にcontrollerを配置している場合namespaceメソッドでネストするかmodule: :clientsオプションをつける
   get 'clients/requests', to: 'clients/requests#index'
-  resources :clients, only: [], module: :clients do
+  namespace :clients do
     resource :request, only: [:show, :new, :edit, :create, :update]
   end
 
   # ---clients/profiles----------------------
-  resources :clients, only: [], module: :clients do
+  namespace :clients do
     resource :profile, only: [:show, :edit, :update]
   end
 
   # ---clients/applicants--------------------
-  resources :clients, only: [], module: :clients do
+  namespace :clients do
     resources :applicants, only: [:index, :show]
   end
 
   # ---clients/engagements--------------------
   namespace :clients do
-    resources :contractors, only: [] do
-      resources :engagements, only: [:create]
-    end
+    resources :engagements, only: [:create]
   end
 
 

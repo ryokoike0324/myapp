@@ -1,6 +1,5 @@
 class Clients::RequestsController < ApplicationController
   before_action :authenticate_client!, except: %i[index show]
-  before_action :matching_login_client, only: %i[edit update]
   # application_controllerに記載
   before_action :redirect_if_request_exists, only: %i[new create]
   before_action :redirect_if_no_request, only: %i[edit update]
@@ -37,7 +36,7 @@ class Clients::RequestsController < ApplicationController
     @request = current_client.build_request(request_params)
     if @request.save
       flash.now[:notice] = t('.notice')
-      redirect_to edit_client_profile_path(current_client)
+      redirect_to edit_clients_profile_path(current_client)
     else
       @request = Request.new
       render :new, status: :unprocessable_entity
@@ -50,7 +49,6 @@ class Clients::RequestsController < ApplicationController
       flash[:notice] = t('.notice')
       redirect_to root_path
     else
-      # binding.pry_remote
       render 'edit', status: :unprocessable_entity
     end
   end
@@ -63,17 +61,18 @@ class Clients::RequestsController < ApplicationController
     params.require(:request).permit(:title, :description, :delivery_date, :deadline)
   end
 
+  # 並び替えのデフォルトを新しい順に設定している
   def sort_param
     params[:sort].presence || 'latest'
   end
 
   # すでにお仕事を登録しているユーザーはeditテンプレートにリダイレクトする
   def redirect_if_request_exists
-    redirect_to edit_client_request_path(current_client.request) if current_client.request.present?
+    redirect_to edit_clients_request_path if current_client.request.present?
   end
 
   # まだお仕事登録していないユーザーはnewテンプレートにリダイレクトする
   def redirect_if_no_request
-    redirect_to new_client_request_path(current_client) if current_client.request.nil?
+    redirect_to new_clients_request_path if current_client.request.nil?
   end
 end

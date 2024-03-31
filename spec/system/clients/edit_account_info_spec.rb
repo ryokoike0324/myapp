@@ -20,7 +20,7 @@ RSpec.describe '発注者' do
         visit root_path
         click_link_or_button 'アカウント'
         # アカウント編集ページに遷移すること
-        expect(current_path).to eq edit_client_registration_path(client)
+        expect(current_path).to eq edit_client_registration_path
         expect(page).to have_content 'アカウント編集'
         # ユーザーのアカウント情報が表示されていること
         expect(page).to have_field 'メールアドレス', with: client.email

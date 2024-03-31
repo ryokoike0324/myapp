@@ -1,4 +1,4 @@
-<%= form_with model: @request, url: client_request_path(current_client), data:{ turbo: false } do |f| %>
+<%= form_with model: @request, url: clients_request_path(current_client), data:{ turbo: false } do |f| %>
   <div class="mb-8">
     <%= f.label :title, class: "block text-gray-700 text-base font-bold mb-2" %>
     <%= f.text_field :title, autofocus: true, class: form_field_error_class(@request, :title) %>
