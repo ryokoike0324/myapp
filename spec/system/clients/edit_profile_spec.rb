@@ -9,7 +9,7 @@ RSpec.describe '発注者' do
       log_in_as client
       click_link_or_button 'プロフィール'
       # リンクからプロフィールページに遷移すること
-      expect(current_path).to eq edit_client_profile_path(client)
+      expect(current_path).to eq edit_clients_profile_path
       # すでに登録している情報が表示されていること
       expect(page).to have_field '店名・会社名', with: client.name
       expect(page).to have_field '事業内容', with: client.our_business

@@ -1,7 +1,7 @@
 <h1 class="text-4xl font-bold tracking-wider"><%= link_to 'First Step', clients_requests_path %></h1>
 <ul class="flex gap-6 items-center font-bold">
-  <li><%= link_to t('.account'), edit_contractor_registration_path(current_contractor)  %></li>
-  <li><%= link_to t('.profile'), edit_contractor_profile_path(current_contractor)  %></li>
+  <li><%= link_to t('.account'), edit_contractor_registration_path  %></li>
+  <li><%= link_to t('.profile'), edit_contractors_profile_path  %></li>
   <li><%= link_to '応募中のお仕事', contractors_request_applications_path  %></li>
   <li><%= link_to t('.logout'), destroy_contractor_session_path, data: { turbo_method: :delete } %></li>
 </ul>

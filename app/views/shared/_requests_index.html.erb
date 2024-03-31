@@ -14,7 +14,7 @@
         </div>
       <% end %>
       <div class="col-span-3 pl-4">
-        <%= link_to client_request_path(req) do %>
+        <%= link_to clients_request_path(req) do %>
           <p class="font-bold text-lg tracking-wide text-blue-600 mb-2"><%= req.title %></p>
         <% end %>
         <p class="mb-2">希望納期：<%= req.delivery_date.strftime("%Y年 %m月 %d日") %></p>

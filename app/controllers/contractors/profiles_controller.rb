@@ -1,6 +1,5 @@
 class Contractors::ProfilesController < ApplicationController
   before_action :authenticate_contractor!
-  before_action :matching_login_contractor, only: %i[edit update]
   # application_controllerに記載
 
   def show
