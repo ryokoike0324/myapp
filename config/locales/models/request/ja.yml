@@ -8,3 +8,18 @@ ja:
         description: 依頼内容
         delivery_date: 納期
         deadline: 募集締切
+    # バリデーションエラー
+    errors:
+      models:
+        request:
+          attributes:
+            title:
+              blank: "タイトルを入力してください"
+            description:
+              blank: "依頼内容を入力してください"
+            deadline:
+              blank: "募集締切を入力してください"
+              must_be_in_the_future: 明日以降の日付をご入力ください。
+            delivery_date:
+              blank: "納期を入力してください"
+              must_be_after_deadline: 募集締切日より後の日付をご入力ください。

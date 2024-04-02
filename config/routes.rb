@@ -17,12 +17,14 @@ Rails.application.routes.draw do
   # ---contractors/profiles----------------
   # deviseにより提供されるcurrent_contractorがあるためcontractor_idは不要になる
   # 不要なidをURLに露出させないためにresourcesでなくnamespaceを使う
+  # client側でもプロフィールを見るため特定のためidは必要（clientユーザーはcurrent_contractorは使えないので)
   namespace :contractors do
     resource :profile, only: [:show, :edit, :update]
   end
 
   # ---contractors/request_applications----------------
   # only: []はそのリソースに対するルーティングを意図的に生成しないようにするためのものであり、ネストされたリソースに対するルーティングのみを生成したい
+  # 自分が応募した仕事、本人にだけ表示すれば良い
   namespace :contractors do
     resources :request_applications, only: [:index, :create, :destroy]
   end
@@ -44,10 +46,13 @@ Rails.application.routes.draw do
 
   # ---clients/requests----------------------
   # controllers/clients/以下にcontrollerを配置している場合namespaceメソッドでネストするかmodule: :clientsオプションをつける
-  get 'clients/requests', to: 'clients/requests#index'
+  # client専用
   namespace :clients do
-    resource :request, only: [:show, :new, :edit, :create, :update]
+    resources :requests, only: [:index, :new, :edit, :create, :update, :destroy]
   end
+
+  # 一般公開用(ゲスト、受注者も見るためclients/requestsとは分ける)
+  resources :public_requests, only: [:index, :show], controller: 'public_requests'
 
   # ---clients/profiles----------------------
   namespace :clients do

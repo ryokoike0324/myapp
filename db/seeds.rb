@@ -40,10 +40,14 @@ end
     our_business: Faker::Lorem.sentence(word_count: 25),
     industry: %w[飲食 製造 IT 建築 サービス その他].sample
   )
-  request = client.create_request!(
+  deadline_from = Date.tomorrow
+  deadline_to = deadline_from + 2.weeks
+  delivery_date_from = deadline_from + 1.month
+  delivery_date_to = delivery_date_from + 2.weeks
+  request = client.requests.create!(
     title: Faker::Job.title,
-    deadline: Faker::Date.between(from: '2024-04-01', to: '2024-04-30'),
-    delivery_date: Faker::Date.between(from: '2024-05-01', to: '2024-05-31'),
+    deadline: Faker::Date.between(from: deadline_from, to: deadline_to),
+    delivery_date: Faker::Date.between(from: delivery_date_from, to: delivery_date_to),
     description: Faker::Lorem.sentence(word_count: 100)
   )
   # 各Requestに対してランダムに選んだ5人のContractorが応募するデータを生成（重複を防ぐ）

@@ -1,0 +1,11 @@
+ja:
+  public_requests:
+    index:
+      title: お仕事一覧
+      sort: 並び替え
+      latest: 新着順
+      old: 古い順
+      until_deadline: 募集締切順
+      until_delivery_date: 納期順
+      recruitment: 募集中
+      delivery_date: 希望納期：

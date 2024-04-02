@@ -20,8 +20,10 @@
 #  fk_rails_...  (client_id => clients.id)
 #
 class Request < ApplicationRecord
+  # 多数の応募者を持つ
   has_many :request_applications, dependent: :destroy
   has_many :applicants, through: :request_applications, source: :contractor
+  # 仕事を発注した発注者は１人
   belongs_to :client
 
   scope :latest, -> { order(created_at: :desc) }
@@ -54,13 +56,15 @@ class Request < ApplicationRecord
     # 早期リターンー不要な処理をスキップすることでコードの効率性を向上させたり、不正な状態でのエラーを防ぐ
     return if deadline.blank?
 
-    errors.add(:deadline, '明日以降の日付をご入力ください。') if deadline <= Time.zone.today
+    # :must_be_in_the_future => i18nによるエラーメッセージ(config/locals/models/request)
+    errors.add(:deadline, :must_be_in_the_future) if deadline <= Time.zone.today
   end
 
   # delivery_dateがdeadlineより後の日付であることを確認するバリデーション
   def delivery_date_must_be_after_deadline
     return if delivery_date.blank? || deadline.blank?
 
-    errors.add(:delivery_date, 'は募集締切日より後の日付をご入力ください。') if delivery_date <= deadline
+    # :must_be_after_deadline => i18nによるエラーメッセージ(config/locals/models/request)
+    errors.add(:delivery_date, :must_be_after_deadline) if delivery_date <= deadline
   end
 end

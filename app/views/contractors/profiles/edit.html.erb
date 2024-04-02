@@ -25,11 +25,14 @@
       <%= f.label :portfolio, class: "block text-gray-700 text-base font-bold mb-2" %>
       <%= f.url_field :portfolio, class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' %>
     </div>
-    <div class="mb-10">
+    <div class="mb-16">
       <%= f.label :study_period, class: "block text-gray-700 text-base font-bold mb-2" %>
       <%= f.select :study_period, %w[３ヶ月未満 ６ヶ月未満 １年未満 １年以上],{},{ class: 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline' }  %>
     </div>
-    <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer mb-3' %>
+    <div class="flex justify-between">
+      <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
+      <%= render 'shared/back_to_home' %>
+    </div>
   <% end %>
   </div>
 </div>
