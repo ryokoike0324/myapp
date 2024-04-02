@@ -22,8 +22,16 @@
 FactoryBot.define do
   factory :request do
     title { Faker::Job.title }
-    deadline { Faker::Date.between(from: '2024-04-01', to: '2024-04-30') }
-    delivery_date { Faker::Date.between(from: '2024-05-01', to: '2024-05-31')  }
+    deadline do
+      from = Date.tomorrow
+      to = from + 2.weeks
+      Faker::Date.between(from:, to:)
+    end
+    delivery_date do
+      from = Date.tomorrow + 1.month
+      to = from + 2.weeks
+      Faker::Date.between(from:, to:)
+    end
     description { Faker::Lorem.sentence(word_count: 25) }
     client
   end

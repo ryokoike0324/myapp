@@ -17,7 +17,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (contractor_id => contractors.id)
-#  fk_rails_...  (request_id => requests.id)
+#  fk_rails_...  (request_id => requests.id) ON DELETE => cascade
 #
 require 'rails_helper'
 

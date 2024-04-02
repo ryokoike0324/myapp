@@ -3,6 +3,33 @@
 <div class="flex justify-center items-center" >
   <div class="w-1/3 py-12">
     <h2 class="text-3xl pb-10 font-bold"><%= t('.title') %></h2>
-    <%= render 'form' %>
+    <%= form_with model: @request, url: clients_requests_path, data:{ turbo: false } do |f| %>
+      <div class="mb-8">
+        <%= f.label :title, class: "block text-gray-700 text-base font-bold mb-2" %>
+        <%= f.text_field :title, autofocus: true, class: form_field_error_class(@request, :title) %>
+        <%= display_field_error_messages(@request, :title) %>
+      </div>
+      <div class="mb-8">
+        <%= f.label :description, class: "block text-gray-700 text-base font-bold mb-2"  %>
+        <%= f.text_area :description, class: "#{form_field_error_class(@request, :description)} min-h-40" %>
+        <%= display_field_error_messages(@request, :description) %>
+      </div>
+      <div class="mb-8">
+        <%= f.label :deadline, class: "block text-gray-700 text-base font-bold mb-2"  %>
+        <%= f.date_field :deadline, class: form_field_error_class(@request, :deadline) %>
+        <%= display_field_error_messages(@request, :deadline) %>
+      </div>
+      <div class="mb-8">
+        <%= f.label :delivery_date, class: "block text-gray-700 text-base font-bold mb-2"  %>
+        <%= f.date_field :delivery_date, class: form_field_error_class(@request, :delivery_date) %>
+        <%= display_field_error_messages(@request, :delivery_date) %>
+      </div>
+      <div class="flex justify-between">
+        <%= f.submit t('.submit'), class: 'bg-blue-500 hover:bg-blue-700 text-white text-center font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer' %>
+        <%= render 'shared/back_to_home' %>
+      </div>
+    <% end %>
+
+
   </div>
 </div>

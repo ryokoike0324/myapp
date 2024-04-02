@@ -6,7 +6,7 @@ class Clients::ApplicantsController < ApplicationController
 
 
   def index
-    @applicants = @request.applicants
+    @applicants = @request.applicants.page(params[:page]).per(10)
   end
 
   def show
@@ -17,7 +17,7 @@ class Clients::ApplicantsController < ApplicationController
 
   # ログインしている発注者の登録している仕事を取得、なければリダイレクト
   def set_request
-    @request = current_client.request
+    @request = Request.find(params[:request_id])
     redirect_to new_clients_request_path, alert: t('.no_request_alert') unless @request
   end
 
