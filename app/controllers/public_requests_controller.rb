@@ -1,4 +1,5 @@
 class PublicRequestsController < ApplicationController
+  before_action :set_back_url, only: [:show]
 
   # 全てのお仕事一覧
   def index
@@ -30,5 +31,11 @@ class PublicRequestsController < ApplicationController
   # 並び替えのデフォルトを新しい順に設定している
   def sort_param
     params[:sort].presence || 'latest'
+  end
+
+  # 遷移元の各一覧ページへ確実に戻るため(link_to :back だと意図しない挙動が発生)
+  def set_back_url
+    allowed_paths = [public_requests_path, clients_requests_path, contractors_request_applications_path, contractors_favorites_path]
+    @back_url = params[:back_url] if allowed_paths.include?(params[:back_url])
   end
 end
