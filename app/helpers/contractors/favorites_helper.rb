@@ -1,0 +1,2 @@
+module Contractors::FavoritesHelper
+end

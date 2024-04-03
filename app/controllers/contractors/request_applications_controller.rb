@@ -4,8 +4,9 @@ class Contractors::RequestApplicationsController < ApplicationController
   # GET	/contractors/request_applications
   # 現在ログインしているcontractorの申し込みしたお仕事の一覧を取得
   def index
-    applications = current_contractor.request_applications.includes(:request)
-    @requests = applications.map(&:request)
+    @requests = current_contractor.applied_requests.page(params[:page]).per(10)
+    # applications = current_contractor.request_applications.includes(:request)
+    # @requests = applications.map(&:request).page(params[:page]).per(10)
   end
 
   # POST /contractors/request_applications

@@ -27,7 +27,9 @@
 #
 class Contractor < ApplicationRecord
   has_many :request_applications, dependent: :destroy
-  has_many :requests, through: :request_applications
+  has_many :applied_requests, through: :request_applications, source: :request
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_requests, through: :favorites, source: :request
   has_one :engagement, dependent: :destroy
   has_one :client, through: :engagement
 

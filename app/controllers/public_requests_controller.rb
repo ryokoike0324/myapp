@@ -11,6 +11,10 @@ class PublicRequestsController < ApplicationController
                   Request.until_deadline
                 when 'until_delivery_date'
                   Request.until_delivery_date
+                when 'applicants_order'
+                  Request.applicants_order
+                when 'likes_order'
+                  Request.likes_order
                 else
                   Request.all
                 end

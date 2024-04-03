@@ -22,6 +22,9 @@
 class RequestApplication < ApplicationRecord
   belongs_to :contractor
   belongs_to :request
+
+  # scopeを付けない場合,テーブル全体で一つの名前のラベル名しか保存できません
   # contractor_id と request_id の組み合わせがユニーク（一意）であることを保証
+  # 1人のユーザーは1つのrequestに対して１回しか応募できない（解除しない限り）
   validates :contractor_id, uniqueness: { scope: :request_id }
 end

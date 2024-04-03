@@ -29,6 +29,11 @@ Rails.application.routes.draw do
     resources :request_applications, only: [:index, :create, :destroy]
   end
 
+  # ---contractors/favorites----------------
+  namespace :contractors do
+    resources :favorites, only: [:index, :create, :destroy]
+  end
+
   # ###Client##################################
 
   # ---client/devise関係-------------------

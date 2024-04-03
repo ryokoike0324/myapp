@@ -3,6 +3,8 @@
 <div class="flex justify-center items-center" >
   <div class="w-1/2 py-12">
     <h2 class="text-3xl pb-10 font-bold"><%= t('.title') %></h2>
+
+    <%# 並び替え %>
     <%= form_with url: public_requests_path, method: :get, local: true do %>
       <div class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <%= label_tag :sort, t('.sort') %>
@@ -10,44 +12,15 @@
           [t('.latest'), 'latest'],
           [t('.old'), 'old'],
           [t('.until_deadline'), 'until_deadline'],
-          [t('.until_delivery_date'), 'until_delivery_date']
-        ], selected: params[:sort]),class:"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-32", onchange: 'this.form.submit();' %>
+          [t('.until_delivery_date'), 'until_delivery_date'],
+          ['応募者数順', 'applicants_order'],
+          ['お気に入り数順', 'likes_order']
+        ], selected: params[:sort]),class:"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40", onchange: 'this.form.submit();' %>
       </div>
     <% end %>
 
-    <div class="mb-12 shadow-md rounded-md">
-      <% @requests.each do |req| %>
-        <div class="grid grid-cols-4 gap-6 border-solid border-2 border-slate-100 p-6 hover:bg-sky-200 transition duration-150 ease-in-out">
-          <% if req.deadline_passed? %>
-            <%= link_to public_request_path(req) do %>
-              <p class="col-span-1 flex items-center justify-center bg-slate-500 rounded-lg text-white h-24 w-24">
-                募集終了
-              </p>
-            <% end %>
-          <% else %>
-            <%= link_to public_request_path(req) do %>
-              <div class="col-span-1 bg-cyan-400 rounded-lg text-white flex items-center justify-center h-24 w-24">
-                <p class="text-center m-2">
-                  募集中<br>
-                  <%= "あと#{req.days_left}日" %>
-                </p>
-              </div>
-            <% end %>
-          <% end %>
-          <div class="col-span-3 pl-4">
-            <%= link_to public_request_path(req) do %>
-              <p class="font-bold text-lg tracking-wide text-blue-600 mb-2"><%= req.title %></p>
-            <% end %>
-            <p class="mb-2">希望納期：<%= req.delivery_date.strftime("%Y年 %m月 %d日") %></p>
-            <p class="mb-2"><%= req.client.name %></p>
-            <p>現在の応募者数：<%= req.applicants.count %>名</p>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <%# 一覧 %>
+    <%= render 'shared/requests_index' %>
 
-    <div class="flex justify-center">
-      <%= paginate(@requests) %>
-    </div>
   </div>
 </div>
