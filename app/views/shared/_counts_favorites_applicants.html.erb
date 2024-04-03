@@ -1,0 +1,23 @@
+<div class="flex justify-end gap-6 text-sm text-gray-500">
+  <% if current_client && req.client == current_client %>
+    <p class="pl-4">
+      現在の応募者数　：
+      <%= link_to clients_applicants_path(request_id: req.id) do %>
+        <span class="font-semibold text-blue-700"><%= req.applicants.count %></span>
+        名
+        <span class="font-semibold text-blue-700">（応募者一覧）</span>
+      <% end %>
+    </p>
+  <% else %>
+    <p class="pl-4">
+      現在の応募者数　：
+      <span class="font-semibold text-cyan-500"><%= req.applicants.count %></span>
+      名
+    </p>
+  <% end %>
+  <p class="pl-4">
+    お気に入り登録数：
+    <span class="font-semibold text-cyan-500"> <%= req.likes.count %></span>
+    名
+  </p>
+</div>

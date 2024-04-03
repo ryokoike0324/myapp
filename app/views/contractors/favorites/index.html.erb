@@ -13,7 +13,7 @@
     <% if @requests.blank? %>
       <p class="text-red-600 text-xl mb-4">※現在お気に入りに登録したお仕事はありません。</p>
     <% end %>
-    <%= render 'shared/requests_index' %>
+    <%= render 'shared/requests_index', back_url: contractors_favorites_path %>
     <%= render 'shared/back_to_home' %>
   </div>
 </div>

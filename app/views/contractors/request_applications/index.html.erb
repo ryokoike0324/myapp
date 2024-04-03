@@ -14,7 +14,7 @@
       <p class="text-red-600 text-xl mb-4">※現在応募中のお仕事はありません。</p>
       <p class="text-red-600 text-xl">※ホームのお仕事一覧から応募して下さい。</p>
     <% end %>
-    <%= render 'shared/requests_index' %>
+    <%= render 'shared/requests_index', back_url: contractors_request_applications_path %>
     <%= render 'shared/back_to_home' %>
   </div>
 </div>
