@@ -1,7 +1,7 @@
-<% provide(:title, '応募中のお仕事一覧') %>
+<% provide(:title, 'お気に入りしたお仕事一覧') %>
 <div class="flex justify-center items-center">
   <div class="w-1/2 py-12">
-    <h2 class="text-3xl pb-10 font-bold">応募中のお仕事一覧</h2>
+    <h2 class="text-3xl pb-10 font-bold">お気に入りしたお仕事一覧</h2>
     <div class="mt-2">
       <p class="text-sm text-gray-500 mb-3">
         複数のお仕事へ応募することは可能ですが、受注出来るお仕事は1つだけとなります。
@@ -11,8 +11,7 @@
       </p>
     </div>
     <% if @requests.blank? %>
-      <p class="text-red-600 text-xl mb-4">※現在応募中のお仕事はありません。</p>
-      <p class="text-red-600 text-xl">※ホームのお仕事一覧から応募して下さい。</p>
+      <p class="text-red-600 text-xl mb-4">※現在お気に入りに登録したお仕事はありません。</p>
     <% end %>
     <%= render 'shared/requests_index' %>
     <%= render 'shared/back_to_home' %>

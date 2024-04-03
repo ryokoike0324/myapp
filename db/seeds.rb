@@ -40,7 +40,7 @@ end
     our_business: Faker::Lorem.sentence(word_count: 25),
     industry: %w[飲食 製造 IT 建築 サービス その他].sample
   )
-  deadline_from = Date.tomorrow
+  deadline_from = 1.month.from_now
   deadline_to = deadline_from + 2.weeks
   delivery_date_from = deadline_from + 1.month
   delivery_date_to = delivery_date_from + 2.weeks

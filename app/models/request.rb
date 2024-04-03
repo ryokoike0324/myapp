@@ -23,6 +23,8 @@ class Request < ApplicationRecord
   # 多数の応募者を持つ
   has_many :request_applications, dependent: :destroy
   has_many :applicants, through: :request_applications, source: :contractor
+  has_many :favorites, dependent: :destroy
+  has_many :likes, through: :favorites, source: :contractor
   # 仕事を発注した発注者は１人
   belongs_to :client
 
@@ -30,6 +32,29 @@ class Request < ApplicationRecord
   scope :old, -> { order(created_at: :asc) }
   scope :until_deadline, -> { order(deadline: :asc) }
   scope :until_delivery_date, -> { order(delivery_date: :asc) }
+  # 各Requestが持つ応募の数(request_applications)をカウントする
+  scope :with_applicants_count, lambda {
+    # request_applicationsテーブルにある各request_idに対応するレコードの数をカウントし、その結果をapplicants_countという名前で取得
+    select('requests.*, COUNT(request_applications.id) AS applicants_count')
+      # ON以下の条件で対応するrequestsテーブルとrequest_applicationsテーブルのレコードを結合してね
+      .joins('LEFT JOIN request_applications ON request_applications.request_id = requests.id')
+      # requestsテーブルのidカラムの値に基づいてグループ化
+      # 各Requestに対するRequestApplicationの数が個別にカウントされ、applicants_countとして返されます
+      .group('requests.id')
+  }
+  # カウントされた応募者数に基づき、降順Requestのコレクションを並び替える
+  scope :applicants_order, lambda {
+    with_applicants_count.order('applicants_count DESC')
+  }
+  scope :with_likes_count, lambda {
+    select('requests.*, COUNT(favorites.id) AS likes_count')
+      .joins('LEFT JOIN favorites ON favorites.request_id = requests.id')
+      .group('requests.id')
+  }
+
+  scope :likes_order, lambda {
+    with_likes_count.order('likes_count DESC')
+  }
 
   validates :title, presence: true
   validates :description, presence: true

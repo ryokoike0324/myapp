@@ -5,7 +5,7 @@ class Clients::EngagementsController < ApplicationController
   def create
 
     # Engagement レコードを作成して、契約を成立させる
-    engagement = Engagement.new(client: current_client, contractor: applicant)
+    engagement = Engagement.new(client: current_client, contractor: params[:applicant_id])
 
     if engagement.save
       # 成功した場合の処理（フラッシュメッセージの設定、リダイレクトなど）

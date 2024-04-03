@@ -33,6 +33,7 @@ module Myapp
     Faker::Config.locale = :ja
     # rspec関連ファイルの生成設定
     config.generators do |g|
+      g.skip_routes true
       g.test_framework :rspec,
                        view_specs: false,
                        helper_specs: false,

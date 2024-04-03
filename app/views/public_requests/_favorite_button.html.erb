@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "favorite_button" do %>
+  <% if favorite %>
+    <%= button_to contractors_favorite_path(request), method: :delete, class: "text-yellow-500 py-2" do %>
+      <i class="fa-solid fa-star"></i> お気に入り解除
+    <% end %>
+  <% else %>
+    <%= button_to contractors_favorites_path, method: :post, class: "text-gray-400  py-2" do %>
+      <%= hidden_field_tag :id, request.id %>
+      <i class="fa-regular fa-star"></i> お気に入り
+    <% end %>
+  <% end %>
+<% end %>
