@@ -24,6 +24,7 @@ class PublicRequestsController < ApplicationController
 
   def show
     @request = Request.find(params[:id])
+    @owner = @request.client
   end
 
   private

@@ -10,5 +10,5 @@
   <% else %>
     <button data-open-modal="confirmationModal-<%= req.id %>" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded focus:outline-none focus:shadow-outline cursor-pointer block">申し込む</button>
   <% end %>
-  <%= render 'shared/modal_apply_request', req: req, application_button_id: application_button_id %>
+  <%= render 'modal_apply_request', req: req, application_button_id: application_button_id %>
 </turbo-frame>

@@ -26,6 +26,10 @@
 #  index_contractors_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Contractor < ApplicationRecord
+  # ポリモーフィックスの関連付け
+  has_many :sent_notifications, as: :sender, class_name: 'Notification', dependent: :destroy
+  has_many :received_notifications, as: :recipient, class_name: 'Notification', dependent: :destroy
+
   has_many :request_applications, dependent: :destroy
   has_many :applied_requests, through: :request_applications, source: :request
   has_many :favorites, dependent: :destroy

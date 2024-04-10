@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount ActionCable.server => '/cable'
+
   # ###Contractor##################################
 
   # ---contractor/devise関係-------------------
@@ -32,6 +34,11 @@ Rails.application.routes.draw do
   # ---contractors/favorites----------------
   namespace :contractors do
     resources :favorites, only: [:index, :create, :destroy]
+  end
+
+  # ---contractors/notifications----------------
+  namespace :contractors do
+    resources :notifications, only: [:index]
   end
 
   # ###Client##################################
@@ -74,6 +81,11 @@ Rails.application.routes.draw do
     resources :engagements, only: [:create]
   end
 
+  # ---contractors/notifications----------------
+  namespace :clients do
+    resources :notifications, only: [:index]
+  end
+
 
   # ###その他###############################
 
@@ -97,6 +109,7 @@ Rails.application.routes.draw do
       get 'done'
     end
   end
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

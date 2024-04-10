@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_02_084517) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_04_064945) do
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -76,6 +76,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_084517) do
     t.datetime "updated_at", null: false
     t.index ["contractor_id"], name: "index_favorites_on_contractor_id"
     t.index ["request_id"], name: "index_favorites_on_request_id"
+  end
+
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "sender_type", null: false
+    t.bigint "sender_id", null: false
+    t.string "recipient_type", null: false
+    t.bigint "recipient_id", null: false
+    t.string "event_type", null: false
+    t.bigint "event_id", null: false
+    t.boolean "unread", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_type", "event_id"], name: "index_notifications_on_event"
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
+    t.index ["sender_type", "sender_id"], name: "index_notifications_on_sender"
   end
 
   create_table "request_applications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

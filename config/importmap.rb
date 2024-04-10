@@ -8,4 +8,6 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 # pin 'controllers/contractors_profiles.js'
 
 # application.jsにもimport
-pin_all_from 'app/javascript/custom', under: 'custom'
+pin '@rails/actioncable', to: 'actioncable.esm.js'
+pin_all_from 'app/javascript/customs', under: 'customs'
+pin_all_from 'app/javascript/channels', under: 'channels'
