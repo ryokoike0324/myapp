@@ -11,6 +11,8 @@ gem 'devise-i18n'
 gem 'kaminari'
 gem 'rails-i18n'
 
+gem 'redis'
+
 gem 'tailwindcss-rails', '~> 2.3'
 
 gem 'cssbundling-rails', '~> 1.4'
