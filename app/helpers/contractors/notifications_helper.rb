@@ -1,0 +1,2 @@
+module Contractors::NotificationsHelper
+end

@@ -20,6 +20,10 @@
 #  fk_rails_...  (request_id => requests.id) ON DELETE => cascade
 #
 class RequestApplication < ApplicationRecord
+  # 仕事に対する応募なので、発注者(client)へ送る
+  include EventNotifier
+
+  has_one :notification, as: :event, dependent: :destroy
   belongs_to :contractor
   belongs_to :request
 
@@ -27,4 +31,15 @@ class RequestApplication < ApplicationRecord
   # contractor_id と request_id の組み合わせがユニーク（一意）であることを保証
   # 1人のユーザーは1つのrequestに対して１回しか応募できない（解除しない限り）
   validates :contractor_id, uniqueness: { scope: :request_id }
+
+  private
+  # EventNotifier内で必要
+  def determine_recipient
+    request.client
+  end
+
+  def determine_sender
+    contractor
+  end
+
 end

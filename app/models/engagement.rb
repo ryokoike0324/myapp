@@ -19,6 +19,20 @@
 #  fk_rails_...  (contractor_id => contractors.id)
 #
 class Engagement < ApplicationRecord
+  # 仕事を依頼する通知なので、受注者(contractor)へ送る
+  include EventNotifier
+
+  has_one :notification, as: :event, dependent: :destroy
   belongs_to :client
   belongs_to :contractor
+
+  private
+  # EventNotifierモジュール内で必要
+  def determine_recipient
+    contractor
+  end
+
+  def determine_sender
+    client
+  end
 end

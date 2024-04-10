@@ -1,0 +1,32 @@
+
+<% provide(:title, '通知一覧') %>
+<div class="w-1/2 mx-auto px-4 py-12">
+  <div class="border-b border-gray-300 pb-3 mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 leading-tight">通知一覧</h2>
+  </div>
+  <% if @notifications.blank? %>
+    <p>現在、通知はありません。</p>
+  <% end %>
+  <div class="my-8">
+    <!-- 全てを1列に配置 -->
+    <div class="grid grid-cols-1 gap-6">
+      <% @notifications.each do |notification| %>
+        <div class="shadow-md rounded-lg p-6 hover:bg-gray-100 mb-5 <%= 'bg-red-100 hover:bg-red-200' if notification.updated_recently? %>">
+          <div class="flex gap-7 items-center">
+            <div class="flex justify-between">
+              <div>
+                <p class="font-bold text-lg"><%= notification.message %></p>
+                <p class="text-sm text-gray-500"><%= notification.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <%= paginate(@notifications) %>
+  </div>
+  <%= render 'shared/back_to_home' %>
+</div>
+

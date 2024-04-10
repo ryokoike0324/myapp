@@ -24,6 +24,9 @@
 #  index_clients_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class Client < ApplicationRecord
+  # ポリモーフィックスの関連付け
+  has_many :sent_notifications, as: :sender, class_name: 'Notification', dependent: :destroy
+  has_many :received_notifications, as: :recipient, class_name: 'Notification', dependent: :destroy
   # 多数の仕事を発注できる
   has_many :requests, dependent: :destroy
   has_one :engagement, dependent: :destroy

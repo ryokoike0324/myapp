@@ -1,10 +1,53 @@
 <h1 class="text-4xl font-bold tracking-wider"><%= link_to 'First Step', public_requests_path %></h1>
-<ul class="flex gap-6 items-center font-bold">
-  <li><%= link_to '登録したお仕事', clients_requests_path %> </li>
-  <li><%= link_to 'お仕事登録', new_clients_request_path %> </li>
-  <li><%= link_to t('.profile'), edit_clients_profile_path %> </li>
-  <li><%= link_to t('.account'), edit_client_registration_path  %> </li>
-  <li><%= link_to t('.logout'), destroy_client_session_path ,method: :delete, data: { turbo_method: :delete } %></li>
+<ul class="flex gap-6 items-center font-bold" id="dropdown">
+  <li>
+    <div class="dropdown relative inline-block text-left">
+      <div>
+        <button
+          type="button"
+          class="dropdown-trigger inline-flex items-center justify-center gap-x-2 rounded-md px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600 shadow-sm ring-1 ring-gray-300"
+          id="menu-button"
+          aria-expanded="true"
+          aria-haspopup="true"
+        >
+          MENU
+          <svg class="-mr-1 h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path
+              fill-rule="evenodd"
+              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        class="dropdown-menu absolute right-0 z-10 mt-2 hidden w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+        tabindex="-1"
+      >
+        <ul class="py-1" role="none">
+          <li><%= link_to 'お仕事一覧', public_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-0" %> </li>
+          <li><%= link_to '登録したお仕事', clients_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-0" %> </li>
+          <li><%= link_to 'お仕事登録', new_clients_request_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-1" %> </li>
+          <li><%= link_to t('.profile'), edit_clients_profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-2" %> </li>
+          <li><%= link_to t('.account'), edit_client_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-3"  %> </li>
+          <li><%= link_to t('.logout'), destroy_client_session_path ,method: :delete, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", role: "menuitem", tabindex: "-1", id: "menu-item-4" %></li>
+        </ul>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <%= link_to clients_notifications_path, class:"relative inline-block" do %>
+      <i class="fa-solid fa-bell fa-lg" id="notification-icon"></i>
+      <%= render 'clients/notifications/notification_count' %>
+    <% end %>
+
+  </li>
+
 </ul>
 
 

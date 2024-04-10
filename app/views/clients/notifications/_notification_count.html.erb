@@ -1,0 +1,5 @@
+<% if current_client.received_notifications.unread.present? %>
+  <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+    <%= current_client.received_notifications.unread.size %>
+  </span>
+<% end %>

@@ -2,5 +2,8 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 // importmap.rbにも
-import "custom/contractor_profiles";
-import "custom/modal";
+import "channels";
+// import "customs";
+import "customs/contractor_profiles";
+import "customs/modal";
+import "customs/dropdown";
