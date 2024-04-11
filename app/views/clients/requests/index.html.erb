@@ -1,7 +1,7 @@
 <% provide(:title, t('.title')) %>
 <div class="flex justify-center items-center" >
   <div class="w-1/2 py-12">
-    <h2 class="text-3xl pb-10 font-bold"><%= current_client.name %>様のお仕事一覧</h2>
+    <h2 class="text-3xl pb-10 font-bold"><%= current_client.name %>様の応募中のお仕事一覧</h2>
 
     <%# 一覧 %>
     <%= render 'shared/requests_index', back_url: clients_requests_path %>

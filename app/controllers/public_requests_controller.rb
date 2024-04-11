@@ -5,19 +5,19 @@ class PublicRequestsController < ApplicationController
   def index
     @requests = case sort_param
                 when 'latest'
-                  Request.latest
+                  Request.unengaged.latest
                 when 'old'
-                  Request.old
+                  Request.unengaged.old
                 when 'until_deadline'
-                  Request.until_deadline
+                  Request.unengaged.until_deadline
                 when 'until_delivery_date'
-                  Request.until_delivery_date
+                  Request.unengaged.until_delivery_date
                 when 'applicants_order'
-                  Request.applicants_order
+                  Request.unengaged.applicants_order
                 when 'likes_order'
-                  Request.likes_order
+                  Request.unengaged.likes_order
                 else
-                  Request.all
+                  Request.unengaged
                 end
                 @requests = @requests.page(params[:page]).per(10)
   end

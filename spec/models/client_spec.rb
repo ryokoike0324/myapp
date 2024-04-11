@@ -8,7 +8,6 @@
 #  confirmed_at           :datetime
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
-#  engaged                :boolean          default(FALSE), not null
 #  industry               :integer          default("飲食"), not null
 #  name                   :string(255)
 #  our_business           :text(65535)

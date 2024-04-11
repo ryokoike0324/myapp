@@ -20,11 +20,12 @@
 #  fk_rails_...  (client_id => clients.id)
 #
 class Request < ApplicationRecord
-  # 多数の応募者を持つ
+  # 多数の応募者、お気に入りを持つ
   has_many :request_applications, dependent: :destroy
   has_many :applicants, through: :request_applications, source: :contractor
   has_many :favorites, dependent: :destroy
   has_many :likes, through: :favorites, source: :contractor
+  has_one :engagement, dependent: :destroy
   # 仕事を発注した発注者は１人
   belongs_to :client
 
@@ -46,14 +47,22 @@ class Request < ApplicationRecord
   scope :applicants_order, lambda {
     with_applicants_count.order('applicants_count DESC')
   }
+  # お気に入り数をカウント
   scope :with_likes_count, lambda {
     select('requests.*, COUNT(favorites.id) AS likes_count')
+    # requests テーブルのすべてのカラムに加えて、favorites テーブルにある各 request_id に対応するレコードの数をカウントし、その結果を likes_count という名前の列として取得
       .joins('LEFT JOIN favorites ON favorites.request_id = requests.id')
       .group('requests.id')
   }
-
+  # お気に入り数順に並び替え
   scope :likes_order, lambda {
     with_likes_count.order('likes_count DESC')
+  }
+
+  # 未契約のお仕事(request)を新着順に返す
+  scope :unengaged, lambda {
+    joins('LEFT OUTER JOIN engagements ON engagements.request_id = requests.id')
+      .where(engagements: { id: nil })
   }
 
   validates :title, presence: true

@@ -8,7 +8,6 @@
 #  confirmed_at           :datetime
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
-#  engaged                :boolean          default(FALSE), not null
 #  industry               :integer          default("飲食"), not null
 #  name                   :string(255)
 #  our_business           :text(65535)
@@ -30,8 +29,8 @@ class Client < ApplicationRecord
   has_many :received_notifications, as: :recipient, class_name: 'Notification', dependent: :destroy
   # 多数の仕事を発注できる
   has_many :requests, dependent: :destroy
-  has_one :engagement, dependent: :destroy
-  has_one :contractor, through: :engagement
+  # 各requestが持つengagementの集合を返す
+  has_many :engagements, through: :requests
   enum industry: { 飲食: 0, 製造: 1, IT: 2, 建築: 3, サービス: 4, その他: 5 }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

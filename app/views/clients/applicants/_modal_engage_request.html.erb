@@ -11,7 +11,7 @@
               ※一度に複数のお仕事を依頼することは出来ません。
             </p>
             <p class="text-sm text-gray-500">
-              ※「依頼する」ボタンをクリックすると依頼が完了します。
+              ※「依頼する」ボタンをクリックすると取引が開始します。
             </p>
           </div>
         </div>
@@ -19,6 +19,7 @@
       <div class="mt-5 sm:mt-4 sm:flex flex justify-around">
         <%= form_with url: clients_engagements_path, method: :post, submit_close_modal: true, local: true do |form| %>
           <%= hidden_field_tag :applicant_id, @applicant.id %>
+          <%= hidden_field_tag :request_id, @request.id %>
           <%= form.submit '依頼する', class: 'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm cursor-pointer' %>
         <% end %>
         <button data-close-modal="confirmationModal-<%= @applicant.id %>" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:w-auto sm:text-sm">
