@@ -8,6 +8,7 @@
 #  confirmed_at           :datetime
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
+#  engaged                :boolean          default(FALSE), not null
 #  image                  :string(255)
 #  name                   :string(255)
 #  portfolio              :string(255)
