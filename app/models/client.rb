@@ -66,4 +66,39 @@ class Client < ApplicationRecord
     end
     guest_client
   end
+
+  # すべての業種名を配列で返す
+  def self.unique_industries
+    # pluck：指定されたカラム（ここでは industry）の値だけを配列として返す
+    distinct.pluck(:industry)
+  end
+
+  # enumのためパラメータを数値に変換する
+  def self.enum_ransack_params(params)
+    params_dup = params.dup
+    # dup メソッドはオブジェクトのシャローコピー（浅いコピー）を作成。元のオブジェクトには影響を与えません
+    # 元の params オブジェクトを変更せずに、そのコピーを操作するため
+    # 複数の場所で params を参照している場合、一箇所での変更が他の場所に影響を及ぼす可能性
+    if params_dup['client_industry_eq']
+      # params_dup["client_industry_eq"] が存在する場合、その値を Client.industries マップを使って整数値に変換
+      # Client.industriesはenumが提供する機能
+      # 各業界名をその対応する整数値にマッピングするハッシュを返します
+      # {"飲食"=>0, "製造"=>1, "IT"=>2, "建築"=>3, "サービス"=>4, "その他"=>5}
+      industry_value = industries[params_dup['client_industry_eq']]
+      params_dup['client_industry_eq'] = industry_value if industry_value
+    end
+    params_dup
+  end
+
+  # Ransackの検索可能なホワイトリストを定義
+  # これにより 'industry' が検索可能になる
+  def self.ransackable_attributes(_auth_object = nil)
+    authorizable_ransackable_attributes & %w[industry]
+  end
+
+  # 指定した関連だけ検索対象とすることができる
+  # すべての関連付けで検索を許可するとパフォーマンスの問題や意図しない結果を招く可能性があるため
+  def self.ransackable_associations(_auth_object = nil)
+    authorizable_ransackable_attributes & %w[requests]
+  end
 end

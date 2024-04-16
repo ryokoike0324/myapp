@@ -41,14 +41,17 @@ end
     industry: %w[飲食 製造 IT 建築 サービス その他].sample
   )
   deadline_from = 1.month.from_now
+  creat_from = deadline_from - 1.week
   deadline_to = deadline_from + 2.weeks
+  creat_to = deadline_to - 1.week
   delivery_date_from = deadline_from + 1.month
   delivery_date_to = delivery_date_from + 2.weeks
   request = client.requests.create!(
     title: Faker::Job.title,
     deadline: Faker::Date.between(from: deadline_from, to: deadline_to),
     delivery_date: Faker::Date.between(from: delivery_date_from, to: delivery_date_to),
-    description: Faker::Lorem.sentence(word_count: 100)
+    description: Faker::Lorem.sentence(word_count: 100),
+    created_at: Faker::Date.between(from: creat_from, to: creat_to)
   )
   # 各Requestに対してランダムに選んだ5人のContractorが応募するデータを生成（重複を防ぐ）
   # Arel（Active Record Relation）ライブラリ、生のSQLスニペットを安全にActiveRecordクエリに組み込む方法

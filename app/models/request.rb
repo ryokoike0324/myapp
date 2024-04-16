@@ -29,37 +29,7 @@ class Request < ApplicationRecord
   # 仕事を発注した発注者は１人
   belongs_to :client
 
-  scope :latest, -> { order(created_at: :desc) }
-  scope :old, -> { order(created_at: :asc) }
-  scope :until_deadline, -> { order(deadline: :asc) }
-  scope :until_delivery_date, -> { order(delivery_date: :asc) }
-  # 各Requestが持つ応募の数(request_applications)をカウントする
-  scope :with_applicants_count, lambda {
-    # request_applicationsテーブルにある各request_idに対応するレコードの数をカウントし、その結果をapplicants_countという名前で取得
-    select('requests.*, COUNT(request_applications.id) AS applicants_count')
-      # ON以下の条件で対応するrequestsテーブルとrequest_applicationsテーブルのレコードを結合してね
-      .joins('LEFT JOIN request_applications ON request_applications.request_id = requests.id')
-      # requestsテーブルのidカラムの値に基づいてグループ化
-      # 各Requestに対するRequestApplicationの数が個別にカウントされ、applicants_countとして返されます
-      .group('requests.id')
-  }
-  # カウントされた応募者数に基づき、降順Requestのコレクションを並び替える
-  scope :applicants_order, lambda {
-    with_applicants_count.order('applicants_count DESC')
-  }
-  # お気に入り数をカウント
-  scope :with_likes_count, lambda {
-    select('requests.*, COUNT(favorites.id) AS likes_count')
-    # requests テーブルのすべてのカラムに加えて、favorites テーブルにある各 request_id に対応するレコードの数をカウントし、その結果を likes_count という名前の列として取得
-      .joins('LEFT JOIN favorites ON favorites.request_id = requests.id')
-      .group('requests.id')
-  }
-  # お気に入り数順に並び替え
-  scope :likes_order, lambda {
-    with_likes_count.order('likes_count DESC')
-  }
-
-  # 未契約のお仕事(request)を新着順に返す
+  # 未契約のお仕事(request)を返す
   scope :unengaged, lambda {
     joins('LEFT OUTER JOIN engagements ON engagements.request_id = requests.id')
       .where(engagements: { id: nil })
@@ -83,6 +53,36 @@ class Request < ApplicationRecord
     (deadline.to_date - Time.zone.today).to_i < 0
   end
 
+  # 応募者数に基づくソート
+  ransacker :applicants_count_sort do
+    Arel.sql('(
+      SELECT COUNT(request_applications.id)
+      FROM request_applications
+      WHERE request_applications.request_id = requests.id)')
+  end
+
+  # お気に入り数に基づくソート
+  ransacker :likes_count_sort do
+    Arel.sql('(
+      SELECT COUNT(favorites.id)
+      FROM favorites
+      WHERE favorites.request_id = requests.id)')
+  end
+
+  # Ransackで検索にかけるホワイトリスト
+  # 引数の前に_をつけると引数がメソッド内で使用されていないことを表示する
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[title description created_at deadline delivery_date]
+  end
+
+  # デフォルトでは、Ransackはすべてのカラムで or 検索を許可しない
+  # モデルの特定の関連付けに対して検索（フィルタリング）を許可したり、除外したりすることができる
+  # すべての関連付けで検索を許可するとパフォーマンスの問題や意図しない結果を招く可能性があるため
+  def self.ransackable_associations(_auth_object = nil)
+    %w[client]
+  end
+
+
   private
 
   # deadlineが明日以降の日付であることを確認するバリデーション
@@ -101,4 +101,5 @@ class Request < ApplicationRecord
     # :must_be_after_deadline => i18nによるエラーメッセージ(config/locals/models/request)
     errors.add(:delivery_date, :must_be_after_deadline) if delivery_date <= deadline
   end
+
 end

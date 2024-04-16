@@ -11,6 +11,8 @@ gem 'devise-i18n'
 gem 'kaminari'
 gem 'rails-i18n'
 
+gem 'ransack'
+
 gem 'redis'
 
 gem 'tailwindcss-rails', '~> 2.3'
