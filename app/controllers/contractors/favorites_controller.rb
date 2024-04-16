@@ -3,7 +3,7 @@ class Contractors::FavoritesController < ApplicationController
   before_action :set_request, except: [:index]
 
   def index
-    @requests = current_contractor.favorite_requests.page(params[:page]).per(10)
+    @requests = current_contractor.favorite_requests.unengaged.page(params[:page]).per(10)
   end
 
   def create

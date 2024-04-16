@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_04_064945) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_11_012332) do
   create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,17 +56,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_064945) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.boolean "engaged", default: false, null: false
     t.index ["email"], name: "index_contractors_on_email", unique: true
     t.index ["reset_password_token"], name: "index_contractors_on_reset_password_token", unique: true
   end
 
   create_table "engagements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "client_id", null: false
     t.bigint "contractor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_engagements_on_client_id"
+    t.bigint "request_id", null: false
     t.index ["contractor_id"], name: "index_engagements_on_contractor_id"
+    t.index ["request_id"], name: "index_engagements_on_request_id"
   end
 
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -114,8 +115,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_04_064945) do
     t.index ["client_id"], name: "index_requests_on_client_id"
   end
 
-  add_foreign_key "engagements", "clients"
   add_foreign_key "engagements", "contractors"
+  add_foreign_key "engagements", "requests"
   add_foreign_key "favorites", "contractors"
   add_foreign_key "favorites", "requests"
   add_foreign_key "request_applications", "contractors"

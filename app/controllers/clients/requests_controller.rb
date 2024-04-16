@@ -2,7 +2,7 @@ class Clients::RequestsController < ApplicationController
   before_action :authenticate_client!
 
   def index
-    @requests = current_client.requests.page(params[:page]).per(10)
+    @requests = current_client.requests.unengaged.page(params[:page]).per(10)
   end
 
   # 受注者側に見せるためcurrent_clientは使えない

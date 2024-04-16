@@ -78,7 +78,7 @@ Rails.application.routes.draw do
 
   # ---clients/engagements--------------------
   namespace :clients do
-    resources :engagements, only: [:create]
+    resources :engagements, only: [:create, :show, :index]
   end
 
   # ---contractors/notifications----------------

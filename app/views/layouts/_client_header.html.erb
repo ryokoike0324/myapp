@@ -29,12 +29,13 @@
         tabindex="-1"
       >
         <ul class="py-1" role="none">
-          <li><%= link_to 'お仕事一覧', public_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-0" %> </li>
-          <li><%= link_to '登録したお仕事', clients_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-0" %> </li>
-          <li><%= link_to 'お仕事登録', new_clients_request_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-1" %> </li>
-          <li><%= link_to t('.profile'), edit_clients_profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-2" %> </li>
-          <li><%= link_to t('.account'), edit_client_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-3"  %> </li>
-          <li><%= link_to t('.logout'), destroy_client_session_path ,method: :delete, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", role: "menuitem", tabindex: "-1", id: "menu-item-4" %></li>
+          <li><%= link_to 'お仕事登録', new_clients_request_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-0" %> </li>
+          <li><%= link_to 'お仕事一覧', public_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-1" %> </li>
+          <li><%= link_to '応募中のお仕事', clients_requests_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-2" %> </li>
+          <li><%= link_to '依頼中のお仕事', clients_engagements_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-3" %> </li>
+          <li><%= link_to t('.profile'), edit_clients_profile_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-4" %> </li>
+          <li><%= link_to t('.account'), edit_client_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b border-gray-200", role: "menuitem", tabindex: "-1", id: "menu-item-5"  %> </li>
+          <li><%= link_to t('.logout'), destroy_client_session_path ,method: :delete, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100", role: "menuitem", tabindex: "-1", id: "menu-item-6" %></li>
         </ul>
       </div>
     </div>

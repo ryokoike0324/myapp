@@ -1,26 +1,41 @@
 <% provide(:title, t('.title')) %>
-
 <div class="flex justify-center items-center" >
-  <div class="w-1/2 py-12">
-    <h2 class="text-3xl pb-10 font-bold"><%= t('.title') %></h2>
+  <div class="w-3/4 py-12">
+    <h2 class="text-3xl pb-10 font-bold">お仕事検索</h2>
+    <p class="mb-10 font-bold">
+      <span class="text-xl"><%= @requests_count %> </span>
+      件のお仕事が見つかりました。
+    </p>
 
-    <%# 並び替え %>
-    <%= form_with url: public_requests_path, method: :get, local: true do %>
-      <div class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-        <%= label_tag :sort, t('.sort') %>
-        <%= select_tag :sort, options_for_select([
-          [t('.latest'), 'latest'],
-          [t('.old'), 'old'],
-          [t('.until_deadline'), 'until_deadline'],
-          [t('.until_delivery_date'), 'until_delivery_date'],
-          ['応募者数順', 'applicants_order'],
-          ['お気に入り数順', 'likes_order']
-        ], selected: params[:sort]),class:"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40", onchange: 'this.form.submit();' %>
+    <div class='grid grid-cols-5'>
+      <%# 業種絞り込みサイドバー %>
+      <%= render 'public_requests/sidebar' %>
+      <%# 検索 %>
+      <div class='col-span-4'>
+        <%= search_form_for @q, url: public_requests_path do |f| %>
+          <% if @query_params[:client_industry_eq] %>
+            <%= f.hidden_field :client_industry_eq, value: @query_params[:client_industry_eq] %>
+          <% end %>
+          <div class="flex items-center">
+            <%= f.search_field :title_or_description_cont, placeholder: 'キーワードから探す', class: "block w-full px-4 py-3 leading-tight text-gray-700 border rounded-l-lg focus:outline-none focus:bg-white focus:border-gray-500" %>
+            <%= f.button type: 'submit', class: "flex items-center justify-center w-12 h-12 text-white rounded-r-lg bg-blue-500 box-border" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>
+            <% end %>
+          </div>
+          <div class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline flex justify-end">
+            <%= f.select :s, options_for_select([
+                [t('.latest'), 'created_at desc'],
+                [t('.old'), 'created_at asc'],
+                [t('.until_deadline'), 'deadline asc'],
+                [t('.until_delivery_date'), 'delivery_date asc'],
+                ['応募者数順', 'applicants_count_sort desc'],
+                ['お気に入り数順', 'likes_count_sort desc']
+              ], selected: params.dig(:q, :s)), class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40", onchange: 'this.form.submit();' %>
+          </div>
+        <% end %>
+        <%# 一覧 %>
+        <%= render 'shared/requests_index', back_url: public_requests_path %>
       </div>
-    <% end %>
-
-    <%# 一覧 %>
-    <%= render 'shared/requests_index', back_url: public_requests_path %>
-
+    </div>
   </div>
 </div>

@@ -10,9 +10,9 @@
       <% @applicants.each do |applicant| %>
         <div class="bg-white shadow-md rounded-lg p-6 hover:bg-gray-100 mb-5">
           <div class="flex gap-7 items-center pl-16 ml-1">
-            <%= link_to image_tag(applicant.image.url, class: "rounded-full h-20 w-20"), clients_applicant_path(request_id: @request.id, id: applicant.id) %>
+            <%= link_to image_tag(applicant.image.url, class: "rounded-full h-20 w-20"), clients_applicant_path(id: applicant.id, request_id: @request.id) %>
             <!-- 名前にshowテンプレートへのリンクを追加 -->
-            <%= link_to applicant.name, clients_applicant_path(request_id: @request.id, id: applicant.id), class: "font-bold text-blue-700 text-lg hover:text-blue-500" %>
+            <%= link_to applicant.name, clients_applicant_path(id: applicant.id, request_id: @request.id), class: "font-bold text-blue-700 text-lg hover:text-blue-500" %>
           </div>
           <dl class="mt-3 text-left divide-y divide-gray-200 border-t-2 border-gray-200">
             <div class="flex gap-3 items-center py-2">

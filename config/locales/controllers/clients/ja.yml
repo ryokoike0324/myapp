@@ -19,3 +19,10 @@ ja:
         no_request_alert: 指定されたユーザーはこの依頼に応募していません。
       set_request:
         not_found_alert: お仕事を登録して下さい。
+    engagements:
+      create:
+        engaged: 依頼が完了しました。
+        failure: 依頼に失敗しました。
+      correct_request:
+        alert_request: 不正な仕事を指定しています。
+        alert_applicant: 不正な応募者への依頼です。
