@@ -53,22 +53,6 @@ class Request < ApplicationRecord
     (deadline.to_date - Time.zone.today).to_i < 0
   end
 
-  # 応募者数に基づくソート
-  ransacker :applicants_count_sort do
-    Arel.sql('(
-      SELECT COUNT(request_applications.id)
-      FROM request_applications
-      WHERE request_applications.request_id = requests.id)')
-  end
-
-  # お気に入り数に基づくソート
-  ransacker :likes_count_sort do
-    Arel.sql('(
-      SELECT COUNT(favorites.id)
-      FROM favorites
-      WHERE favorites.request_id = requests.id)')
-  end
-
   # Ransackで検索にかけるホワイトリスト
   # 引数の前に_をつけると引数がメソッド内で使用されていないことを表示する
   def self.ransackable_attributes(_auth_object = nil)
@@ -79,7 +63,28 @@ class Request < ApplicationRecord
   # モデルの特定の関連付けに対して検索（フィルタリング）を許可したり、除外したりすることができる
   # すべての関連付けで検索を許可するとパフォーマンスの問題や意図しない結果を招く可能性があるため
   def self.ransackable_associations(_auth_object = nil)
-    %w[client]
+    %w[client favorite request_application]
+  end
+
+  # Ransackで使うscopeを指定する。
+  # 戻り値はシンボルの配列を使う。
+  # デフォルトでは全てのscopeは認可されていない
+  def self.ransackable_scopes(_auth_object = nil)
+    [:unengaged]
+  end
+
+  # 応募者数に基づくカスタムソート用の仮想属性
+  ransacker :applicants_count_sort, type: :integer do
+    Arel.sql('(
+      SELECT COUNT(request_applications.id) FROM request_applications WHERE request_applications.request_id = requests.id)')
+  end
+
+  # お気に入り数に基づくカスタムソート用の仮想属性
+  ransacker :likes_count_sort, type: :integer do
+    Arel.sql('(
+      SELECT COUNT(favorites.id) 
+      FROM favorites 
+      WHERE favorites.request_id = requests.id)')
   end
 
 

@@ -26,11 +26,13 @@
             <%= f.select :s, options_for_select([
                 [t('.latest'), 'created_at desc'],
                 [t('.old'), 'created_at asc'],
-                [t('.until_deadline'), 'deadline asc'],
-                [t('.until_delivery_date'), 'delivery_date asc'],
-                ['応募者数順', 'applicants_count_sort desc'],
-                ['お気に入り数順', 'likes_count_sort desc']
-              ], selected: params.dig(:q, :s)), class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40", onchange: 'this.form.submit();' %>
+                ['募集締切：早い順', 'deadline asc'],
+                ['募集締切：遅い順', 'deadline desc'],
+                ['希望納期：早い順', 'delivery_date asc'],
+                ['希望納期：遅い順', 'delivery_date desc'],
+              ], selected: params.dig(:q, :s)),
+              { class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40" },
+              { onchange: "this.form.submit();" } %>
           </div>
         <% end %>
         <%# 一覧 %>
