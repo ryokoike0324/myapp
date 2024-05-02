@@ -1,11 +1,14 @@
 <div class="col-span-1 bg-white">
-  <h3>業種で絞り込む</h3>
+  <h3 class='font-bold text-lg mb-3'>業種で絞り込む</h3>
   <%# 検索条件が@query_params入っているためキーワード検索の条件に加えてさらに絞り込みの条件を追加できる。 %>
     <ul>
-      <li><%= link_to '全てのお仕事', public_requests_path(@query_params) %></li>
+      <li class="mb-1 text-blue-500"><%= link_to '全てのお仕事', public_requests_path(@query_params) %></li>
 
       <% Client.unique_industries.each do |industry| %>
-        <li><%= link_to industry, public_requests_path(q: {client_industry_eq: industry}) %></li>
+        <li>
+          <% if current_page?(public_requests_path(q: {client_industry_eq: industry})) %>
+          <%= link_to industry, public_requests_path(q: {client_industry_eq: industry}), class: 'mb-1 text-blue-500' %>
+        </li>
       <% end %>
         <%# &.によりnilチェックしている、nilならメソッドを実行しない %>
         <%# 現在の検索パラメータ（params[:q]）に新しい条件（client_industry_eq: industry）を追加しています %>

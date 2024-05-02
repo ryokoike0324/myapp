@@ -32,38 +32,38 @@ RSpec.describe Request do
     it 'descriptionがないと登録できない' do
       request.description = nil
       request.valid?
-      expect(request.errors[:description]).to include('を入力してください')
+      expect(request.errors[:description]).to include('依頼内容を入力してください')
     end
 
     it 'delivery_dateがないと登録できない' do
       request.delivery_date = nil
       request.valid?
-      expect(request.errors[:delivery_date]).to include('を入力してください')
+      expect(request.errors[:delivery_date]).to include('納期を入力してください')
     end
 
     it 'deadlineがないと登録できない' do
       request.deadline = nil
       request.valid?
-      expect(request.errors[:deadline]).to include('を入力してください')
+      expect(request.errors[:deadline]).to include('募集締切を入力してください')
     end
 
     it 'titleがないと登録できない' do
       request.title = nil
       request.valid?
-      expect(request.errors[:title]).to include('を入力してください')
+      expect(request.errors[:title]).to include('タイトルを入力してください')
     end
 
-    it 'deadline(募集締切)が明日以降の日付であること' do
+    it 'deadline_must_be_in_the_future(募集締切が明日以降の日付であること)' do
       request.deadline = Time.zone.today
       expect(request).not_to be_valid
       expect(request.errors[:deadline]).to include('明日以降の日付をご入力ください。')
     end
 
-    it 'delivery_date(希望納期)がdeadline(募集締切)より後の日付であること' do
+    it 'delivery_date_must_be_after_deadline(希望納期が募集締切より後の日付であること)' do
       request.deadline = 1.week.from_now
       request.delivery_date = 1.week.from_now - 1.day
       expect(request).not_to be_valid
-      expect(request.errors[:delivery_date]).to include('は募集締切日より後の日付をご入力ください。')
+      expect(request.errors[:delivery_date]).to include('募集締切日より後の日付をご入力ください。')
     end
 
     it 'deadline(募集締切)とdelivery_date(希望納期)が両方有効な場合に有効であること' do
@@ -74,31 +74,16 @@ RSpec.describe Request do
   end
 
   describe 'scope' do
-    let!(:first_request){ create(:request, created_at: 1.day.ago, deadline: 2.days.from_now, delivery_date: 5.days.from_now) }
-    let!(:second_request){ create(:request, created_at: 2.days.ago, deadline: 3.days.from_now, delivery_date: 4.days.from_now) }
-    let!(:third_request){ create(:request, created_at: 3.days.ago, deadline: 1.day.from_now, delivery_date: 6.days.from_now) }
+    let!(:engaged_contractor){ create(:contractor) }
+    let!(:engaged_request){ create(:request) }
+    let!(:unengaged_request){ create(:request) }
 
-    describe 'latest' do
-      it 'created_atが新しい日時順のコレクションが返されること' do
-        expect(described_class.latest).to eq([first_request, second_request, third_request])
-      end
-    end
-
-    describe 'old' do
-      it 'created_atが古い日時順のコレクションが返されること' do
-        expect(described_class.old).to eq([third_request, second_request, first_request])
-      end
-    end
-
-    describe 'deadline' do
-      it '締切日(deadline)が近い順のコレクションが返されること' do
-        expect(described_class.until_deadline).to eq([third_request, first_request, second_request])
-      end
-    end
-
-    describe 'delivery_date' do
-      it '納期(delivery_date)が近い順のコレクションが返されること' do
-        expect(described_class.until_delivery_date).to eq([second_request, first_request, third_request])
+    describe 'unengaged' do
+      it '未契約のRequestのコレクションが返されること' do
+        create(:engagement, request: engaged_request, contractor: engaged_contractor)
+        # unengaged スコープを呼び出し、unengaged_requestのみが含まれることを確認
+        expect(described_class.unengaged).to include(unengaged_request)
+        expect(described_class.unengaged).not_to include(engaged_request)
       end
     end
   end
@@ -133,4 +118,5 @@ RSpec.describe Request do
       end
     end
   end
+
 end

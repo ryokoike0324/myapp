@@ -25,7 +25,6 @@ class Engagement < ApplicationRecord
   belongs_to :request
   belongs_to :contractor
 
-  private
   # EventNotifierモジュール内で必要
   # 仕事を依頼する通知なので、受注者(contractor)へ送る
   def determine_recipient

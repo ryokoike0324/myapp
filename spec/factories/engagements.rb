@@ -20,7 +20,9 @@
 #
 FactoryBot.define do
   factory :engagement do
-    client { nil }
+    # { nil }デフォルト値として何も設定しないことを明示
+    # つまりclient_id,contractor_id,request_idがデフォルトでnilだよ
     contractor { nil }
+    request { nil }
   end
 end

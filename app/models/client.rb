@@ -70,13 +70,13 @@ class Client < ApplicationRecord
   # すべての業種名を配列で返す
   def self.unique_industries
     # pluck：指定されたカラム（ここでは industry）の値だけを配列として返す
-    distinct.pluck(:industry)
+    %w[飲食 製造 IT 建築 サービス その他]
   end
 
   # enumのためパラメータを数値に変換する
   def self.enum_ransack_params(params)
     params_dup = params.dup
-    # dup メソッドはオブジェクトのシャローコピー（浅いコピー）を作成。元のオブジェクトには影響を与えません
+    # dup メソッドはオブジェクトのコピーを作成。元のオブジェクトには影響を与えません
     # 元の params オブジェクトを変更せずに、そのコピーを操作するため
     # 複数の場所で params を参照している場合、一箇所での変更が他の場所に影響を及ぼす可能性
     if params_dup['client_industry_eq']

@@ -9,8 +9,8 @@ module EventNotifier
     after_create_commit :enqueue_notification_job
   end
 
-  private
 
+  private
   # 通知のオブジェクト生成をバックグラウンドで実行
   def enqueue_notification_job
     # NotificationJobを非同期で実行する
