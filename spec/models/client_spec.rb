@@ -53,10 +53,42 @@ RSpec.describe Client do
 
   end
 
-  describe 'ゲストユーザー' do
-    it '正しい値が登録されていること' do
-      guest = described_class.guest
-      expect(guest).to be_valid
+  describe 'class method' do
+    describe 'self.guest(ゲストユーザー登録)' do
+      it '正しい値が登録されていること' do
+        guest = described_class.guest
+        expect(guest).to be_valid
+      end
     end
+
+    describe 'self.unique_industries(すべての業種名を配列で返す)' do
+
+      it '正しい配列を返すこと' do
+        # 業種名のデータを作成
+        industries_ary = described_class.unique_industries
+        expect(industries_ary).to eq %w[飲食 製造 IT 建築 サービス その他]
+      end
+    end
+
+    describe 'self.enum_ransack_params(enumのためパラメータを数値に変換する)' do
+
+      context 'paramsの値が「飲食」の場合' do
+        it '数値0に変換されること' do
+          params = { 'client_industry_eq' => '飲食' }
+          transform_params = described_class.enum_ransack_params(params)
+          expect(transform_params).to eq({ 'client_industry_eq' => 0 })
+        end
+      end
+
+      context 'paramsの値が「その他」の場合' do
+        it '数値5に変換されること' do
+          params = { 'client_industry_eq' => 'その他' }
+          transform_params = described_class.enum_ransack_params(params)
+          expect(transform_params).to eq({ 'client_industry_eq' => 5 })
+        end
+      end
+    end
+
+
   end
 end
